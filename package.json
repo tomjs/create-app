@@ -1,0 +1,50 @@
+{
+  "name": "@tomjs/create-app",
+  "version": "0.0.0",
+  "description": "create tomjs web app",
+  "keywords": [
+    "tomjs",
+    "front-end",
+    "create",
+    "app"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "files": [
+    "dist",
+    "*.md"
+  ],
+  "main": "./dist/index.js",
+  "bin": {
+    "create-app": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "dev": "tsup src/index.ts --format cjs --watch",
+    "build": "tsup src/index.ts --format cjs",
+    "lint": "run-s lint:eslint lint:prettier",
+    "lint:eslint": "eslint \"src/**/*.{js,cjs,ts}\" *.{js,cjs,ts} --fix --cache",
+    "lint:prettier": "prettier --write \"src/**/*.{js,cjs,ts,json,md}\" *.{js,cjs,ts,json,md}",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.4.1",
+    "@tomjs/commitlint": "^1.0.4",
+    "@tomjs/eslint": "^1.0.6",
+    "@tomjs/prettier": "^1.0.4",
+    "@tomjs/tsconfig": "^1.0.6",
+    "@types/node": "^16.18.61",
+    "eslint": "^8.53.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.1.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  }
+}
