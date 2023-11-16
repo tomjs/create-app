@@ -6,7 +6,10 @@
     "tomjs",
     "front-end",
     "create",
-    "app"
+    "app",
+    "vite",
+    "vue",
+    "react"
   ],
   "license": "MIT",
   "repository": {

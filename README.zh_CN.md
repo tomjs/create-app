@@ -54,6 +54,11 @@ pnpm create @tomjs/app my-app --template vue --module
 - `-t --template`：指定模板，可选值：`vue`、`react`
 - `-m --module`：`package.json` 使用 `type:"module"`，否则使用 `commonjs`
 
+支持模板:
+
+- vue
+- react
+
 ## 项目配置
 
 项目配置在 `package.json` 中，可配置项如下：

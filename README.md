@@ -53,6 +53,11 @@ Parameters:
 - `-t --template` : specify the template, optional values: `vue` , `react`
 - `-m --module` : `package.json` uses `type:"module"`, otherwise use `commonjs`
 
+Support templates:
+
+- vue
+- react
+
 ## Reference project
 
 - [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)
