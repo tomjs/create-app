@@ -9,6 +9,10 @@
     "app"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomgao365/create-app.git"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -32,7 +36,8 @@
     "lint:eslint": "eslint \"src/**/*.{js,cjs,ts}\" *.{js,cjs,ts} --fix --cache",
     "lint:prettier": "prettier --write \"src/**/*.{js,cjs,ts,json,md}\" *.{js,cjs,ts,json,md}",
     "prepare": "husky install",
-    "prepublishOnly": "npm run build && np --any-branch --no-yarn --yolo --no-publish --message \"chore: release v%s\""
+    "release": "np --any-branch --no-yarn --yolo --no-publish --message \"chore: release v%s\"",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "cross-spawn": "^7.0.3",
