@@ -25,3 +25,60 @@ yarn create @tomjs/app
 ```bash
 pnpm create @tomjs/app
 ```
+
+然后根据提示生成项目。
+
+你也可以直接指定项目名、模板、module类型
+
+- 使用 `npm`
+
+```bash
+npm create @tomjs/app@latest
+npm create @tomjs/app@latest my-app -- --template vue --module
+```
+
+- 使用 `yarn`
+
+```bash
+yarn create @tomjs/app my-app --template vue --module
+```
+
+- 使用 `pnpm`
+
+```bash
+pnpm create @tomjs/app my-app --template vue --module
+```
+
+参数说明:
+
+- `-t --template`：指定模板，可选值：`vue`、`react`
+- `-m --module`：`package.json` 使用 `type:"module"`，否则使用 `commonjs`
+
+## 项目配置
+
+项目配置在 `package.json` 中，可配置项如下：
+
+````json
+{
+  "name": "my-app",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main.ts",
+}
+
+## 项目结构
+
+```bash
+.
+├── README.md
+├── package.json
+├── src
+│   ├── App.vue
+│   ├── main.ts
+│   └── shims-vue.d.ts
+├── tsconfig.json
+
+## 参考项目
+
+- [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)
+````

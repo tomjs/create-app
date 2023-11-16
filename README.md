@@ -25,3 +25,34 @@ yarn create @tomjs/app
 ```bash
 pnpm create @tomjs/app
 ```
+
+Then generate the project based on the prompts.
+
+You can also directly specify the project name, template, and module type.
+
+- Using `npm`
+
+```bash
+npm create @tomjs/app@latest my-app -- --template vue --module
+```
+
+- Using `yarn`
+
+```bash
+yarn create @tomjs/app my-app --template vue --module
+```
+
+- Using `pnpm`
+
+```bash
+pnpm create @tomjs/app --template vue --module
+```
+
+Parameters:
+
+- `-t --template` : specify the template, optional values: `vue` , `react`
+- `-m --module` : `package.json` uses `type:"module"`, otherwise use `commonjs`
+
+## Reference project
+
+- [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)

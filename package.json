@@ -15,31 +15,41 @@
   },
   "files": [
     "dist",
+    "template-*",
     "*.md"
   ],
-  "main": "./dist/index.js",
+  "main": "./dist/index.mjs",
   "bin": {
-    "create-app": "./dist/index.js"
+    "create-app": "./dist/index.mjs"
   },
   "engines": {
     "node": ">=18"
   },
   "scripts": {
-    "dev": "tsup src/index.ts --format cjs --watch",
-    "build": "tsup src/index.ts --format cjs",
+    "dev": "tsup --watch",
+    "build": "tsup",
     "lint": "run-s lint:eslint lint:prettier",
     "lint:eslint": "eslint \"src/**/*.{js,cjs,ts}\" *.{js,cjs,ts} --fix --cache",
     "lint:prettier": "prettier --write \"src/**/*.{js,cjs,ts,json,md}\" *.{js,cjs,ts,json,md}",
     "prepare": "husky install",
-    "release": "npm run build && np --any-branch --no-yarn --yolo --no-publish --message \"chore: release v%s\""
+    "release": "np --any-branch --no-yarn --yolo --no-publish --message \"chore: release v%s\"",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "cross-spawn": "^7.0.3",
+    "kolorist": "^1.8.0",
+    "minimist": "^1.2.8",
+    "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.1",
-    "@tomjs/commitlint": "^1.0.4",
-    "@tomjs/eslint": "^1.0.6",
-    "@tomjs/prettier": "^1.0.4",
+    "@commitlint/cli": "^18.4.2",
+    "@tomjs/commitlint": "^2.0.3",
+    "@tomjs/eslint": "^1.0.7",
+    "@tomjs/prettier": "^1.0.5",
     "@tomjs/tsconfig": "^1.0.6",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^18.18.9",
+    "@types/prompts": "^2.4.8",
     "eslint": "^8.53.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
