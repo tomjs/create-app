@@ -1,0 +1,10 @@
+{
+  "extends": "@tomjs/tsconfig/react-dom.json",
+  "compilerOptions": {},
+  "include": ["src"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}

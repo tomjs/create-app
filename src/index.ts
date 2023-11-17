@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { cyan, green, red, reset } from 'kolorist';
+import { blue, cyan, green, red, reset, yellow } from 'kolorist';
 import minimist from 'minimist';
 import prompts from 'prompts';
 import {
@@ -27,6 +27,14 @@ type Framework = {
   name: string;
   display: string;
   color: ColorFunc;
+  variants: FrameworkVariant[];
+};
+
+type FrameworkVariant = {
+  name: string;
+  display: string;
+  color: ColorFunc;
+  customCommand?: string;
 };
 
 const FRAMEWORKS: Framework[] = [
@@ -34,15 +42,41 @@ const FRAMEWORKS: Framework[] = [
     name: 'vue',
     display: 'Vue',
     color: green,
+    variants: [
+      {
+        name: 'vue',
+        display: 'Web',
+        color: blue,
+      },
+      {
+        name: 'electron-vue',
+        display: 'Electron',
+        color: yellow,
+      },
+    ],
   },
   {
     name: 'react',
     display: 'React',
     color: cyan,
+    variants: [
+      {
+        name: 'react',
+        display: 'Web',
+        color: blue,
+      },
+      {
+        name: 'electron-react',
+        display: 'Electron',
+        color: yellow,
+      },
+    ],
   },
 ];
 
-const TEMPLATES = FRAMEWORKS.map(s => s.name);
+const TEMPLATES = FRAMEWORKS.map(
+  f => (f.variants && f.variants.map(v => v.name)) || [f.name],
+).reduce((a, b) => a.concat(b), []);
 
 const renameFiles: Record<string, string> = {
   _gitignore: '.gitignore',
@@ -112,6 +146,19 @@ async function run() {
         }),
       },
       {
+        type: (framework: Framework) => (framework && framework.variants ? 'select' : null),
+        name: 'variant',
+        message: reset('Select a variant:'),
+        choices: (framework: Framework) =>
+          framework.variants.map(variant => {
+            const variantColor = variant.color;
+            return {
+              title: variantColor(variant.display || variant.name),
+              value: variant.name,
+            };
+          }),
+      },
+      {
         type: () => (argv.module !== undefined ? null : 'toggle'),
         name: 'isModuleType',
         message: reset('Is it set to module type?'),
@@ -129,7 +176,7 @@ async function run() {
   );
 
   // user choice associated with prompts
-  const { framework, overwrite, packageName } = result;
+  const { framework, overwrite, packageName, variant } = result;
 
   const root = path.join(cwd, targetDir);
 
@@ -141,7 +188,7 @@ async function run() {
 
   console.log(`\nScaffolding project in ${root}...`);
 
-  const template: string = framework?.name || argTemplate;
+  const template: string = variant || framework?.name || argTemplate;
   const isModule = result.isModuleType ?? argv.module;
 
   const getTemplateDir = (template: string) =>

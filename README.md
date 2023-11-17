@@ -56,7 +56,9 @@ Parameters:
 Support templates:
 
 - vue
+- vue + electron
 - react
+- react + electron
 
 ## Reference project
 

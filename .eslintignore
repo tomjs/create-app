@@ -12,3 +12,4 @@
 # project
 node_modules
 dist
+template-*
