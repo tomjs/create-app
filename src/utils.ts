@@ -5,15 +5,10 @@ export interface Args {
   _: string[];
   t?: string;
   template?: string;
-  m?: boolean;
-  module?: boolean;
 }
 
 export function formatArgs(args: Args) {
-  [
-    ['t', 'template'],
-    ['m', 'module'],
-  ].forEach(([short, long]) => {
+  [['t', 'template']].forEach(([short, long]) => {
     args[long] = args[long] ?? args[short];
   });
 

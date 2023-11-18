@@ -2,7 +2,7 @@
 
 ![npm](https://img.shields.io/npm/v/%40tomjs/create-app) ![NPM](https://img.shields.io/npm/l/%40tomjs%2Fcreate-app) ![npm package minimized gzipped size (scoped version select exports)](https://img.shields.io/bundlejs/size/%40tomjs/create-app)
 
-创建基于 tomjs 配置的 web 应用，推荐 `node>=18`
+创建基于 [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomgao365/tomjs) 的 web 应用，推荐 `node>=18`
 
 [English](./README.md) | **中文**
 
@@ -34,56 +34,33 @@ pnpm create @tomjs/app
 
 ```bash
 npm create @tomjs/app@latest
-npm create @tomjs/app@latest my-app -- --template vue --module
+npm create @tomjs/app@latest my-app -- --template vue
 ```
 
 - 使用 `yarn`
 
 ```bash
-yarn create @tomjs/app my-app --template vue --module
+yarn create @tomjs/app my-app --template vue
 ```
 
 - 使用 `pnpm`
 
 ```bash
-pnpm create @tomjs/app my-app --template vue --module
+pnpm create @tomjs/app my-app --template vue
 ```
 
 参数说明:
 
 - `-t --template`：指定模板，可选值：`vue`、`react`
-- `-m --module`：`package.json` 使用 `type:"module"`，否则使用 `commonjs`
 
 支持模板:
 
 - vue
+- electron-vue
 - react
-
-## 项目配置
-
-项目配置在 `package.json` 中，可配置项如下：
-
-````json
-{
-  "name": "my-app",
-  "version": "0.0.1",
-  "description": "",
-  "main": "src/main.ts",
-}
-
-## 项目结构
-
-```bash
-.
-├── README.md
-├── package.json
-├── src
-│   ├── App.vue
-│   ├── main.ts
-│   └── shims-vue.d.ts
-├── tsconfig.json
+- electron-react
 
 ## 参考项目
 
 - [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)
-````
+- [electron-vite-vue](https://github.com/electron-vite/electron-vite-vue)

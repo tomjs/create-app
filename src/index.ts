@@ -37,6 +37,15 @@ type FrameworkVariant = {
   customCommand?: string;
 };
 
+interface PromptResult {
+  projectName?: string;
+  overwrite?: boolean;
+  overwriteChecker?: any;
+  packageName?: string;
+  framework?: Framework;
+  variant?: string;
+}
+
 const FRAMEWORKS: Framework[] = [
   {
     name: 'vue',
@@ -80,7 +89,7 @@ const TEMPLATES = FRAMEWORKS.map(
 
 const renameFiles: Record<string, string> = {
   _gitignore: '.gitignore',
-  '_lintstagedrc.js': '.lintstagedrc.js',
+  '_lintstagedrc.cjs': '.lintstagedrc.cjs',
 };
 
 const defaultTargetDir = 'my-app';
@@ -92,7 +101,9 @@ async function run() {
   let targetDir = argTargetDir || defaultTargetDir;
   const getProjectName = () => (targetDir === '.' ? path.basename(path.resolve()) : targetDir);
 
-  const result = await prompts(
+  let result: PromptResult = {};
+
+  result = await prompts(
     [
       {
         type: argTargetDir ? null : 'text',
@@ -116,7 +127,8 @@ async function run() {
       {
         type: (_, { overwrite }: { overwrite?: boolean }) => {
           if (overwrite === false) {
-            throw new Error(red('✖') + ' Operation cancelled');
+            console.log(red('✖') + ' Operation cancelled');
+            throw new Error();
           }
           return null;
         },
@@ -158,14 +170,6 @@ async function run() {
             };
           }),
       },
-      {
-        type: () => (argv.module !== undefined ? null : 'toggle'),
-        name: 'isModuleType',
-        message: reset('Is it set to module type?'),
-        initial: false,
-        active: 'yes',
-        inactive: 'no',
-      },
     ],
     {
       onCancel: () => {
@@ -188,8 +192,7 @@ async function run() {
 
   console.log(`\nScaffolding project in ${root}...`);
 
-  const template: string = variant || framework?.name || argTemplate;
-  const isModule = result.isModuleType ?? argv.module;
+  const template: string = variant || framework?.name || argTemplate || '';
 
   const getTemplateDir = (template: string) =>
     path.join(fileURLToPath(import.meta.url), '../..', `template-${template}`);
@@ -200,10 +203,7 @@ async function run() {
   [templateDir, getTemplateDir('config')].forEach(dir => {
     const files = fs.readdirSync(dir);
     for (const file of files) {
-      let destFile = renameFiles[file] ?? file;
-      if (isModule && destFile.endsWith('rc.js')) {
-        destFile = destFile.replace('.js', '.cjs');
-      }
+      const destFile = renameFiles[file] ?? file;
 
       const targetPath = path.join(root, destFile);
       copy(path.join(dir, file), targetPath);
@@ -212,11 +212,6 @@ async function run() {
 
   const pkg = JSON.parse(fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'));
   pkg.name = packageName || getProjectName();
-  if (isModule) {
-    pkg.type = 'module';
-  } else {
-    delete pkg.type;
-  }
 
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
 
@@ -240,4 +235,8 @@ async function run() {
   }
 }
 
-run().catch(() => {});
+run().catch((e: any) => {
+  if (e.message) {
+    console.error(e);
+  }
+});
