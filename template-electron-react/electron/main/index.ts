@@ -1,5 +1,6 @@
 import { release } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 
 // The built directory structure
@@ -10,6 +11,7 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 // │ ├─┬ render         > Electron-Renderer
 // │ │ └── index.html
 //
+const __dirname = dirname(fileURLToPath(import.meta.url));
 process.env.DIST_ELECTRON = __dirname;
 process.env.DIST = join(process.env.DIST_ELECTRON, 'render');
 process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL

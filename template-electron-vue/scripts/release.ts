@@ -14,6 +14,7 @@ function genPkgJson() {
     author: os.userInfo().username,
     description: pkg.description,
     main: './main.js',
+    type: 'module',
     dependencies: Object.entries(Object.assign({}, pkg.dependencies, pkg.devDependencies))
       .filter(([name]) => ELECTRON_DEPENDENCIES.includes(name))
       .reduce((object, entry) => ({ ...object, [entry[0]]: entry[1] }), {}),
@@ -36,6 +37,5 @@ async function run() {
 }
 
 run().then(() => {
-  console.log('Done!');
   process.exit(0);
 });

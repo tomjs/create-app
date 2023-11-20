@@ -51,7 +51,7 @@ export default defineConfig(({ command }) => {
               emptyOutDir: false,
               lib: {
                 entry: 'electron/main/index.ts',
-                formats: ['cjs'],
+                formats: ['es'],
                 fileName: () => 'main.js',
               },
               rollupOptions: {
@@ -83,7 +83,7 @@ export default defineConfig(({ command }) => {
               emptyOutDir: false,
               lib: {
                 entry: 'electron/preload/index.ts',
-                formats: ['cjs'],
+                formats: ['es'],
                 fileName: () => 'preload.js',
               },
               rollupOptions: {
