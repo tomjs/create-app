@@ -8,18 +8,18 @@ vite + electron + react
 
 ```
 ├── electron
-│   ├── main        > Electron-Main
-│   ├── payload     > Electron-payload
-├── src             > Electron-Renderer
+│   ├── main          > Electron-Main
+│   ├── payload       > Preload-Scripts
+├── src               > Electron-Renderer
 ```
 
 - output
 
 ```
 ├─┬ dist
-│ ├── main.js        > Electron-Main
-│ ├── preload.js     > Preload-Scripts
-│ ├─┬ render         > Electron-Renderer
+│ ├── main.mjs        > Electron-Main
+│ ├── preload.mjs     > Preload-Scripts
+│ ├─┬ render          > Electron-Renderer
 │ │ └── index.html
 ```
 

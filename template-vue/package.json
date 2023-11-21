@@ -26,6 +26,7 @@
     "@tomjs/prettier": "^1.0.5",
     "@tomjs/stylelint": "^1.0.5",
     "@tomjs/tsconfig": "^1.0.7",
+    "@types/node": "^18.18.11",
     "@vitejs/plugin-vue": "^4.5.0",
     "eslint": "^8.53.0",
     "husky": "^8.0.3",

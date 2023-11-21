@@ -11,17 +11,13 @@
       "VITE_DEV_SERVER_URL": "http://127.0.0.1:6888/"
     }
   },
-  "main": "dist/main.js",
+  "main": "dist/main.mjs",
   "scripts": {
-    "dev": "vite",
-    "build": "npm run clean && vue-tsc --noEmit && vite build && npm run release",
-    "release": "tsx ./scripts/release.ts",
-    "clean": "rimraf ./dist",
-    "preview": "vite preview",
-    "lint": "run-s lint:eslint lint:stylelint lint:prettier",
-    "lint:eslint": "eslint \"src/**/*.{ts,tsx,vue}\" *.{js,cjs,ts} --fix --cache",
-    "lint:stylelint": "stylelint \"src/**/*.{css,scss,less,vue,html}\" --fix --cache",
-    "lint:prettier": "prettier --write .",
+    "dev": "tsup --watch",
+    "build": "tsup --minify",
+    "lint": "run-s lint:eslint lint:prettier",
+    "lint:eslint": "eslint \"src/**/*.{js,cjs,ts}\" *.{js,cjs,ts} --fix --cache",
+    "lint:prettier": "prettier --write \"src/**/*.{js,cjs,ts,json,md}\" *.{js,cjs,ts,json,md}",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -34,10 +30,10 @@
     "@tomjs/prettier": "^1.0.5",
     "@tomjs/stylelint": "^1.0.5",
     "@tomjs/tsconfig": "^1.0.7",
-    "@types/node": "^18.18.10",
+    "@types/node": "^18.18.11",
     "@types/shelljs": "^0.8.15",
     "@vitejs/plugin-vue": "^4.5.0",
-    "electron": "^28.0.0-beta.7",
+    "electron": "^28.0.0-beta.8",
     "electron-builder": "^24.6.4",
     "eslint": "^8.53.0",
     "husky": "^8.0.3",
