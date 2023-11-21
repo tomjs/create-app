@@ -27,7 +27,7 @@ type Framework = {
   name: string;
   display: string;
   color: ColorFunc;
-  variants: FrameworkVariant[];
+  variants?: FrameworkVariant[];
 };
 
 type FrameworkVariant = {
@@ -80,6 +80,11 @@ const FRAMEWORKS: Framework[] = [
         color: yellow,
       },
     ],
+  },
+  {
+    name: 'node',
+    display: 'Node',
+    color: blue,
   },
 ];
 
@@ -162,7 +167,7 @@ async function run() {
         name: 'variant',
         message: reset('Select a variant:'),
         choices: (framework: Framework) =>
-          framework.variants.map(variant => {
+          framework?.variants?.map(variant => {
             const variantColor = variant.color;
             return {
               title: variantColor(variant.display || variant.name),
@@ -199,11 +204,16 @@ async function run() {
 
   const templateDir = getTemplateDir(template);
 
+  const isNode = template.includes('node');
   // copy template files
   [templateDir, getTemplateDir('config')].forEach(dir => {
     const files = fs.readdirSync(dir);
+
     for (const file of files) {
       const destFile = renameFiles[file] ?? file;
+      if (isNode && file.includes('stylelint')) {
+        return;
+      }
 
       const targetPath = path.join(root, destFile);
       copy(path.join(dir, file), targetPath);

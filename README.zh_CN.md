@@ -51,14 +51,15 @@ pnpm create @tomjs/app my-app --template vue
 
 参数说明:
 
-- `-t --template`：指定模板，可选值：`vue`、`react`
+- `-t --template`：指定模板
 
 支持模板:
 
 - vue
-- electron-vue
 - react
+- electron-vue
 - electron-react
+- node
 
 ## 参考项目
 

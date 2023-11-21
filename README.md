@@ -50,14 +50,15 @@ pnpm create @tomjs/app --template vue
 
 Parameters:
 
-- `-t --template` : specify the template, optional values: `vue` , `react`
+- `-t --template` : specify the template
 
 Support templates:
 
 - vue
-- electron-vue
 - react
+- electron-vue
 - electron-react
+- node
 
 ## Reference project
 
