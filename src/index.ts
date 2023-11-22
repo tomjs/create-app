@@ -212,7 +212,7 @@ async function run() {
     for (const file of files) {
       const destFile = renameFiles[file] ?? file;
       if (isNode && file.includes('stylelint')) {
-        return;
+        continue;
       }
 
       const targetPath = path.join(root, destFile);
