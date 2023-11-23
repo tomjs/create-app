@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tomgao365/create-app.git"
+    "url": "git+https://github.com/tomgao365/create-app.git"
   },
   "publishConfig": {
     "access": "public",
@@ -22,12 +22,12 @@
   },
   "files": [
     "dist",
-    "template-*",
+    "template-",
     "*.md"
   ],
-  "main": "./dist/index.mjs",
+  "main": "dist/index.mjs",
   "bin": {
-    "create-app": "./dist/index.mjs"
+    "create-app": "dist/index.mjs"
   },
   "engines": {
     "node": ">=18"
