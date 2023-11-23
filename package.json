@@ -22,7 +22,7 @@
   },
   "files": [
     "dist",
-    "template-*"
+    "template-*/**"
   ],
   "main": "dist/index.mjs",
   "bin": {
