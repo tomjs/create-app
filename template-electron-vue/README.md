@@ -17,9 +17,9 @@ vite + electron + vue
 
 ```
 ├─┬ dist
-│ ├── main.mjs        > Electron-Main
-│ ├── preload.mjs     > Preload-Scripts
-│ ├─┬ render          > Electron-Renderer
+│ ├── main.js        > Electron-Main
+│ ├── preload.js     > Preload-Scripts
+│ ├─┬ render         > Electron-Renderer
 │ │ └── index.html
 ```
 

@@ -9,7 +9,7 @@ import pkg from './package.json';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
-  ['main.mjs', 'main.mjs.map', 'preload.mjs'].forEach(s => {
+  ['main.js', 'main.js.map', 'preload.js'].forEach(s => {
     rmSync(`dist/${s}`, { recursive: true, force: true });
   });
 
@@ -51,8 +51,8 @@ export default defineConfig(({ command }) => {
               emptyOutDir: false,
               lib: {
                 entry: 'electron/main/index.ts',
-                formats: ['es'],
-                fileName: () => 'main.mjs',
+                formats: ['cjs'],
+                fileName: () => 'main.js',
               },
               rollupOptions: {
                 // Some third-party Node.js libraries may not be built correctly by Vite, especially `C/C++` addons,
@@ -83,8 +83,8 @@ export default defineConfig(({ command }) => {
               emptyOutDir: false,
               lib: {
                 entry: 'electron/preload/index.ts',
-                formats: ['es'],
-                fileName: () => 'preload.mjs',
+                formats: ['cjs'],
+                fileName: () => 'preload.js',
               },
               rollupOptions: {
                 external: Object.keys('dependencies' in pkg ? pkg.dependencies : {}),

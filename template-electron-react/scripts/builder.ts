@@ -11,7 +11,7 @@ export default {
     output: `build/${pkg.version}`,
     app: 'dist',
   },
-  files: ['main.mjs', 'preload.mjs', 'render'],
+  files: ['main.js', 'preload.js', 'render'],
   icon: 'public/img/icon.png',
   artifactName: '${productName}-${version}-${os}-${arch}.${ext}',
   electronLanguages: ['zh-CN', 'en-US'],

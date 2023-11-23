@@ -2,7 +2,6 @@
   "name": "electron-app",
   "version": "0.0.0",
   "description": "vite + electron + vue",
-  "type": "module",
   "engines": {
     "node": ">=18"
   },
@@ -11,13 +10,15 @@
       "VITE_DEV_SERVER_URL": "http://127.0.0.1:6888/"
     }
   },
-  "main": "dist/main.mjs",
+  "main": "dist/main.js",
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup --minify",
+    "dev": "vite",
+    "build": "npm run clean && vue-tsc --noEmit && vite build && npm run release",
+    "release": "tsx ./scripts/release.ts",
+    "clean": "rimraf ./dist",
     "lint": "run-s lint:eslint lint:prettier",
-    "lint:eslint": "eslint \"src/**/*.{js,cjs,ts}\" *.{js,cjs,ts} --fix --cache",
-    "lint:prettier": "prettier --write \"src/**/*.{js,cjs,ts,json,md}\" *.{js,cjs,ts,json,md}",
+    "lint:eslint": "eslint \"{src,electron,scripts}/**/*.{js,cjs,ts,vue}\" *.{js,cjs,ts} --fix --cache",
+    "lint:prettier": "prettier --write \"{src,electron,scripts}/**/*.{js,cjs,ts,vue,json,md}\" *.{js,cjs,ts,json,md}",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -45,8 +46,8 @@
     "stylelint": "^15.11.0",
     "tree-kill": "^1.2.2",
     "tsx": "^4.1.3",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.0",
+    "typescript": "~5.2.2",
+    "vite": "^5.0.2",
     "vite-plugin-electron": "^0.15.4",
     "vite-plugin-electron-renderer": "^0.14.5",
     "vue-tsc": "^1.8.22"

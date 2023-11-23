@@ -6,9 +6,9 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 // The built directory structure
 //
 // ├─┬ dist
-// │ ├── main.mjs        > Electron-Main
-// │ ├── preload.mjs     > Preload-Scripts
-// │ ├─┬ render          > Electron-Renderer
+// │ ├── main.js        > Electron-Main
+// │ ├── preload.js     > Preload-Scripts
+// │ ├─┬ render         > Electron-Renderer
 // │ │ └── index.html
 //
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -36,7 +36,7 @@ if (!app.requestSingleInstanceLock()) {
 
 let win: BrowserWindow | null = null;
 // Here, you can also use other preload
-const preload = join(__dirname, './preload.mjs');
+const preload = join(__dirname, './preload.js');
 const url = process.env.VITE_DEV_SERVER_URL as string;
 const indexHtml = join(process.env.DIST, 'index.html');
 

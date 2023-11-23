@@ -13,8 +13,7 @@ function genPkgJson() {
     version: pkg.version,
     author: os.userInfo().username,
     description: pkg.description,
-    type: 'module',
-    main: './main.mjs',
+    main: './main.js',
     dependencies: Object.entries(Object.assign({}, pkg.dependencies, pkg.devDependencies))
       .filter(([name]) => ELECTRON_DEPENDENCIES.includes(name))
       .reduce((object, entry) => ({ ...object, [entry[0]]: entry[1] }), {}),
