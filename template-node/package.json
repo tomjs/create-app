@@ -1,7 +1,7 @@
 {
   "name": "template-node",
   "version": "0.0.0",
-  "description": "basic node template",
+  "description": "basic node.js template",
   "keywords": [
     "tomjs"
   ],
@@ -37,7 +37,7 @@
   "scripts": {
     "dev": "tsup --watch",
     "start": "tsx ./src/index.ts",
-    "build": "rimraf ./dist && tsup",
+    "build": "tsup",
     "lint": "run-s lint:eslint lint:prettier",
     "lint:eslint": "eslint \"src/**/*.ts\" *.{js,cjs,ts} --fix --cache",
     "lint:prettier": "prettier --write .",
