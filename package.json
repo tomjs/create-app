@@ -11,6 +11,10 @@
     "vue",
     "react"
   ],
+  "author": {
+    "name": "Tom Gao",
+    "email": "tom@tomgao.cc"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

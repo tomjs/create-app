@@ -5,8 +5,24 @@
   "keywords": [
     "tomjs"
   ],
+  "author": {
+    "name": "Tom Gao",
+    "email": "tom@tomgao.cc"
+  },
+  "license": "MIT",
   "engines": {
     "node": ">=16"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomgao365/template-node.git"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -21,7 +37,7 @@
   "scripts": {
     "dev": "tsup --watch",
     "start": "tsx ./src/index.ts",
-    "build": "tsup --minify",
+    "build": "rimraf ./dist && tsup",
     "lint": "run-s lint:eslint lint:prettier",
     "lint:eslint": "eslint \"src/**/*.ts\" *.{js,cjs,ts} --fix --cache",
     "lint:prettier": "prettier --write .",
