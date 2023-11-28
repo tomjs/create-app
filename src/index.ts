@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { blue, cyan, green, red, reset, yellow } from 'kolorist';
 import minimist from 'minimist';
 import prompts from 'prompts';
+import shell from 'shelljs';
 import {
   Args,
   copy,
@@ -85,6 +86,18 @@ const FRAMEWORKS: Framework[] = [
     name: 'node',
     display: 'Node',
     color: blue,
+    variants: [
+      {
+        name: 'node',
+        display: 'base',
+        color: blue,
+      },
+      {
+        name: 'node-github',
+        display: 'Github + NPM',
+        color: yellow,
+      },
+    ],
   },
 ];
 
@@ -105,6 +118,12 @@ async function run() {
 
   let targetDir = argTargetDir || defaultTargetDir;
   const getProjectName = () => (targetDir === '.' ? path.basename(path.resolve()) : targetDir);
+
+  // get git user info
+  const user = {
+    name: '',
+    email: '',
+  };
 
   let result: PromptResult = {};
 
@@ -220,13 +239,37 @@ async function run() {
     }
   });
 
+  const isGitHub = template.includes('github');
+  const templateName = `template-${template}`;
+
   const pkg = JSON.parse(fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'));
-  pkg.name = packageName || getProjectName();
+  const pkgName = packageName || getProjectName();
+  pkg.name = pkgName;
+  if (isGitHub) {
+    pkg.name = `@tomjs/${pkgName}`;
+    pkg.author = Object.assign(pkg.author, user);
+  }
 
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
 
+  // package name in README eg.
+  if (isGitHub) {
+    ['package.json', 'README.md', 'README.zh_CN.md'].forEach(name => {
+      const file = path.join(root, name);
+      if (fs.existsSync(file)) {
+        const content = fs.readFileSync(file, 'utf-8');
+        fs.writeFileSync(file, content.replace(new RegExp(templateName, 'g'), pkgName));
+      }
+    });
+  }
+
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
   const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
+
+  // git init
+  if (shell.which('git')) {
+    shell.exec(`cd ${root} && git init`);
+  }
 
   const cdProjectName = path.relative(cwd, root);
   console.log(`\nDone. Now run:\n`);
