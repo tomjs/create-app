@@ -5,11 +5,18 @@
   "keywords": [
     "tomjs",
     "front-end",
+    "frontend",
+    "back-end",
+    "backend",
     "create",
+    "create-app",
     "app",
+    "template",
     "vite",
     "vue",
-    "react"
+    "react",
+    "electron",
+    "node"
   ],
   "author": {
     "name": "Tom Gao",

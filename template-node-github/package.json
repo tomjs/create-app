@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "basic node.js template",
   "keywords": [
-    "tomjs"
+    "tomjs",
+    "node",
+    "back-end",
+    "backend"
   ],
   "author": {
     "name": "name",
