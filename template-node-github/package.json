@@ -1,13 +1,13 @@
 {
-  "name": "@tomjs/template-node-github",
+  "name": "template-node-github",
   "version": "0.0.0",
   "description": "basic node.js template",
   "keywords": [
     "tomjs"
   ],
   "author": {
-    "name": "Tom Gao",
-    "email": "tom@tomgao.cc"
+    "name": "name",
+    "email": "name@github.com"
   },
   "license": "MIT",
   "engines": {
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tomgao365/template-node-github.git"
+    "url": "git+https://github.com/xxx/template-node-github.git"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

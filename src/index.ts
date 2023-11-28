@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { blue, cyan, green, red, reset, yellow } from 'kolorist';
@@ -112,18 +113,19 @@ const renameFiles: Record<string, string> = {
 
 const defaultTargetDir = 'my-app';
 
+function getGitInfo(name: string) {
+  const result = shell.exec(`git config --get ${name}`, { silent: true });
+  if (result.code === 0) {
+    return result.stdout.trim();
+  }
+}
+
 async function run() {
   const argTargetDir = formatTargetDir(argv._[0]);
   const argTemplate = argv.template || argv.t;
 
   let targetDir = argTargetDir || defaultTargetDir;
   const getProjectName = () => (targetDir === '.' ? path.basename(path.resolve()) : targetDir);
-
-  // get git user info
-  const user = {
-    name: '',
-    email: '',
-  };
 
   let result: PromptResult = {};
 
@@ -206,7 +208,7 @@ async function run() {
   // user choice associated with prompts
   const { framework, overwrite, packageName, variant } = result;
 
-  const root = path.join(cwd, targetDir);
+  const root = path.join(cwd, targetDir.substring(targetDir.indexOf('/') + 1));
 
   if (overwrite) {
     emptyDir(root);
@@ -245,20 +247,39 @@ async function run() {
   const pkg = JSON.parse(fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'));
   const pkgName = packageName || getProjectName();
   pkg.name = pkgName;
+
+  // get git user info
+  const gitUser = {
+    name: 'Tom Gao',
+    email: 'tom@tomgao.cc',
+  };
   if (isGitHub) {
-    pkg.name = `@tomjs/${pkgName}`;
-    pkg.author = Object.assign(pkg.author, user);
+    if (shell.which('git')) {
+      gitUser.name = getGitInfo('user.name') || os.userInfo().username;
+      gitUser.email = getGitInfo('user.email') || '';
+      pkg.author = Object.assign(pkg.author, gitUser);
+    }
+    const regName = pkgName.startsWith('@') ? pkgName.split('/')[0].substring(1) : gitUser.name;
+    pkg.repository.url = `https://github.com/${regName}/${pkgName.substring(
+      pkgName.indexOf('/') + 1,
+    )}.git`;
   }
 
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
 
   // package name in README eg.
   if (isGitHub) {
-    ['package.json', 'README.md', 'README.zh_CN.md'].forEach(name => {
+    ['LICENSE', 'README.md', 'README.zh_CN.md'].forEach(name => {
       const file = path.join(root, name);
       if (fs.existsSync(file)) {
         const content = fs.readFileSync(file, 'utf-8');
-        fs.writeFileSync(file, content.replace(new RegExp(templateName, 'g'), pkgName));
+        fs.writeFileSync(
+          file,
+          content
+            .replace(new RegExp(templateName, 'g'), pkgName)
+            .replace(new RegExp('{{user.name}}', 'g'), gitUser.name)
+            .replace(new RegExp('{{user.email}}', 'g'), gitUser.email),
+        );
       }
     });
   }

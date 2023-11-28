@@ -1,6 +1,6 @@
-# @tomjs/template-node-github
+# template-node-github
 
-![npm](https://img.shields.io/npm/v/%40tomjs/template-node-github) ![NPM](https://img.shields.io/npm/l/%40tomjs%2Ftemplate-node-github) ![npm package minimized gzipped size (scoped version select exports)](https://img.shields.io/bundlejs/size/%40tomjs/template-node-github)
+![npm](https://img.shields.io/npm/v/template-node-github) ![NPM](https://img.shields.io/npm/l/template-node-github) ![npm package minimized gzipped size (scoped version select exports)](https://img.shields.io/bundlejs/size/template-node-github)
 
 Basic node template
 
@@ -11,17 +11,17 @@ Basic node template
 With `pnpm`
 
 ```bash
-pnpm add @tomjs/template-node-github
+pnpm add template-node-github
 ```
 
 With `yarn`
 
 ```bash
-yarn add @tomjs/template-node-github
+yarn add template-node-github
 ```
 
 With `npm`
 
 ```bash
-npm i @tomjs/template-node-github
+npm i template-node-github
 ```
