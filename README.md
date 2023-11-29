@@ -1,6 +1,6 @@
 # @tomjs/create-app
 
-![npm](https://img.shields.io/npm/v/%40tomjs/create-app) ![NPM](https://img.shields.io/npm/l/%40tomjs%2Fcreate-app) ![npm package minimized gzipped size (scoped version select exports)](https://img.shields.io/bundlejs/size/%40tomjs/create-app)
+![npm](https://img.shields.io/npm/v/%40tomjs/create-app) ![node-current (scoped)](https://img.shields.io/node/v/%40tomjs/create-app) ![NPM](https://img.shields.io/npm/l/%40tomjs%2Fcreate-app) ![npm package minimized gzipped size (scoped version select exports)](https://img.shields.io/bundlejs/size/%40tomjs/create-app)
 
 Create a web application based on [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomgao365/tomjs), recommended `node>=18`
 
