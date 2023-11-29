@@ -271,16 +271,29 @@ async function run() {
   if (isGitHub) {
     ['LICENSE', 'README.md', 'README.zh_CN.md'].forEach(name => {
       const file = path.join(root, name);
-      if (fs.existsSync(file)) {
-        const content = fs.readFileSync(file, 'utf-8');
-        fs.writeFileSync(
-          file,
-          content
-            .replace(new RegExp(templateName, 'g'), pkgName)
-            .replace(new RegExp('{{user.name}}', 'g'), gitUser.name)
-            .replace(new RegExp('{{user.email}}', 'g'), gitUser.email),
+      if (!fs.existsSync(file)) {
+        return;
+      }
+      let content = fs
+        .readFileSync(file, 'utf-8')
+        .replace(new RegExp(templateName, 'g'), pkgName)
+        .replace(new RegExp('{{user.name}}', 'g'), gitUser.name)
+        .replace(new RegExp('{{user.email}}', 'g'), gitUser.email);
+
+      if (name.startsWith('README')) {
+        const pathName = pkgName.replace('@', '%40');
+        const name = pkgName.replace('@', '%40').replace(new RegExp('/', 'g'), '%2F');
+        content = content.replace(
+          '{{badges}}',
+          [
+            `![npm](https://img.shields.io/npm/v/${pathName})`,
+            `![node-current (scoped)](https://img.shields.io/node/v/${pathName})`,
+            `![NPM](https://img.shields.io/npm/l/${name})`,
+          ].join(' '),
         );
       }
+
+      fs.writeFileSync(file, content);
     });
   }
 

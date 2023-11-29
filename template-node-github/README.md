@@ -1,6 +1,6 @@
 # template-node-github
 
-![npm](https://img.shields.io/npm/v/template-node-github) ![NPM](https://img.shields.io/npm/l/template-node-github) ![npm package minimized gzipped size (scoped version select exports)](https://img.shields.io/bundlejs/size/template-node-github)
+{{badges}}
 
 > Basic node template
 
