@@ -2,7 +2,7 @@
 
 ![npm](https://img.shields.io/npm/v/%40tomjs/create-app) ![node-current (scoped)](https://img.shields.io/node/v/%40tomjs/create-app) ![NPM](https://img.shields.io/npm/l/%40tomjs%2Fcreate-app)
 
-创建基于 [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomgao365/tomjs) 的 web 应用，推荐 `node>=18`
+创建基于 [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomgao365/tomjs) 的 web 应用。
 
 [English](./README.md) | **中文**
 
