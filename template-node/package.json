@@ -37,11 +37,11 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
-    "@tomjs/commitlint": "^2.0.3",
-    "@tomjs/eslint": "^1.0.8",
-    "@tomjs/prettier": "^1.0.5",
-    "@tomjs/tsconfig": "^1.0.7",
-    "@types/node": "^18.18.13",
+    "@tomjs/commitlint": "^2.0.5",
+    "@tomjs/eslint": "^1.1.0",
+    "@tomjs/prettier": "^1.0.6",
+    "@tomjs/tsconfig": "^1.0.8",
+    "@types/node": "^18.19.0",
     "eslint": "^8.54.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
@@ -49,7 +49,7 @@
     "prettier": "^3.1.0",
     "rimraf": "^5.0.5",
     "tsup": "^8.0.1",
-    "tsx": "^4.6.0",
+    "tsx": "^4.6.1",
     "typescript": "~5.2.2"
   }
 }
