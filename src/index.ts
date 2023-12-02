@@ -282,7 +282,7 @@ async function run() {
     const regName = pkgName.startsWith('@')
       ? pkgName.split('/')[0].substring(1)
       : camelCase(gitUser.name);
-    pkg.repository.url = `https://github.com/${regName}/${pkgName.substring(
+    pkg.repository.url = `git+https://github.com/${regName}/${pkgName.substring(
       pkgName.indexOf('/') + 1,
     )}.git`;
   } else {
