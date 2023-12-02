@@ -95,7 +95,7 @@ const FRAMEWORKS: Framework[] = [
     variants: [
       {
         name: 'node',
-        display: 'base',
+        display: 'Base',
         color: blue,
       },
       {
