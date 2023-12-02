@@ -1,8 +1,8 @@
-# template-node-github
+# template-node-electron
 
 {{badges}}
 
-> 基础 node 模板
+> 基础 Electron 模板
 
 [English](./README.md) | **中文**
 
@@ -11,17 +11,17 @@
 使用 `pnpm`
 
 ```bash
-pnpm add template-node-github
+pnpm add template-node-electron
 ```
 
 使用 `yarn`
 
 ```bash
-yarn add template-node-github
+yarn add template-node-electron
 ```
 
 使用 `npm`
 
 ```bash
-npm i template-node-github
+npm i template-node-electron
 ```

@@ -60,6 +60,7 @@ pnpm create @tomjs/app my-app --template vue
 - electron-vue
 - electron-react
 - node
+- node-electron
 
 ## 参考项目
 

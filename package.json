@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "kolorist": "^1.8.0",
+    "lodash-es": "^4.17.21",
     "minimist": "^1.2.8",
     "prompts": "^2.4.2",
     "shelljs": "^0.8.5"
@@ -63,6 +64,7 @@
     "@tomjs/eslint": "^1.1.0",
     "@tomjs/prettier": "^1.0.6",
     "@tomjs/tsconfig": "^1.0.8",
+    "@types/lodash-es": "^4.17.12",
     "@types/minimist": "^1.2.5",
     "@types/node": "^18.19.0",
     "@types/prompts": "^2.4.9",

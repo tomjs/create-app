@@ -5,6 +5,5 @@ export default defineConfig({
   format: ['esm'],
   target: ['es2022', 'node18'],
   clean: true,
-  sourcemap: false,
   splitting: true,
 });

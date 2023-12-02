@@ -1,8 +1,8 @@
-# template-node-github
+# template-node-electron
 
 {{badges}}
 
-> Basic node template
+> Basic Electron template
 
 **English** | [中文](./README.zh_CN.md)
 
@@ -11,17 +11,17 @@
 With `pnpm`
 
 ```bash
-pnpm add template-node-github
+pnpm add template-node-electron
 ```
 
 With `yarn`
 
 ```bash
-yarn add template-node-github
+yarn add template-node-electron
 ```
 
 With `npm`
 
 ```bash
-npm i template-node-github
+npm i template-node-electron
 ```

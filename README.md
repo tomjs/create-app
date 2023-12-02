@@ -59,6 +59,7 @@ Support templates:
 - electron-vue
 - electron-react
 - node
+- node-electron
 
 ## Reference project
 

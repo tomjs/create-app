@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { blue, cyan, green, red, reset, yellow } from 'kolorist';
+import { camelCase } from 'lodash-es';
 import minimist from 'minimist';
 import prompts from 'prompts';
 import shell from 'shelljs';
@@ -29,6 +30,7 @@ type Framework = {
   name: string;
   display: string;
   color: ColorFunc;
+  publish?: boolean;
   variants?: FrameworkVariant[];
 };
 
@@ -36,6 +38,7 @@ type FrameworkVariant = {
   name: string;
   display: string;
   color: ColorFunc;
+  publish?: boolean;
   customCommand?: string;
 };
 
@@ -46,6 +49,7 @@ interface PromptResult {
   packageName?: string;
   framework?: Framework;
   variant?: string;
+  publish?: boolean;
 }
 
 const FRAMEWORKS: Framework[] = [
@@ -87,6 +91,7 @@ const FRAMEWORKS: Framework[] = [
     name: 'node',
     display: 'Node',
     color: blue,
+    publish: true,
     variants: [
       {
         name: 'node',
@@ -94,8 +99,8 @@ const FRAMEWORKS: Framework[] = [
         color: blue,
       },
       {
-        name: 'node-github',
-        display: 'Github + NPM',
+        name: 'node-electron',
+        display: 'Electron',
         color: yellow,
       },
     ],
@@ -196,6 +201,22 @@ async function run() {
             };
           }),
       },
+      {
+        type: (pre, values: PromptResult) => {
+          const { variant, framework } = values;
+          const { publish, variants } = framework || {};
+          if (!publish && !variants?.find(s => s.name === variant && s.publish)) {
+            return;
+          }
+
+          return 'toggle';
+        },
+        name: 'publish',
+        message: reset('Whether to publish to the npm repository?'),
+        initial: true,
+        active: 'yes',
+        inactive: 'no',
+      },
     ],
     {
       onCancel: () => {
@@ -206,7 +227,7 @@ async function run() {
   );
 
   // user choice associated with prompts
-  const { framework, overwrite, packageName, variant } = result;
+  const { framework, overwrite, packageName, variant, publish } = result;
 
   const root = path.join(cwd, targetDir.substring(targetDir.indexOf('/') + 1));
 
@@ -241,7 +262,6 @@ async function run() {
     }
   });
 
-  const isGitHub = template.includes('github');
   const templateName = `template-${template}`;
 
   const pkg = JSON.parse(fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'));
@@ -250,27 +270,46 @@ async function run() {
 
   // get git user info
   const gitUser = {
-    name: 'Tom Gao',
-    email: 'tom@tomgao.cc',
+    name: 'UserName',
+    email: 'name@github.com',
   };
-  if (isGitHub) {
+  if (publish) {
     if (shell.which('git')) {
       gitUser.name = getGitInfo('user.name') || os.userInfo().username;
       gitUser.email = getGitInfo('user.email') || '';
       pkg.author = Object.assign(pkg.author, gitUser);
     }
-    const regName = pkgName.startsWith('@') ? pkgName.split('/')[0].substring(1) : gitUser.name;
+    const regName = pkgName.startsWith('@')
+      ? pkgName.split('/')[0].substring(1)
+      : camelCase(gitUser.name);
     pkg.repository.url = `https://github.com/${regName}/${pkgName.substring(
       pkgName.indexOf('/') + 1,
     )}.git`;
+  } else {
+    delete pkg.author;
+    delete pkg.publishConfig;
+    delete pkg.repository;
+    delete pkg.scripts.prepublishOnly;
+    delete pkg.devDependencies.np;
   }
 
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
 
   // package name in README eg.
-  if (isGitHub) {
+  if (isNode) {
     ['LICENSE', 'README.md', 'README.zh_CN.md'].forEach(name => {
       const file = path.join(root, name);
+      if (!publish) {
+        if (fs.existsSync(file)) {
+          fs.rmSync(file);
+
+          if (name === 'README.md') {
+            fs.writeFileSync(file, `# ${pkgName}\n`, { encoding: 'utf-8' });
+          }
+          return;
+        }
+      }
+
       if (!fs.existsSync(file)) {
         return;
       }
