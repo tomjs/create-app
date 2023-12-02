@@ -197,3 +197,7 @@ Procfile    text
 *.xlsx binary
 *.ppt  binary
 *.pptx binary
+
+## EXTENSIONS
+*.crx  binary
+*.xpi  binary
