@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import fs from 'node:fs';
+import fs, { rmSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,8 +8,10 @@ import { camelCase } from 'lodash-es';
 import minimist from 'minimist';
 import prompts from 'prompts';
 import shell from 'shelljs';
+import { Framework, PromptResult } from './types';
 import {
   Args,
+  checkPromptResultFlag,
   copy,
   emptyDir,
   formatArgs,
@@ -23,34 +25,6 @@ import {
 // cli args
 const argv = formatArgs(minimist<Args>(process.argv.slice(2), { string: ['_'] }));
 const cwd = process.cwd();
-
-type ColorFunc = (str: string | number) => string;
-
-type Framework = {
-  name: string;
-  display: string;
-  color: ColorFunc;
-  publish?: boolean;
-  variants?: FrameworkVariant[];
-};
-
-type FrameworkVariant = {
-  name: string;
-  display: string;
-  color: ColorFunc;
-  publish?: boolean;
-  customCommand?: string;
-};
-
-interface PromptResult {
-  projectName?: string;
-  overwrite?: boolean;
-  overwriteChecker?: any;
-  packageName?: string;
-  framework?: Framework;
-  variant?: string;
-  publish?: boolean;
-}
 
 const FRAMEWORKS: Framework[] = [
   {
@@ -92,6 +66,7 @@ const FRAMEWORKS: Framework[] = [
     display: 'Node',
     color: blue,
     publish: true,
+    test: true,
     variants: [
       {
         name: 'node',
@@ -203,16 +178,20 @@ async function run() {
       },
       {
         type: (pre, values: PromptResult) => {
-          const { variant, framework } = values;
-          const { publish, variants } = framework || {};
-          if (!publish && !variants?.find(s => s.name === variant && s.publish)) {
-            return;
-          }
-
-          return 'toggle';
+          return checkPromptResultFlag(values, 'publish') ? 'toggle' : null;
         },
-        name: 'publish',
+        name: 'needPublish',
         message: reset('Whether to publish to the npm repository?'),
+        initial: true,
+        active: 'yes',
+        inactive: 'no',
+      },
+      {
+        type: (pre, values: PromptResult) => {
+          return checkPromptResultFlag(values, 'test') ? 'toggle' : null;
+        },
+        name: 'needTest',
+        message: reset('Whether to add Test?'),
         initial: true,
         active: 'yes',
         inactive: 'no',
@@ -227,7 +206,7 @@ async function run() {
   );
 
   // user choice associated with prompts
-  const { framework, overwrite, packageName, variant, publish } = result;
+  const { framework, overwrite, packageName, variant, needPublish, needTest } = result;
 
   const root = path.join(cwd, targetDir.substring(targetDir.indexOf('/') + 1));
 
@@ -273,33 +252,44 @@ async function run() {
     name: 'UserName',
     email: 'name@github.com',
   };
-  if (publish) {
-    if (shell.which('git')) {
-      gitUser.name = getGitInfo('user.name') || os.userInfo().username;
-      gitUser.email = getGitInfo('user.email') || '';
-      pkg.author = Object.assign(pkg.author, gitUser);
-    }
-    const regName = pkgName.startsWith('@')
-      ? pkgName.split('/')[0].substring(1)
-      : camelCase(gitUser.name);
-    pkg.repository.url = `git+https://github.com/${regName}/${pkgName.substring(
-      pkgName.indexOf('/') + 1,
-    )}.git`;
-  } else {
-    delete pkg.author;
-    delete pkg.publishConfig;
-    delete pkg.repository;
-    delete pkg.scripts.prepublishOnly;
-    delete pkg.devDependencies.np;
+  handlePkgJson();
+
+  // conditionally change files
+  if (isNode) {
+    replaceFileContent();
   }
 
-  fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
+  const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
+  const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
 
-  // package name in README eg.
-  if (isNode) {
+  // git init
+  if (shell.which('git')) {
+    shell.exec(`cd ${root} && git init`);
+  }
+
+  const cdProjectName = path.relative(cwd, root);
+  console.log(`\nDone. Now run:\n`);
+  if (root !== cwd) {
+    console.log(`  cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`);
+  }
+  switch (pkgManager) {
+    case 'yarn':
+      console.log('  yarn');
+      console.log('  yarn dev');
+      break;
+    default:
+      console.log(`  ${pkgManager} install`);
+      console.log(`  ${pkgManager} run dev`);
+      break;
+  }
+
+  /**
+   * replace template name in files
+   */
+  function replaceFileContent() {
     ['LICENSE', 'README.md', 'README.zh_CN.md'].forEach(name => {
       const file = path.join(root, name);
-      if (!publish) {
+      if (!needPublish) {
         if (fs.existsSync(file)) {
           fs.rmSync(file);
 
@@ -336,28 +326,51 @@ async function run() {
     });
   }
 
-  const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
-  const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
+  /**
+   * handle package.json
+   */
+  function handlePkgJson() {
+    if (needPublish) {
+      if (shell.which('git')) {
+        gitUser.name = getGitInfo('user.name') || os.userInfo().username;
+        gitUser.email = getGitInfo('user.email') || '';
+        pkg.author = Object.assign(pkg.author, gitUser);
+      }
+      const regName = pkgName.startsWith('@')
+        ? pkgName.split('/')[0].substring(1)
+        : camelCase(gitUser.name);
+      pkg.repository.url = `git+https://github.com/${regName}/${pkgName.substring(
+        pkgName.indexOf('/') + 1,
+      )}.git`;
+    } else {
+      delete pkg.author;
+      delete pkg.publishConfig;
+      delete pkg.repository;
+      delete pkg.scripts.prepublishOnly;
+      delete pkg.devDependencies.np;
+    }
 
-  // git init
-  if (shell.which('git')) {
-    shell.exec(`cd ${root} && git init`);
-  }
+    if (!needTest) {
+      delete pkg.scripts.test;
+      ['jest.config.js', 'test'].forEach(name => {
+        const file = path.join(root, name);
+        if (fs.existsSync(file)) {
+          rmSync(file, { force: true, recursive: true });
+        }
+      });
 
-  const cdProjectName = path.relative(cwd, root);
-  console.log(`\nDone. Now run:\n`);
-  if (root !== cwd) {
-    console.log(`  cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`);
-  }
-  switch (pkgManager) {
-    case 'yarn':
-      console.log('  yarn');
-      console.log('  yarn dev');
-      break;
-    default:
-      console.log(`  ${pkgManager} install`);
-      console.log(`  ${pkgManager} run dev`);
-      break;
+      // remove jest deps
+      const deps = Object.keys(pkg.devDependencies || {});
+      if (Array.isArray(deps)) {
+        deps.forEach(dep => {
+          if (dep.includes('jest')) {
+            delete pkg.devDependencies[dep];
+          }
+        });
+      }
+    }
+
+    fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
   }
 }
 

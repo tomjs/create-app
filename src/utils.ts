@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { Framework, PromptResult } from './types';
 
 export interface Args {
   _: string[];
@@ -75,4 +76,10 @@ export function pkgFromUserAgent(userAgent: string | undefined) {
     name: pkgSpecArr[0],
     version: pkgSpecArr[1],
   };
+}
+
+export function checkPromptResultFlag(values: PromptResult, flagName: string) {
+  const { variant, framework } = values;
+  const fw = framework as Framework;
+  return fw[flagName] || !!fw?.variants?.find(s => s.name === variant && s[flagName]);
 }
