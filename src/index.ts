@@ -3,6 +3,7 @@ import fs, { rmSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import JSON5 from 'json5';
 import { blue, cyan, green, red, reset, yellow } from 'kolorist';
 import { camelCase } from 'lodash-es';
 import minimist from 'minimist';
@@ -324,6 +325,24 @@ async function run() {
 
       fs.writeFileSync(file, content);
     });
+
+    if (!needTest) {
+      const files = fs.readdirSync(root).filter(s => /tsconfig(\.\w+)?\.json/.test(s));
+      files.forEach(file => {
+        const cfgPath = path.join(root, file);
+        if (fs.existsSync(cfgPath)) {
+          const content = fs.readFileSync(cfgPath, 'utf-8');
+          const json = JSON5.parse(content);
+          ['include', 'exclude'].forEach(key => {
+            if (json[key]) {
+              json[key] = json[key].filter(s => !s.includes('test'));
+            }
+          });
+
+          fs.writeFileSync(cfgPath, JSON.stringify(json, null, 2));
+        }
+      });
+    }
   }
 
   /**
