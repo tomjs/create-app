@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { Framework, PromptResult } from './types';
 
 export interface Args {
   _: string[];
@@ -78,8 +77,13 @@ export function pkgFromUserAgent(userAgent: string | undefined) {
   };
 }
 
-export function checkPromptResultFlag(values: PromptResult, flagName: string) {
-  const { variant, framework } = values;
-  const fw = framework as Framework;
-  return fw[flagName] || !!fw?.variants?.find(s => s.name === variant && s[flagName]);
+export function readJson(path: string) {
+  if (!fs.existsSync(path)) {
+    return;
+  }
+  try {
+    return JSON.parse(fs.readFileSync(path, 'utf8'));
+  } catch (e) {
+    console.error(e);
+  }
 }

@@ -12,7 +12,6 @@ import shell from 'shelljs';
 import { Framework, PromptResult } from './types';
 import {
   Args,
-  checkPromptResultFlag,
   copy,
   emptyDir,
   formatArgs,
@@ -20,6 +19,7 @@ import {
   isEmpty,
   isValidPackageName,
   pkgFromUserAgent,
+  readJson,
   toValidPackageName,
 } from './utils';
 
@@ -68,17 +68,12 @@ const FRAMEWORKS: Framework[] = [
     color: blue,
     publish: true,
     test: true,
-    variants: [
-      {
-        name: 'node',
-        display: 'Base',
-        color: blue,
-      },
-      {
-        name: 'node-electron',
-        display: 'Electron',
-        color: yellow,
-      },
+    props: [
+      { id: 'test', name: 'Test' },
+      { id: 'publish', name: 'Github + NPM' },
+      { id: 'vite', name: 'Vite Plugin' },
+      { id: 'electron', name: 'Electron' },
+      { id: 'example', name: 'Examples' },
     ],
   },
 ];
@@ -178,24 +173,21 @@ async function run() {
           }),
       },
       {
-        type: (pre, values: PromptResult) => {
-          return checkPromptResultFlag(values, 'publish') ? 'toggle' : null;
+        type: (framework: Framework) => {
+          return framework && Array.isArray(framework.props) && framework.props.length
+            ? 'multiselect'
+            : null;
         },
-        name: 'needPublish',
-        message: reset('Whether to publish to the npm repository?'),
-        initial: true,
-        active: 'yes',
-        inactive: 'no',
-      },
-      {
-        type: (pre, values: PromptResult) => {
-          return checkPromptResultFlag(values, 'test') ? 'toggle' : null;
-        },
-        name: 'needTest',
-        message: reset('Whether to add Test?'),
-        initial: true,
-        active: 'yes',
-        inactive: 'no',
+        name: 'props',
+        message: reset('Select optional options:'),
+        instructions: false,
+        choices: (framework: Framework) =>
+          framework?.props?.map(prop => {
+            return {
+              title: prop.name,
+              value: prop.id,
+            };
+          }),
       },
     ],
     {
@@ -207,7 +199,11 @@ async function run() {
   );
 
   // user choice associated with prompts
-  const { framework, overwrite, packageName, variant, needPublish, needTest } = result;
+  const { framework, overwrite, packageName, variant } = result;
+
+  console.log(result);
+
+  const props = result.props || [];
 
   const root = path.join(cwd, targetDir.substring(targetDir.indexOf('/') + 1));
 
@@ -242,11 +238,8 @@ async function run() {
     }
   });
 
-  const templateName = `template-${template}`;
-
-  const pkg = JSON.parse(fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'));
   const pkgName = packageName || getProjectName();
-  pkg.name = pkgName;
+  const templateName = `template-${template}`;
 
   // get git user info
   const gitUser = {
@@ -257,7 +250,9 @@ async function run() {
 
   // conditionally change files
   if (isNode) {
-    replaceFileContent();
+    handleReplaceContent();
+    handleTest();
+    handleExample();
   }
 
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
@@ -285,12 +280,12 @@ async function run() {
   }
 
   /**
-   * replace template name in files
+   * replace template name and user info
    */
-  function replaceFileContent() {
+  function handleReplaceContent() {
     ['LICENSE', 'README.md', 'README.zh_CN.md'].forEach(name => {
       const file = path.join(root, name);
-      if (!needPublish) {
+      if (!props.includes('publish')) {
         if (fs.existsSync(file)) {
           fs.rmSync(file);
 
@@ -325,31 +320,22 @@ async function run() {
 
       fs.writeFileSync(file, content);
     });
-
-    if (!needTest) {
-      const files = fs.readdirSync(root).filter(s => /tsconfig(\.\w+)?\.json/.test(s));
-      files.forEach(file => {
-        const cfgPath = path.join(root, file);
-        if (fs.existsSync(cfgPath)) {
-          const content = fs.readFileSync(cfgPath, 'utf-8');
-          const json = JSON5.parse(content);
-          ['include', 'exclude'].forEach(key => {
-            if (json[key]) {
-              json[key] = json[key].filter(s => !s.includes('test'));
-            }
-          });
-
-          fs.writeFileSync(cfgPath, JSON.stringify(json, null, 2));
-        }
-      });
-    }
   }
 
-  /**
-   * handle package.json
-   */
+  function removeDeps(pkg, name) {
+    ['dependencies', 'devDependencies'].forEach(key => {
+      Object.keys(pkg[key] || {}).forEach(dep => {
+        if (dep.includes(name)) {
+          delete pkg[key][dep];
+        }
+      });
+    });
+  }
+
   function handlePkgJson() {
-    if (needPublish) {
+    const pkg = readJson(path.join(root, `package.json`));
+
+    if (props.includes('publish')) {
       if (shell.which('git')) {
         gitUser.name = getGitInfo('user.name') || os.userInfo().username;
         gitUser.email = getGitInfo('user.email') || '';
@@ -369,27 +355,80 @@ async function run() {
       delete pkg.devDependencies.np;
     }
 
-    if (!needTest) {
-      delete pkg.scripts.test;
-      ['jest.config.js', 'test'].forEach(name => {
-        const file = path.join(root, name);
-        if (fs.existsSync(file)) {
-          rmSync(file, { force: true, recursive: true });
-        }
-      });
+    if (!props.includes('electron')) {
+      removeDeps(pkg, 'electron');
+      pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',electron', '');
+    }
 
-      // remove jest deps
-      const deps = Object.keys(pkg.devDependencies || {});
-      if (Array.isArray(deps)) {
-        deps.forEach(dep => {
-          if (dep.includes('jest')) {
-            delete pkg.devDependencies[dep];
-          }
-        });
-      }
+    if (!props.includes('vite')) {
+      removeDeps(pkg, 'vite');
     }
 
     fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
+  }
+
+  /**
+   * handle test prop
+   */
+  function handleTest() {
+    if (props.includes('test')) {
+      if (!props.includes('electron')) {
+        // runner: '@kayahr/jest-electron-runner/main',
+        const filePath = path.join(root, 'jest.config.js');
+        if (fs.existsSync(filePath)) {
+          const content = fs.readFileSync(filePath, 'utf-8');
+          fs.writeFileSync(
+            filePath,
+            content.replace(/\n {2}runner: '@kayahr\/jest-electron-runner\/main',/g, ''),
+          );
+        }
+      }
+
+      return;
+    }
+
+    // tsconfig.json
+    const files = fs.readdirSync(root).filter(s => /tsconfig(\.\w+)?\.json/.test(s));
+    files.forEach(file => {
+      const cfgPath = path.join(root, file);
+      if (fs.existsSync(cfgPath)) {
+        const content = fs.readFileSync(cfgPath, 'utf-8');
+        const json = JSON5.parse(content);
+        ['include', 'exclude'].forEach(key => {
+          if (json[key]) {
+            json[key] = json[key].filter(s => !s.includes('test'));
+          }
+        });
+
+        fs.writeFileSync(cfgPath, JSON.stringify(json, null, 2));
+      }
+    });
+
+    ['jest.config.js', 'test'].forEach(name => {
+      const file = path.join(root, name);
+      if (fs.existsSync(file)) {
+        rmSync(file, { force: true, recursive: true });
+      }
+    });
+
+    // package.json
+    const pkgPath = path.join(root, `package.json`);
+    const pkg = readJson(pkgPath);
+    delete pkg.scripts.test;
+    pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',test', '');
+
+    // remove jest deps
+    removeDeps(pkg, 'jest');
+
+    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
+  }
+
+  function handleExample() {
+    if (props.includes('example')) {
+      return;
+    }
+    const examplePath = path.join(root, 'example');
+    fs.mkdirSync(examplePath);
   }
 }
 

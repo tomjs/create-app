@@ -7,6 +7,10 @@ export type Framework = {
   publish?: boolean;
   test?: boolean;
   variants?: FrameworkVariant[];
+  /**
+   * custom props for the framework
+   */
+  props?: { id: string; name: string }[];
 };
 
 export type FrameworkVariant = {
@@ -25,6 +29,5 @@ export interface PromptResult {
   packageName?: string;
   framework?: Framework;
   variant?: string;
-  needPublish?: boolean;
-  needTest?: boolean;
+  props?: ('test' | 'publish' | 'vite' | 'electron' | 'example')[];
 }
