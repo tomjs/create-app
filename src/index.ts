@@ -201,8 +201,6 @@ async function run() {
   // user choice associated with prompts
   const { framework, overwrite, packageName, variant } = result;
 
-  console.log(result);
-
   const props = result.props || [];
 
   const root = path.join(cwd, targetDir.substring(targetDir.indexOf('/') + 1));
