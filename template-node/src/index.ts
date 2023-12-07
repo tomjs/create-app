@@ -1,3 +1,3 @@
-export function fun(){}
+export function fun() {}
 
 export default fun();

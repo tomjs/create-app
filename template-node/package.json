@@ -36,7 +36,7 @@
   },
   "scripts": {
     "dev": "tsup --watch",
-    "start": "tsx ./scripts/index.ts",
+    "start": "tsx ./scripts/info.ts",
     "build": "tsup",
     "test": "jest",
     "lint": "run-s lint:eslint lint:prettier",
