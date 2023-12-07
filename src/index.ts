@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import fs, { rmSync } from 'node:fs';
+import fs, { copyFileSync, rmSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,6 +21,7 @@ import {
   pkgFromUserAgent,
   readJson,
   toValidPackageName,
+  writeJson,
 } from './utils';
 
 // cli args
@@ -362,7 +363,7 @@ async function run() {
       removeDeps(pkg, 'vite');
     }
 
-    fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
+    writeJson(path.join(root, 'package.json'), pkg);
   }
 
   /**
@@ -398,7 +399,7 @@ async function run() {
           }
         });
 
-        fs.writeFileSync(cfgPath, JSON.stringify(json, null, 2));
+        writeJson(cfgPath, json);
       }
     });
 
@@ -418,15 +419,59 @@ async function run() {
     // remove jest deps
     removeDeps(pkg, 'jest');
 
-    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
+    writeJson(pkgPath, pkg);
   }
 
   function handleExample() {
-    if (props.includes('example')) {
+    if (!props.includes('example')) {
       return;
     }
     const examplePath = path.join(root, 'example');
     fs.mkdirSync(examplePath);
+    const isElectron = props.includes('electron');
+    const configPath = getTemplateDir('config');
+    ['vue', 'react'].forEach(lang => {
+      const srcPath = getTemplateDir(isElectron ? `electron-${lang}` : lang);
+      const dstPath = path.join(examplePath, lang);
+      if (!fs.existsSync(srcPath)) {
+        console.log(`${yellow('srcPath')} is not exist`);
+        return;
+      }
+      fs.cpSync(srcPath, dstPath, { recursive: true });
+
+      // stylelint
+      fs.readdirSync(configPath)
+        .filter(s => s.includes('stylelint'))
+        .forEach(file => {
+          copyFileSync(path.join(configPath, file), path.join(dstPath, file));
+        });
+
+      // remove other lint deps
+      const pkg = readJson(path.join(dstPath, 'package.json'));
+      [
+        'eslint',
+        'prettier',
+        'stylelint',
+        'commitlint',
+        'husky',
+        'lint-staged',
+        'tsconfig',
+        'lint-staged',
+      ].forEach(key => {
+        if (pkg[key]) {
+          delete pkg[key];
+        }
+      });
+      writeJson(path.join(dstPath, 'package.json'), pkg);
+
+      // remove files
+      ['_lintstagedrc.cjs'].forEach(s => {
+        const file = path.join(dstPath, s);
+        if (fs.existsSync(file)) {
+          fs.rmSync(file, { recursive: true });
+        }
+      });
+    });
   }
 }
 

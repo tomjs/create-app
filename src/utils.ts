@@ -87,3 +87,7 @@ export function readJson(path: string) {
     console.error(e);
   }
 }
+
+export function writeJson(path: string, data: any) {
+  fs.writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
+}
