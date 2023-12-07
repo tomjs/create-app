@@ -8,6 +8,7 @@ import { camelCase } from 'lodash-es';
 import minimist from 'minimist';
 import prompts from 'prompts';
 import shell from 'shelljs';
+import { beforeCreate, getAppConfig, getGitUserUrl } from './repo';
 import { Framework, PromptProp, PromptResult } from './types';
 import {
   Args,
@@ -67,11 +68,9 @@ const FRAMEWORKS: Framework[] = [
     name: 'node',
     display: 'Node',
     color: blue,
-    publish: true,
-    test: true,
     props: [
       { id: 'test', name: 'Test' },
-      { id: 'publish', name: 'Github + NPM' },
+      { id: 'publish', name: 'Git Repository + NPM' },
       { id: 'vite', name: 'Vite Plugin' },
       { id: 'electron', name: 'Electron' },
       { id: 'examples', name: 'Examples' },
@@ -92,12 +91,19 @@ function getGitInfo(name: string) {
   }
 }
 
-async function run() {
+function getPureTargetDir(targetDir: string) {
+  return targetDir.length > 1 ? targetDir.substring(targetDir.indexOf('/') + 1) : targetDir;
+}
+
+async function createApp() {
   const argTargetDir = formatTargetDir(argv._[0]);
   const argTemplate = argv.template || argv.t;
 
   let targetDir = argTargetDir || defaultTargetDir;
   const getProjectName = () => (targetDir === '.' ? path.basename(path.resolve()) : targetDir);
+  let pureTargetDir = getPureTargetDir(targetDir);
+
+  const { gitRepos } = getAppConfig();
 
   const result: PromptResult = await prompts(
     [
@@ -108,17 +114,18 @@ async function run() {
         initial: defaultTargetDir,
         onState: state => {
           targetDir = formatTargetDir(state.value) || defaultTargetDir;
+          pureTargetDir = getPureTargetDir(targetDir);
         },
       },
       {
-        type: () => (!fs.existsSync(targetDir) || isEmpty(targetDir) ? null : 'toggle'),
+        type: () => (!fs.existsSync(pureTargetDir) || isEmpty(pureTargetDir) ? null : 'toggle'),
         name: 'overwrite',
         message: () =>
-          (targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`) +
+          (pureTargetDir === '.' ? 'Current directory' : `Target directory "${pureTargetDir}"`) +
           ` is not empty. Remove existing files and continue?`,
         initial: false,
-        active: 'yes',
-        inactive: 'no',
+        active: 'Yes',
+        inactive: 'No',
       },
       {
         type: (_, { overwrite }: { overwrite?: boolean }) => {
@@ -167,7 +174,8 @@ async function run() {
           }),
       },
       {
-        type: (framework: Framework) => {
+        type: (pre, values) => {
+          const { framework } = values;
           return framework && Array.isArray(framework.props) && framework.props.length
             ? 'multiselect'
             : null;
@@ -175,13 +183,31 @@ async function run() {
         name: 'props',
         message: reset('Select optional options:'),
         instructions: false,
-        choices: (framework: Framework) =>
-          framework?.props?.map(prop => {
+        choices: (pre, values) => {
+          const { framework } = values;
+          return framework?.props?.map(prop => {
             return {
               title: prop.name,
               value: prop.id,
             };
-          }),
+          });
+        },
+      },
+      {
+        type: (pre, values) => {
+          return gitRepos.length && Array.isArray(values.props) && values.props.includes('publish')
+            ? 'select'
+            : null;
+        },
+        name: 'gitUserUrl',
+        message: reset('Which git repository to publish to?'),
+        choices: gitRepos.map(repo => {
+          const title = getGitUserUrl(repo);
+          return {
+            title,
+            value: title,
+          };
+        }),
       },
     ],
     {
@@ -193,11 +219,11 @@ async function run() {
   );
 
   // user choice associated with prompts
-  const { framework, overwrite, packageName, variant } = result;
+  const { framework, overwrite, packageName, variant, gitUserUrl } = result;
 
   const props = result.props || [];
 
-  const root = path.join(cwd, targetDir.substring(targetDir.indexOf('/') + 1));
+  const root = path.join(cwd, pureTargetDir);
 
   if (overwrite) {
     emptyDir(root);
@@ -238,6 +264,15 @@ async function run() {
     name: 'UserName',
     email: 'name@github.com',
   };
+
+  function getGitUrl() {
+    const regName = pkgName.startsWith('@')
+      ? pkgName.split('/')[0].substring(1)
+      : camelCase(gitUser.name);
+    const url = gitUserUrl || `https://github.com/${regName}`;
+    return `${url}/${pkgName.substring(pkgName.indexOf('/') + 1)}.git`;
+  }
+
   handlePkgJson();
 
   // conditionally change files
@@ -253,6 +288,9 @@ async function run() {
   // git init
   if (shell.which('git')) {
     shell.exec(`cd ${root} && git init`);
+    if (props.includes('publish')) {
+      shell.exec(`cd ${root} && git remote add origin ${getGitUrl()}`);
+    }
   }
 
   const cdProjectName = path.relative(cwd, root);
@@ -326,6 +364,7 @@ async function run() {
 
   function handlePkgJson() {
     const pkg = readJson(path.join(root, `package.json`));
+    pkg.name = pkgName;
 
     if (props.includes('publish')) {
       if (shell.which('git')) {
@@ -333,12 +372,8 @@ async function run() {
         gitUser.email = getGitInfo('user.email') || '';
         pkg.author = Object.assign(pkg.author, gitUser);
       }
-      const regName = pkgName.startsWith('@')
-        ? pkgName.split('/')[0].substring(1)
-        : camelCase(gitUser.name);
-      pkg.repository.url = `git+https://github.com/${regName}/${pkgName.substring(
-        pkgName.indexOf('/') + 1,
-      )}.git`;
+
+      pkg.repository.url = `git+${getGitUrl()}`;
     } else {
       delete pkg.author;
       delete pkg.publishConfig;
@@ -467,8 +502,18 @@ async function run() {
   }
 }
 
-run().catch((e: any) => {
-  if (e.message) {
-    console.error(e);
-  }
-});
+beforeCreate()
+  .then(async () => {
+    try {
+      return await createApp();
+    } catch (e: any) {
+      if (e.message) {
+        console.error(e);
+      }
+    }
+  })
+  .catch((e: any) => {
+    if (e.message) {
+      console.error(e);
+    }
+  });

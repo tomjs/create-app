@@ -32,4 +32,11 @@ export interface PromptResult {
   framework?: Framework;
   variant?: string;
   props?: PromptProp[];
+  gitUserUrl?: string;
+}
+
+export interface GitRepo {
+  id: string;
+  repo: string;
+  owner: string;
 }

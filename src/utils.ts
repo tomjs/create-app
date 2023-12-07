@@ -5,10 +5,14 @@ export interface Args {
   _: string[];
   t?: string;
   template?: string;
+  git?: boolean;
 }
 
 export function formatArgs(args: Args) {
-  [['t', 'template']].forEach(([short, long]) => {
+  [
+    ['t', 'template'],
+    ['g', 'git'],
+  ].forEach(([short, long]) => {
     args[long] = args[long] ?? args[short];
   });
 
@@ -97,4 +101,10 @@ export function rmSync(path: string) {
     return;
   }
   fs.rmSync(path, { recursive: true, force: true });
+}
+
+export function mkdirp(dir: string) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
 }
