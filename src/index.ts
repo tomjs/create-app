@@ -492,6 +492,7 @@ async function createApp() {
         'lint-staged',
         'tsconfig',
         'lint-staged',
+        'npm-run-all',
       );
       writeJson(path.join(destPath, 'package.json'), pkg);
 
