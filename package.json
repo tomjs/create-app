@@ -45,8 +45,9 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup --minify",
-    "lint": "run-s lint:eslint lint:prettier",
+    "lint": "run-s lint:eslint lint:stylelint lint:prettier",
     "lint:eslint": "eslint \"{src,template-*}/**/*.{js,cjs,ts}\" *.{js,cjs,ts} --fix --cache",
+    "lint:stylelint": "stylelint \"template-*/**/*.{css,scss,less,vue,html}\" --fix --cache",
     "lint:prettier": "prettier --write \"{src,template-*}/**/*.{js,cjs,ts,json,md}\" *.{js,cjs,ts,json,md}",
     "prepare": "husky install",
     "prepublishOnly": "npm run build && np --any-branch --no-yarn --yolo --no-publish --message \"chore: release v%s\""
@@ -63,6 +64,7 @@
     "@tomjs/commitlint": "^2.0.5",
     "@tomjs/eslint": "^1.1.0",
     "@tomjs/prettier": "^1.0.6",
+    "@tomjs/stylelint": "^1.0.7",
     "@tomjs/tsconfig": "^1.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/minimist": "^1.2.5",
@@ -75,6 +77,7 @@
     "np": "^9.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.1.0",
+    "stylelint": "^15.11.0",
     "tsup": "^8.0.1",
     "typescript": "~5.2.2"
   }
