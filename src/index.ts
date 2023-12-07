@@ -354,10 +354,10 @@ async function createApp() {
     });
   }
 
-  function removeDeps(pkg, name) {
+  function removeDeps(pkg, ...names) {
     ['dependencies', 'devDependencies'].forEach(key => {
       Object.keys(pkg[key] || {}).forEach(dep => {
-        if (dep.includes(name)) {
+        if (names.find(name => dep.includes(name))) {
           delete pkg[key][dep];
         }
       });
@@ -474,7 +474,16 @@ async function createApp() {
 
       // remove other lint deps
       const pkg = readJson(path.join(destPath, 'package.json'));
-      [
+
+      // remove lint scripts
+      Object.keys(pkg.scripts).forEach(s => {
+        if (s.startsWith('lint') || ['prepare'].includes(s)) {
+          delete pkg.scripts[s];
+        }
+      });
+
+      removeDeps(
+        pkg,
         'eslint',
         'prettier',
         'stylelint',
@@ -483,11 +492,7 @@ async function createApp() {
         'lint-staged',
         'tsconfig',
         'lint-staged',
-      ].forEach(key => {
-        if (pkg[key]) {
-          delete pkg[key];
-        }
-      });
+      );
       writeJson(path.join(destPath, 'package.json'), pkg);
 
       // remove files
@@ -498,6 +503,13 @@ async function createApp() {
         }
       });
     });
+
+    fs.writeFileSync(
+      path.join(root, 'pnpm-workspace.yaml'),
+      `packages:
+  - 'examples/*'`,
+      { encoding: 'utf-8' },
+    );
   }
 }
 
