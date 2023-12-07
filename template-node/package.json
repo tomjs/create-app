@@ -36,11 +36,11 @@
   },
   "scripts": {
     "dev": "tsup --watch",
-    "start": "tsx ./src/index.ts",
+    "start": "tsx ./scripts/index.ts",
     "build": "tsup",
     "test": "jest",
     "lint": "run-s lint:eslint lint:prettier",
-    "lint:eslint": "eslint \"{src,test,electron}/**/*.ts\" *.{js,cjs,ts} --fix --cache",
+    "lint:eslint": "eslint \"{src,scripts,test,electron,examples}/**/*.ts\" *.{js,cjs,ts} --fix --cache",
     "lint:prettier": "prettier --write .",
     "prepare": "husky install",
     "prepublishOnly": "npm run build && np --any-branch --no-yarn --yolo --no-publish --message \"chore: release v%s\""

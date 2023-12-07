@@ -91,3 +91,10 @@ export function readJson(path: string) {
 export function writeJson(path: string, data: any) {
   fs.writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
 }
+
+export function rmSync(path: string) {
+  if (!fs.existsSync(path)) {
+    return;
+  }
+  fs.rmSync(path, { recursive: true, force: true });
+}

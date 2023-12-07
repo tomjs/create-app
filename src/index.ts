@@ -1,15 +1,14 @@
 #!/usr/bin/env node
-import fs, { copyFileSync, rmSync } from 'node:fs';
+import fs, { copyFileSync, renameSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import JSON5 from 'json5';
 import { blue, cyan, green, red, reset, yellow } from 'kolorist';
 import { camelCase } from 'lodash-es';
 import minimist from 'minimist';
 import prompts from 'prompts';
 import shell from 'shelljs';
-import { Framework, PromptResult } from './types';
+import { Framework, PromptProp, PromptResult } from './types';
 import {
   Args,
   copy,
@@ -20,6 +19,7 @@ import {
   isValidPackageName,
   pkgFromUserAgent,
   readJson,
+  rmSync,
   toValidPackageName,
   writeJson,
 } from './utils';
@@ -74,7 +74,7 @@ const FRAMEWORKS: Framework[] = [
       { id: 'publish', name: 'Github + NPM' },
       { id: 'vite', name: 'Vite Plugin' },
       { id: 'electron', name: 'Electron' },
-      { id: 'example', name: 'Examples' },
+      { id: 'examples', name: 'Examples' },
     ],
   },
 ];
@@ -82,11 +82,6 @@ const FRAMEWORKS: Framework[] = [
 const TEMPLATES = FRAMEWORKS.map(
   f => (f.variants && f.variants.map(v => v.name)) || [f.name],
 ).reduce((a, b) => a.concat(b), []);
-
-const renameFiles: Record<string, string> = {
-  _gitignore: '.gitignore',
-  '_lintstagedrc.cjs': '.lintstagedrc.cjs',
-};
 
 const defaultTargetDir = 'my-app';
 
@@ -104,9 +99,7 @@ async function run() {
   let targetDir = argTargetDir || defaultTargetDir;
   const getProjectName = () => (targetDir === '.' ? path.basename(path.resolve()) : targetDir);
 
-  let result: PromptResult = {};
-
-  result = await prompts(
+  const result: PromptResult = await prompts(
     [
       {
         type: argTargetDir ? null : 'text',
@@ -227,7 +220,7 @@ async function run() {
     const files = fs.readdirSync(dir);
 
     for (const file of files) {
-      const destFile = renameFiles[file] ?? file;
+      const destFile = file.startsWith('_') ? file.replace('_', '.') : file;
       if (isNode && file.includes('stylelint')) {
         continue;
       }
@@ -366,49 +359,39 @@ async function run() {
     writeJson(path.join(root, 'package.json'), pkg);
   }
 
+  function replacePropFile(fileName: string, prop: PromptProp) {
+    const lastIndex = fileName.lastIndexOf('.');
+    const propName = fileName.substring(0, lastIndex) + '.' + prop + fileName.substring(lastIndex);
+    const filePath = path.join(root, fileName);
+    const propFilePath = path.join(root, propName);
+
+    if (props.includes(prop)) {
+      rmSync(filePath);
+      if (fs.existsSync(propFilePath)) {
+        renameSync(propFilePath, filePath);
+      }
+    } else {
+      rmSync(propFilePath);
+    }
+  }
+
   /**
    * handle test prop
    */
   function handleTest() {
-    if (props.includes('test')) {
-      if (!props.includes('electron')) {
-        // runner: '@kayahr/jest-electron-runner/main',
-        const filePath = path.join(root, 'jest.config.js');
-        if (fs.existsSync(filePath)) {
-          const content = fs.readFileSync(filePath, 'utf-8');
-          fs.writeFileSync(
-            filePath,
-            content.replace(/\n {2}runner: '@kayahr\/jest-electron-runner\/main',/g, ''),
-          );
-        }
-      }
+    replacePropFile('tsconfig.json', 'test');
+    replacePropFile('jest.config.cjs', 'electron');
 
+    if (props.includes('test')) {
       return;
     }
 
-    // tsconfig.json
-    const files = fs.readdirSync(root).filter(s => /tsconfig(\.\w+)?\.json/.test(s));
-    files.forEach(file => {
-      const cfgPath = path.join(root, file);
-      if (fs.existsSync(cfgPath)) {
-        const content = fs.readFileSync(cfgPath, 'utf-8');
-        const json = JSON5.parse(content);
-        ['include', 'exclude'].forEach(key => {
-          if (json[key]) {
-            json[key] = json[key].filter(s => !s.includes('test'));
-          }
-        });
-
-        writeJson(cfgPath, json);
-      }
-    });
-
-    ['jest.config.js', 'test'].forEach(name => {
-      const file = path.join(root, name);
-      if (fs.existsSync(file)) {
-        rmSync(file, { force: true, recursive: true });
-      }
-    });
+    // test config and folder
+    fs.readdirSync(root)
+      .filter(s => s.startsWith('jest.config') || ['test'].includes(s))
+      .forEach(file => {
+        rmSync(path.join(root, file));
+      });
 
     // package.json
     const pkgPath = path.join(root, `package.json`);
@@ -423,31 +406,40 @@ async function run() {
   }
 
   function handleExample() {
-    if (!props.includes('example')) {
+    // .lintstagedrc.cjs
+    replacePropFile('.lintstagedrc.cjs', 'examples');
+
+    if (!props.includes('examples')) {
+      // package.json
+      const pkg = readJson(path.join(root, `package.json`));
+      pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',examples', '');
+      writeJson(path.join(root, `package.json`), pkg);
+
       return;
     }
-    const examplePath = path.join(root, 'example');
+
+    const examplePath = path.join(root, 'examples');
     fs.mkdirSync(examplePath);
     const isElectron = props.includes('electron');
     const configPath = getTemplateDir('config');
     ['vue', 'react'].forEach(lang => {
       const srcPath = getTemplateDir(isElectron ? `electron-${lang}` : lang);
-      const dstPath = path.join(examplePath, lang);
+      const destPath = path.join(examplePath, lang);
       if (!fs.existsSync(srcPath)) {
-        console.log(`${yellow('srcPath')} is not exist`);
+        console.log(`${yellow(srcPath)} template is not exist`);
         return;
       }
-      fs.cpSync(srcPath, dstPath, { recursive: true });
+      fs.cpSync(srcPath, destPath, { recursive: true });
 
       // stylelint
       fs.readdirSync(configPath)
         .filter(s => s.includes('stylelint'))
         .forEach(file => {
-          copyFileSync(path.join(configPath, file), path.join(dstPath, file));
+          copyFileSync(path.join(configPath, file), path.join(destPath, file));
         });
 
       // remove other lint deps
-      const pkg = readJson(path.join(dstPath, 'package.json'));
+      const pkg = readJson(path.join(destPath, 'package.json'));
       [
         'eslint',
         'prettier',
@@ -462,11 +454,11 @@ async function run() {
           delete pkg[key];
         }
       });
-      writeJson(path.join(dstPath, 'package.json'), pkg);
+      writeJson(path.join(destPath, 'package.json'), pkg);
 
       // remove files
       ['_lintstagedrc.cjs'].forEach(s => {
-        const file = path.join(dstPath, s);
+        const file = path.join(destPath, s);
         if (fs.existsSync(file)) {
           fs.rmSync(file, { recursive: true });
         }

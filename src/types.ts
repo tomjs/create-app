@@ -22,6 +22,8 @@ export type FrameworkVariant = {
   customCommand?: string;
 };
 
+export type PromptProp = 'test' | 'publish' | 'vite' | 'electron' | 'examples';
+
 export interface PromptResult {
   projectName?: string;
   overwrite?: boolean;
@@ -29,5 +31,5 @@ export interface PromptResult {
   packageName?: string;
   framework?: Framework;
   variant?: string;
-  props?: ('test' | 'publish' | 'vite' | 'electron' | 'example')[];
+  props?: PromptProp[];
 }
