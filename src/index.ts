@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import fs, { copyFileSync, renameSync } from 'node:fs';
+import fs, { renameSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,7 +9,7 @@ import minimist from 'minimist';
 import prompts from 'prompts';
 import shell from 'shelljs';
 import { beforeCreate, getAppConfig, getGitUserUrl } from './repo';
-import { Framework, PromptProp, PromptResult } from './types';
+import { Framework, PromptOption, PromptResult } from './types';
 import {
   Args,
   copy,
@@ -68,7 +68,7 @@ const FRAMEWORKS: Framework[] = [
     name: 'node',
     display: 'Node',
     color: blue,
-    props: [
+    options: [
       { id: 'test', name: 'Test' },
       { id: 'publish', name: 'Git Repository + NPM' },
       { id: 'vite', name: 'Vite Plugin' },
@@ -176,26 +176,28 @@ async function createApp() {
       {
         type: (pre, values) => {
           const { framework } = values;
-          return framework && Array.isArray(framework.props) && framework.props.length
+          return framework && Array.isArray(framework.options) && framework.options.length
             ? 'multiselect'
             : null;
         },
-        name: 'props',
+        name: 'options',
         message: reset('Select optional options:'),
         instructions: false,
         choices: (pre, values) => {
           const { framework } = values;
-          return framework?.props?.map(prop => {
+          return framework?.options?.map(option => {
             return {
-              title: prop.name,
-              value: prop.id,
+              title: option.name,
+              value: option.id,
             };
           });
         },
       },
       {
         type: (pre, values) => {
-          return gitRepos.length && Array.isArray(values.props) && values.props.includes('publish')
+          return gitRepos.length &&
+            Array.isArray(values.options) &&
+            values.options.includes('publish')
             ? 'select'
             : null;
         },
@@ -221,7 +223,7 @@ async function createApp() {
   // user choice associated with prompts
   const { framework, overwrite, packageName, variant, gitUserUrl } = result;
 
-  const props = result.props || [];
+  const options = result.options || [];
 
   const root = path.join(cwd, pureTargetDir);
 
@@ -247,7 +249,7 @@ async function createApp() {
 
     for (const file of files) {
       const destFile = file.startsWith('_') ? file.replace('_', '.') : file;
-      if (isNode && file.includes('stylelint')) {
+      if (isNode && !options.includes('examples') && file.includes('stylelint')) {
         continue;
       }
 
@@ -288,7 +290,7 @@ async function createApp() {
   // git init
   if (shell.which('git')) {
     shell.exec(`cd ${root} && git init`);
-    if (props.includes('publish')) {
+    if (options.includes('publish')) {
       shell.exec(`cd ${root} && git remote add origin ${getGitUrl()}`);
     }
   }
@@ -315,7 +317,7 @@ async function createApp() {
   function handleReplaceContent() {
     ['LICENSE', 'README.md', 'README.zh_CN.md'].forEach(name => {
       const file = path.join(root, name);
-      if (!props.includes('publish')) {
+      if (!options.includes('publish')) {
         if (fs.existsSync(file)) {
           fs.rmSync(file);
 
@@ -366,7 +368,7 @@ async function createApp() {
     const pkg = readJson(path.join(root, `package.json`));
     pkg.name = pkgName;
 
-    if (props.includes('publish')) {
+    if (options.includes('publish')) {
       if (shell.which('git')) {
         gitUser.name = getGitInfo('user.name') || os.userInfo().username;
         gitUser.email = getGitInfo('user.email') || '';
@@ -382,25 +384,26 @@ async function createApp() {
       delete pkg.devDependencies.np;
     }
 
-    if (!props.includes('electron')) {
+    if (!options.includes('electron')) {
       removeDeps(pkg, 'electron');
       pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',electron', '');
     }
 
-    if (!props.includes('vite')) {
+    if (isNode && !options.includes('vite')) {
       removeDeps(pkg, 'vite');
     }
 
     writeJson(path.join(root, 'package.json'), pkg);
   }
 
-  function replacePropFile(fileName: string, prop: PromptProp) {
+  function replaceOptionFile(fileName: string, option: PromptOption) {
     const lastIndex = fileName.lastIndexOf('.');
-    const propName = fileName.substring(0, lastIndex) + '.' + prop + fileName.substring(lastIndex);
+    const propName =
+      fileName.substring(0, lastIndex) + '.' + option + fileName.substring(lastIndex);
     const filePath = path.join(root, fileName);
     const propFilePath = path.join(root, propName);
 
-    if (props.includes(prop)) {
+    if (options.includes(option)) {
       rmSync(filePath);
       if (fs.existsSync(propFilePath)) {
         renameSync(propFilePath, filePath);
@@ -411,13 +414,13 @@ async function createApp() {
   }
 
   /**
-   * handle test prop
+   * handle test
    */
   function handleTest() {
-    replacePropFile('tsconfig.json', 'test');
-    replacePropFile('jest.config.cjs', 'electron');
+    replaceOptionFile('tsconfig.json', 'test');
+    replaceOptionFile('jest.config.cjs', 'electron');
 
-    if (props.includes('test')) {
+    if (options.includes('test')) {
       return;
     }
 
@@ -442,21 +445,24 @@ async function createApp() {
 
   function handleExample() {
     // .lintstagedrc.cjs
-    replacePropFile('.lintstagedrc.cjs', 'examples');
+    replaceOptionFile('.lintstagedrc.cjs', 'examples');
 
-    if (!props.includes('examples')) {
+    if (!options.includes('examples')) {
       // package.json
       const pkg = readJson(path.join(root, `package.json`));
+      pkg.scripts['lint'] = pkg.scripts['lint'].replace(' lint:stylelint', '');
       pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',examples', '');
-      writeJson(path.join(root, `package.json`), pkg);
+      delete pkg.scripts['lint:stylelint'];
 
+      removeDeps(pkg, 'stylelint');
+
+      writeJson(path.join(root, `package.json`), pkg);
       return;
     }
 
     const examplePath = path.join(root, 'examples');
     fs.mkdirSync(examplePath);
-    const isElectron = props.includes('electron');
-    const configPath = getTemplateDir('config');
+    const isElectron = options.includes('electron');
     ['vue', 'react'].forEach(lang => {
       const srcPath = getTemplateDir(isElectron ? `electron-${lang}` : lang);
       const destPath = path.join(examplePath, lang);
@@ -465,13 +471,6 @@ async function createApp() {
         return;
       }
       fs.cpSync(srcPath, destPath, { recursive: true });
-
-      // stylelint
-      fs.readdirSync(configPath)
-        .filter(s => s.includes('stylelint'))
-        .forEach(file => {
-          copyFileSync(path.join(configPath, file), path.join(destPath, file));
-        });
 
       // remove other lint deps
       const pkg = readJson(path.join(destPath, 'package.json'));
@@ -504,13 +503,11 @@ async function createApp() {
 
 beforeCreate()
   .then(async () => {
-    try {
-      return await createApp();
-    } catch (e: any) {
+    return createApp().catch((e: any) => {
       if (e.message) {
         console.error(e);
       }
-    }
+    });
   })
   .catch((e: any) => {
     if (e.message) {

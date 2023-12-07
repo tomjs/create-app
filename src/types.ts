@@ -10,7 +10,7 @@ export type Framework = {
   /**
    * custom props for the framework
    */
-  props?: { id: string; name: string }[];
+  options?: { id: string; name: string }[];
 };
 
 export type FrameworkVariant = {
@@ -22,7 +22,7 @@ export type FrameworkVariant = {
   customCommand?: string;
 };
 
-export type PromptProp = 'test' | 'publish' | 'vite' | 'electron' | 'examples';
+export type PromptOption = 'test' | 'publish' | 'vite' | 'electron' | 'examples';
 
 export interface PromptResult {
   projectName?: string;
@@ -31,7 +31,7 @@ export interface PromptResult {
   packageName?: string;
   framework?: Framework;
   variant?: string;
-  props?: PromptProp[];
+  options?: PromptOption[];
   gitUserUrl?: string;
 }
 

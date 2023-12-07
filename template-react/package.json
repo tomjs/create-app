@@ -23,9 +23,9 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@tomjs/commitlint": "^2.0.5",
-    "@tomjs/eslint": "^1.1.0",
+    "@tomjs/eslint": "^1.1.1",
     "@tomjs/prettier": "^1.0.6",
-    "@tomjs/stylelint": "^1.0.7",
+    "@tomjs/stylelint": "^1.1.0",
     "@tomjs/tsconfig": "^1.0.8",
     "@types/node": "^18.19.3",
     "@types/react": "^18.2.42",
@@ -38,6 +38,6 @@
     "prettier": "^3.1.0",
     "stylelint": "^15.11.0",
     "typescript": "~5.2.2",
-    "vite": "^5.0.5"
+    "vite": "^5.0.6"
   }
 }
