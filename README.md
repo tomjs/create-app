@@ -51,6 +51,7 @@ pnpm create @tomjs/app --template vue
 Parameters:
 
 - `-t --template` : specify the template
+- `--git`：git repository setting
 
 Support templates:
 
@@ -59,7 +60,6 @@ Support templates:
 - electron-vue
 - electron-react
 - node
-- node-electron
 
 ## Reference project
 

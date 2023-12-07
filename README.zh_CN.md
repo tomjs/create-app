@@ -52,6 +52,7 @@ pnpm create @tomjs/app my-app --template vue
 参数说明:
 
 - `-t --template`：指定模板
+- `--git`：git 仓库配置
 
 支持模板:
 
@@ -60,7 +61,6 @@ pnpm create @tomjs/app my-app --template vue
 - electron-vue
 - electron-react
 - node
-- node-electron
 
 ## 参考项目
 
