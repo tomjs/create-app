@@ -31,7 +31,7 @@
     "@tomjs/commitlint": "^2.0.5",
     "@tomjs/eslint": "^1.1.1",
     "@tomjs/prettier": "^1.0.6",
-    "@tomjs/stylelint": "^1.1.0",
+    "@tomjs/stylelint": "^1.1.1",
     "@tomjs/tsconfig": "^1.0.8",
     "@types/node": "^18.19.3",
     "@types/react": "^18.2.42",
