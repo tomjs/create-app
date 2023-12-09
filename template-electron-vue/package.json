@@ -6,7 +6,7 @@
   "engines": {
     "node": ">=18"
   },
-  "main": "dist/main.js",
+  "main": "dist/main/index.mjs",
   "scripts": {
     "dev": "vite",
     "build": "npm run clean && vue-tsc --noEmit && vite build && npm run release",
