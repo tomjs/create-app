@@ -1,14 +1,10 @@
 {
   "name": "electron-app",
   "version": "0.0.0",
+  "type": "module",
   "description": "vite + electron + vue",
   "engines": {
     "node": ">=18"
-  },
-  "debug": {
-    "env": {
-      "VITE_DEV_SERVER_URL": "http://127.0.0.1:6888/"
-    }
   },
   "main": "dist/main.js",
   "scripts": {
@@ -29,10 +25,12 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@tomjs/commitlint": "^2.0.5",
+    "@tomjs/electron-devtools-installer": "^2.0.3",
     "@tomjs/eslint": "^1.1.1",
     "@tomjs/prettier": "^1.0.6",
     "@tomjs/stylelint": "^1.1.1",
-    "@tomjs/tsconfig": "^1.0.8",
+    "@tomjs/tsconfig": "^1.0.9",
+    "@tomjs/vite-plugin-electron": "^1.1.2",
     "@types/node": "^18.19.3",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
@@ -48,11 +46,9 @@
     "rimraf": "^5.0.5",
     "shelljs": "^0.8.5",
     "stylelint": "^15.11.0",
-    "tree-kill": "^1.2.2",
     "tsx": "^4.6.2",
     "typescript": "~5.2.2",
-    "vite": "^5.0.6",
-    "vite-plugin-electron": "^0.15.4",
+    "vite": "^5.0.7",
     "vite-plugin-electron-renderer": "^0.14.5"
   }
 }

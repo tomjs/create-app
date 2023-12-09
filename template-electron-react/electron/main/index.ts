@@ -3,20 +3,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 
-// The built directory structure
-//
-// ├─┬ dist
-// │ ├── main.js        > Electron-Main
-// │ ├── preload.js     > Preload-Scripts
-// │ ├─┬ render         > Electron-Renderer
-// │ │ └── index.html
-//
 const __dirname = dirname(fileURLToPath(import.meta.url));
-process.env.DIST_ELECTRON = __dirname;
-process.env.DIST = join(process.env.DIST_ELECTRON, 'render');
-process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL
-  ? join(process.env.DIST_ELECTRON, '../public')
-  : process.env.DIST;
+const isDev = process.env.NODE_ENV === 'development';
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration();
@@ -32,19 +20,22 @@ if (!app.requestSingleInstanceLock()) {
 // Remove electron security warnings
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
-// process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 let win: BrowserWindow | null = null;
-// Here, you can also use other preload
-const preload = join(__dirname, './preload.js');
-const url = process.env.VITE_DEV_SERVER_URL as string;
-const indexHtml = join(process.env.DIST, 'index.html');
+// package.json "type":"module", must use mjs extension
+const preload = join(__dirname, '../preload/index.mjs');
+const serverUrl = process.env.APP_DEV_SERVER_URL as string;
+const rendererDist = join(__dirname, '../renderer');
+const indexHtml = join(rendererDist, 'index.html');
+const publicPath = serverUrl ? join(__dirname, '../../public') : rendererDist;
 
-async function createWindow() {
+function createWindow() {
   win = new BrowserWindow({
     title: 'Main window',
     width: 800,
     height: 700,
+    icon: join(publicPath, 'img/icon.png'),
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -55,11 +46,10 @@ async function createWindow() {
     },
   });
 
-  if (process.env.VITE_DEV_SERVER_URL) {
-    // electron-vite-vue#298
-    win.loadURL(url);
+  if (isDev) {
+    win.loadURL(serverUrl);
     // Open devTool if the app is not packaged
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
   } else {
     win.loadFile(indexHtml);
   }
@@ -77,7 +67,26 @@ async function createWindow() {
   // win.webContents.on('will-navigate', (event, url) => { }) #344
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(async () => {
+  createWindow();
+
+  if (isDev) {
+    const { installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = await import(
+      '@tomjs/electron-devtools-installer'
+    );
+
+    installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
+      .then(exts => {
+        console.log(
+          'Added Extension: ',
+          exts.map(s => s.name),
+        );
+      })
+      .catch(() => {
+        console.log('Failed to install extensions');
+      });
+  }
+});
 
 app.on('window-all-closed', () => {
   win = null;
@@ -111,8 +120,8 @@ ipcMain.handle('open-win', (_, arg) => {
     },
   });
 
-  if (process.env.VITE_DEV_SERVER_URL) {
-    childWindow.loadURL(`${url}#${arg}`);
+  if (serverUrl) {
+    childWindow.loadURL(`${serverUrl}#${arg}`);
   } else {
     childWindow.loadFile(indexHtml, { hash: arg });
   }

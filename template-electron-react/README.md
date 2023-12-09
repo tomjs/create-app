@@ -4,23 +4,31 @@ vite + electron + react
 
 ## Description
 
-- source code
+- Recommended `electron` front-end code directory structure
 
 ```
-├── electron
-│   ├── main          > Electron-Main
-│   ├── payload       > Preload-Scripts
-├── src               > Electron-Renderer
+|--electron
+|  |--main
+|  |  |--index.ts
+|  |--preload
+|  |  |--index.ts
+|--src
+|  |--App.tsx
+|  |--main.tsx
 ```
 
-- output
+- Use the default dist output directory of the plugin
 
 ```
-├─┬ dist
-│ ├── main.js        > Electron-Main
-│ ├── preload.js     > Preload-Scripts
-│ ├─┬ render         > Electron-Renderer
-│ │ └── index.html
+|--dist
+|  |--main
+|  |  |--index.js
+|  |  |--index.js.map
+|  |--preload
+|  |  |--index.js
+|  |  |--index.js.map
+|  |--renderer
+|  |  |--index.html
 ```
 
 ## Reference project

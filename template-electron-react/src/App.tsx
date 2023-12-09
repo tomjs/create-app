@@ -9,7 +9,9 @@ import './App.css';
 function App() {
   const [count, setCount] = useState(0);
 
-  const info = os.platform() + ' ' + os.arch();
+  const versions = ['chrome', 'node', 'electron']
+    .map(s => `${s}: ${process.versions[s]}`)
+    .concat(['platform: ' + os.platform() + ' ' + os.arch()]);
 
   return (
     <>
@@ -25,8 +27,8 @@ function App() {
         </a>
       </div>
       <h1>Vite + Electron + React</h1>
-      <div>{info}</div>
       <div className="card">
+        <div style={{ marginBottom: '1em' }}>{versions.join(', ')}</div>
         <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR

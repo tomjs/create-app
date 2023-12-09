@@ -1,15 +1,21 @@
 <script setup lang="ts">
+import os from 'node:os';
 import { ref } from 'vue';
 
 defineProps<{ msg: string }>();
 
 const count = ref(0);
+
+const versions = ['chrome', 'node', 'electron']
+  .map(s => `${s}: ${process.versions[s]}`)
+  .concat(['platform: ' + os.platform() + ' ' + os.arch()]);
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
+    <div style="margin-bottom: 1em">{{ versions.join(', ') }}</div>
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>
       Edit
