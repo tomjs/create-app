@@ -384,13 +384,15 @@ async function createApp() {
       delete pkg.devDependencies.np;
     }
 
-    if (!options.includes('electron')) {
-      removeDeps(pkg, 'electron');
-      pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',electron', '');
-    }
+    if (isNode) {
+      if (!options.includes('electron')) {
+        removeDeps(pkg, 'electron');
+        pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',electron', '');
+      }
 
-    if (isNode && !options.includes('vite')) {
-      removeDeps(pkg, 'vite');
+      if (options.includes('vite')) {
+        removeDeps(pkg, 'vite');
+      }
     }
 
     writeJson(path.join(root, 'package.json'), pkg);
