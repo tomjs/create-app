@@ -1,27 +1,20 @@
-# template-node
+# {{pkg.name}}
 
-{{badges}}
-
-> 基础 node 模板
+[![npm](https://img.shields.io/npm/v/{{pkg.name}})](https://www.npmjs.com/package/{{pkg.name}}) ![node-current (scoped)](https://img.shields.io/node/v/{{pkg.name}}) ![NPM](https://img.shields.io/npm/l/{{pkg.name}}) [![Docs](https://www.paka.dev/badges/v0/cute.svg)](https://www.paka.dev/npm/{{pkg.name}})
 
 [English](./README.md) | **中文**
 
+> 基础 node 模板
+
 ## 安装
 
-使用 `pnpm`
-
 ```bash
-pnpm add template-node
-```
+# pnpm
+pnpm add {{pkg.name}} -D
 
-使用 `yarn`
+# yarn
+yarn add {{pkg.name}} -D
 
-```bash
-yarn add template-node
-```
-
-使用 `npm`
-
-```bash
-npm i template-node
+# npm
+npm i {{pkg.name}} --save-dev
 ```

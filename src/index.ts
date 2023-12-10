@@ -259,7 +259,6 @@ async function createApp() {
   });
 
   const pkgName = packageName || getProjectName();
-  const templateName = `template-${template}`;
 
   // get git user info
   const gitUser = {
@@ -331,24 +330,11 @@ async function createApp() {
       if (!fs.existsSync(file)) {
         return;
       }
-      let content = fs
+      const content = fs
         .readFileSync(file, 'utf-8')
-        .replace(new RegExp(templateName, 'g'), pkgName)
+        .replace(new RegExp('{{pkg.name}}', 'g'), pkgName)
         .replace(new RegExp('{{user.name}}', 'g'), gitUser.name)
         .replace(new RegExp('{{user.email}}', 'g'), gitUser.email);
-
-      if (name.startsWith('README')) {
-        const pathName = pkgName.replace('@', '%40');
-        const name = pkgName.replace('@', '%40').replace(new RegExp('/', 'g'), '%2F');
-        content = content.replace(
-          '{{badges}}',
-          [
-            `![npm](https://img.shields.io/npm/v/${pathName})`,
-            `![node-current (scoped)](https://img.shields.io/node/v/${pathName})`,
-            `![NPM](https://img.shields.io/npm/l/${name})`,
-          ].join(' '),
-        );
-      }
 
       fs.writeFileSync(file, content);
     });
