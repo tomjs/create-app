@@ -17,23 +17,12 @@ export default defineConfig(() => {
         '@': path.join(__dirname, 'src'),
       },
     },
-    build: {
-      emptyOutDir: true,
-    },
     plugins: [
       react(),
-      electron({
-        main: {
-          entry: 'electron/main/index.ts',
-        },
-        preload: {
-          entry: 'electron/preload/index.ts',
-        },
-      }),
+      electron(),
       // Use Node.js API in the Renderer process
       renderer(),
     ],
-    server: {},
     clearScreen: false,
   };
 });

@@ -4,7 +4,7 @@ vite + electron + react
 
 ## Description
 
-- Recommended `electron` front-end code directory structure
+- Recommend `electron` and page `src` code directory structure
 
 ```
 |--electron
@@ -13,11 +13,11 @@ vite + electron + react
 |  |--preload
 |  |  |--index.ts
 |--src
-|  |--App.tsx
-|  |--main.tsx
+|  |--App.vue
+|  |--main.ts
 ```
 
-- Use the default dist output directory of the plugin
+- Zero configuration, default dist output directory
 
 ```
 |--dist

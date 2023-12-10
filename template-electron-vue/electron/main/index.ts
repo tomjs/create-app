@@ -1,9 +1,7 @@
 import { release } from 'node:os';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const isDev = process.env.NODE_ENV === 'development';
 
 // Disable GPU Acceleration for Windows 7
@@ -24,7 +22,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 let win: BrowserWindow | null = null;
 // package.json "type":"module", must use mjs extension
-const preload = join(__dirname, '../preload/index.mjs');
+const preload = join(__dirname, '../preload/index.js');
 const serverUrl = process.env.APP_DEV_SERVER_URL as string;
 const rendererDist = join(__dirname, '../renderer');
 const indexHtml = join(rendererDist, 'index.html');

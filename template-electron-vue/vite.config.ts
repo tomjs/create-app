@@ -11,30 +11,17 @@ export default defineConfig(() => {
   process.env.APP_VERSION = pkg.version;
 
   return {
-    envPrefix: ['VITE_', 'APP_'],
     resolve: {
       alias: {
         '@': path.join(__dirname, 'src'),
       },
     },
-    build: {
-      outDir: 'dist/render',
-      emptyOutDir: true,
-    },
     plugins: [
       vue(),
-      electron({
-        main: {
-          entry: 'electron/main/index.ts',
-        },
-        preload: {
-          entry: 'electron/preload/index.ts',
-        },
-      }),
+      electron(),
       // Use Node.js API in the Renderer process
       renderer(),
     ],
-    server: {},
     clearScreen: false,
   };
 });
