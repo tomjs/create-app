@@ -13,7 +13,7 @@ vite + electron + react
 |  |--preload
 |  |  |--index.ts
 |--src
-|  |--App.vue
+|  |--App.tsx
 |  |--main.ts
 ```
 
@@ -29,6 +29,69 @@ vite + electron + react
 |  |  |--index.js.map
 |  |--renderer
 |  |  |--index.html
+```
+
+## Debug
+
+### Web debugging
+
+Use [@tomjs/electron-devtools-installer](https://npmjs.com/package/@tomjs/electron-devtools-installer) to install the `Chrome Devtools` plugins and use it like web development
+
+```ts
+import { app } from 'electron';
+
+app.whenReady().then(() => {
+  const { installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = await import(
+    '@tomjs/electron-devtools-installer'
+  );
+
+  installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
+    .then(exts => {
+      console.log(
+        'Added Extension: ',
+        exts.map(s => s.name),
+      );
+    })
+    .catch(err => {
+      console.log('Failed to install extensions');
+      console.error(err);
+    });
+});
+```
+
+### Main thread debugging
+
+#### Turn on debugging
+
+Start code compilation through the following configuration or `ELECTRON_DEBUG=1 vite dev`
+
+- Enable by setting `APP_ELECTRON_DEBUG=1` in `.env.development` file
+- `vite.config.js` configures `electron({ debug: true })` to be turned on
+
+#### VSCODE
+
+Run `Debug Main Process` through `vscode` to debug the main thread. For debugging tools, refer to [Official Documentation](https://code.visualstudio.com/docs/editor/debugging)
+
+`launch.json` is configured as follows:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
+      "args": ["."],
+      "envFile": "${workspaceFolder}/node_modules/@tomjs/vite-plugin-electron/debug/.env"
+    }
+  ]
+}
 ```
 
 ## Reference project

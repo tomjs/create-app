@@ -1,11 +1,12 @@
 {
   "name": "electron-app",
   "version": "0.0.0",
+  "type": "module",
   "description": "vite + electron + vue",
   "engines": {
     "node": ">=18"
   },
-  "main": "dist/main/index.js",
+  "main": "dist/main/index.mjs",
   "scripts": {
     "dev": "vite",
     "build": "npm run clean && vite build && npm run release",
@@ -29,7 +30,7 @@
     "@tomjs/prettier": "^1.0.6",
     "@tomjs/stylelint": "^1.1.1",
     "@tomjs/tsconfig": "^1.1.2",
-    "@tomjs/vite-plugin-electron": "^1.3.6",
+    "@tomjs/vite-plugin-electron": "^1.3.8",
     "@types/node": "^18.19.3",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",

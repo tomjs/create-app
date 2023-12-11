@@ -1,6 +1,7 @@
 import { release } from 'node:os';
 import { join } from 'node:path';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import '../polyfills';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -22,7 +23,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 let win: BrowserWindow | null = null;
 // package.json "type":"module", must use mjs extension
-const preload = join(__dirname, '../preload/index.js');
+const preload = join(__dirname, '../preload/index.mjs');
 const serverUrl = process.env.APP_DEV_SERVER_URL as string;
 const rendererDist = join(__dirname, '../renderer');
 const indexHtml = join(rendererDist, 'index.html');
