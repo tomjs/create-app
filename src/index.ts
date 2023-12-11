@@ -376,7 +376,7 @@ async function createApp() {
         pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',electron', '');
       }
 
-      if (options.includes('vite')) {
+      if (!options.includes('vite')) {
         removeDeps(pkg, 'vite');
       }
     }
