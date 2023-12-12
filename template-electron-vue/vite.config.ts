@@ -18,7 +18,7 @@ export default defineConfig(() => {
     },
     plugins: [
       vue(),
-      electron(),
+      electron({ builder: { enable: true } }),
       // Use Node.js API in the Renderer process
       renderer(),
     ],

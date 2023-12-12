@@ -19,7 +19,7 @@ export default defineConfig(() => {
     },
     plugins: [
       react(),
-      electron(),
+      electron({ builder: { enable: true } }),
       // Use Node.js API in the Renderer process
       renderer(),
     ],

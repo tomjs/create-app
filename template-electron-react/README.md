@@ -8,11 +8,13 @@ vite + electron + react
 
 ```
 |--electron
-|  |--main
+|  |--main        // main process code
 |  |  |--index.ts
-|  |--preload
+|  |--preload     // preload process code
 |  |  |--index.ts
-|--src
+|  |--build       // electron-builder resources for electron package
+|  |  |--icons
+|--src            // front-end code
 |  |--App.tsx
 |  |--main.ts
 ```
