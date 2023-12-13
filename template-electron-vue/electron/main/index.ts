@@ -3,8 +3,6 @@ import { join } from 'node:path';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import '../polyfills';
 
-const isDev = process.env.NODE_ENV === 'development';
-
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration();
 
@@ -20,6 +18,8 @@ if (!app.requestSingleInstanceLock()) {
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+
+const isDev = process.env.NODE_ENV === 'development';
 
 let win: BrowserWindow | null = null;
 // package.json "type":"module", must use mjs extension
@@ -70,16 +70,11 @@ app.whenReady().then(async () => {
   createWindow();
 
   if (isDev) {
-    const { installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = await import(
-      '@tomjs/electron-devtools-installer'
-    );
+    const { installExtension, VUEJS_DEVTOOLS } = await import('@tomjs/electron-devtools-installer');
 
-    installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
-      .then(exts => {
-        console.log(
-          'Added Extension: ',
-          exts.map(s => s.name),
-        );
+    installExtension(VUEJS_DEVTOOLS)
+      .then(ext => {
+        console.log('Added Extension: ', ext.name);
       })
       .catch(() => {
         console.log('Failed to install extensions');

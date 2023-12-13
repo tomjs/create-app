@@ -5,7 +5,8 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Main Debug",
+      "name": "Debug Main Process",
+      "preLaunchTask": "npm:debug",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
@@ -14,11 +15,15 @@
         "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
       },
       "args": [
-        "."
+        ".",
       ],
-      "envFile": "${workspaceFolder}/node_modules/@tomjs/vite-plugin-electron/debug/.env",
-      "outputCapture": "std",
-      "console": "integratedTerminal"
+      "outFiles": [
+        "${workspaceFolder}/**/*.js",
+        "${workspaceFolder}/**/*.cjs",
+        "${workspaceFolder}/**/*.mjs",
+        "!**/node_modules/**"
+      ],
+      "envFile": "${workspaceFolder}/node_modules/@tomjs/vite-plugin-electron/debug/.env"
     },
   ]
 }
