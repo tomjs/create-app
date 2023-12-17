@@ -90,7 +90,3 @@ Run `Debug Main Process` through `vscode` to debug the main thread. For debuggin
   ]
 }
 ```
-
-## Reference project
-
-- [electron-vite-vue](https://github.com/electron-vite/electron-vite-vue)

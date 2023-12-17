@@ -95,7 +95,3 @@ Run `Debug Main Process` through `vscode` to debug the main thread. For debuggin
   ]
 }
 ```
-
-## Reference project
-
-- [electron-vite-react](https://github.com/electron-vite/electron-vite-react)
