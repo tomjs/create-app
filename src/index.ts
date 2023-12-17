@@ -70,7 +70,8 @@ const FRAMEWORKS: Framework[] = [
     color: blue,
     options: [
       { id: 'test', name: 'Test' },
-      { id: 'publish', name: 'Git Repository + NPM' },
+      { id: 'publish', name: 'Git Repository + NPM Publish' },
+      { id: 'ssh', name: 'Git init by SSH' },
       { id: 'vite', name: 'Vite Plugin' },
       { id: 'electron', name: 'Electron' },
       { id: 'examples', name: 'Examples' },
@@ -266,11 +267,15 @@ async function createApp() {
     email: 'name@github.com',
   };
 
-  function getGitUrl() {
+  function getGitUrl(ssh) {
     const regName = pkgName.startsWith('@')
       ? pkgName.split('/')[0].substring(1)
       : camelCase(gitUser.name);
-    const url = gitUserUrl || `https://github.com/${regName}`;
+    let url = gitUserUrl || `https://github.com/${regName}`;
+    if (ssh) {
+      url = url.replace(/http(s):\/\//g, 'git@').replace(/\//, ':');
+    }
+
     return `${url}/${pkgName.substring(pkgName.indexOf('/') + 1)}.git`;
   }
 
@@ -290,7 +295,7 @@ async function createApp() {
   if (shell.which('git')) {
     shell.exec(`cd ${root} && git init`);
     if (options.includes('publish')) {
-      shell.exec(`cd ${root} && git remote add origin ${getGitUrl()}`);
+      shell.exec(`cd ${root} && git remote add origin ${getGitUrl(options.includes('ssh'))}`);
     }
   }
 

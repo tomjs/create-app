@@ -22,7 +22,7 @@ export type FrameworkVariant = {
   customCommand?: string;
 };
 
-export type PromptOption = 'test' | 'publish' | 'vite' | 'electron' | 'examples';
+export type PromptOption = 'test' | 'publish' | 'ssh' | 'vite' | 'electron' | 'examples';
 
 export interface PromptResult {
   projectName?: string;
