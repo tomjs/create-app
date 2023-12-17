@@ -28,20 +28,20 @@ importers:
         specifier: ^18.4.3
         version: 18.4.3(typescript@5.3.3)
       '@tomjs/commitlint':
-        specifier: ^2.0.7
-        version: 2.0.7(@commitlint/cli@18.4.3)
+        specifier: ^2.0.8
+        version: 2.0.8(@commitlint/cli@18.4.3)
       '@tomjs/eslint':
-        specifier: ^1.1.3
-        version: 1.1.3(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
-      '@tomjs/prettier':
-        specifier: ^1.0.8
-        version: 1.0.8(prettier@3.1.1)
-      '@tomjs/stylelint':
-        specifier: ^2.0.1
-        version: 2.0.1(prettier@3.1.1)(stylelint@16.0.2)
-      '@tomjs/tsconfig':
         specifier: ^1.1.4
-        version: 1.1.4
+        version: 1.1.4(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+      '@tomjs/prettier':
+        specifier: ^1.0.9
+        version: 1.0.9(prettier@3.1.1)
+      '@tomjs/stylelint':
+        specifier: ^2.0.2
+        version: 2.0.2(prettier@3.1.1)(stylelint@16.0.2)
+      '@tomjs/tsconfig':
+        specifier: ^1.1.5
+        version: 1.1.5
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -972,7 +972,7 @@ packages:
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dependencies:
       cross-spawn: 7.0.3
-      fast-glob: 3.3.1
+      fast-glob: 3.3.2
       is-glob: 4.0.3
       open: 9.1.0
       picocolors: 1.0.0
@@ -1141,8 +1141,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@tomjs/commitlint@2.0.7(@commitlint/cli@18.4.3):
-    resolution: {integrity: sha512-/CFciahNrod1wDYYviBGbYZ9pcdcbMaIj3SKYbpgu0MbbqOLSlxJ0jMoHLQudxLldmbKMdjCSxAE807vr5VeWQ==}
+  /@tomjs/commitlint@2.0.8(@commitlint/cli@18.4.3):
+    resolution: {integrity: sha512-VTP6DJTC+dZ4q/DdNr/zUoC/L1bGZ2s85TawbLtUqvLF6MlomTk/N3fAKpZeBXWGoika29X90lNwGDIDMi0/qQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@commitlint/cli': '>=18.2.0'
@@ -1151,8 +1151,8 @@ packages:
       '@commitlint/config-conventional': 18.4.3
     dev: true
 
-  /@tomjs/eslint@1.1.3(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
-    resolution: {integrity: sha512-g8/wzLL1AvYL5LBjYxS4eLEAlm27A+dKY6ITj9xnM2zbzxDC6DegCgGj/BwdORuNuAdnHhaBnvaPI3DwAnncAw==}
+  /@tomjs/eslint@1.1.4(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
+    resolution: {integrity: sha512-suYQJcCjp/hx4fokJJhdNPp4VF9N+VFNRPp7E1R10M0xmbhB3GAB9TV3A1NHua8ZEpgy+vC1zkVPQZGIfsLDvw==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
       eslint: '>=8.0.0'
@@ -1187,8 +1187,8 @@ packages:
       - supports-color
     dev: true
 
-  /@tomjs/prettier@1.0.8(prettier@3.1.1):
-    resolution: {integrity: sha512-1eKoDGANpV44E0VK4lRJO1S72mMi0MU3jPpJqPdilPTVTDml7kI7R6uob9Uy7YyYpz+cvAPuW/cP7EUzOEPv5w==}
+  /@tomjs/prettier@1.0.9(prettier@3.1.1):
+    resolution: {integrity: sha512-mx7spzMwItV9F0k2bDV5JcIlUkRuZkwa0BFVRJZB2mYn5/204+kQaS0NAV06WAaW4tiRXxCxmYpZ9GPNGe8zjw==}
     engines: {node: '>=16'}
     peerDependencies:
       prettier: '>=3.0.0'
@@ -1196,9 +1196,9 @@ packages:
       prettier: 3.1.1
     dev: true
 
-  /@tomjs/stylelint@2.0.1(prettier@3.1.1)(stylelint@16.0.2):
-    resolution: {integrity: sha512-S5fC97SPuAJGlbppihCO9HimidqZnb9Y4ipJBAc6dsKwsXAERrxTlqOCepVP/GWkwdqxb591szGovyjSIgh5gQ==}
-    engines: {node: '>=16'}
+  /@tomjs/stylelint@2.0.2(prettier@3.1.1)(stylelint@16.0.2):
+    resolution: {integrity: sha512-jYQPpopf3nka7Y/SzZfZGlCmNP4Opofy6ydN+iTOlEvBubd75oLbaFPAzIk30a0nZ1chhh+Ngs+cxkSSW2AnPA==}
+    engines: {node: '>=18.2.0'}
     peerDependencies:
       prettier: '>=3.0.0'
       stylelint: ^16.0.2
@@ -1218,8 +1218,8 @@ packages:
       stylelint-prettier: 4.1.0(prettier@3.1.1)(stylelint@16.0.2)
     dev: true
 
-  /@tomjs/tsconfig@1.1.4:
-    resolution: {integrity: sha512-+QgJd5981dh0+bYDeVO8Q8vt08jmi3fLS5BAI7AY81+cyPr0o/BmAwrHuOBH0a/2CWRVI+A5oJNn5KCJMuempQ==}
+  /@tomjs/tsconfig@1.1.5:
+    resolution: {integrity: sha512-QAajHvGZ/0lx3WxOpQoqVVuHKjtQoiHaIzQ/AKhgUzGvfF2jL/PEKSfA/EyDVFZOCFRe6JVioYMFaRcDC5XL/w==}
     engines: {node: '>=16'}
     dependencies:
       '@vue/tsconfig': 0.4.0
@@ -1350,7 +1350,7 @@ packages:
       debug: 4.3.4
       eslint: 8.56.0
       graphemer: 1.4.0
-      ignore: 5.2.4
+      ignore: 5.3.0
       natural-compare: 1.4.0
       semver: 7.5.4
       ts-api-utils: 1.0.3(typescript@5.3.3)
@@ -2885,7 +2885,7 @@ packages:
       eslint: 8.56.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
-      fast-glob: 3.3.1
+      fast-glob: 3.3.2
       get-tsconfig: 4.7.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -3380,7 +3380,6 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.5
-    dev: true
 
   /fast-json-stable-stringify@2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
