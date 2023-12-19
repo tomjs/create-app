@@ -31,7 +31,7 @@
     "@tomjs/prettier": "^1.0.9",
     "@tomjs/stylelint": "^2.0.2",
     "@tomjs/tsconfig": "^1.1.5",
-    "@tomjs/vite-plugin-electron": "^1.6.0",
+    "@tomjs/vite-plugin-electron": "^1.7.0",
     "@types/node": "^18.19.3",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
