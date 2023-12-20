@@ -14,7 +14,7 @@
     "release": "cross-env VITE_ELECTRON_BUILDER=1 npm run build",
     "clean": "rimraf ./dist",
     "lint": "run-s lint:eslint lint:stylelint lint:prettier",
-    "lint:eslint": "eslint \"{src,electron,scripts}/**/*.{js,cjs,ts,vue}\" *.{js,cjs,ts} --fix --cache",
+    "lint:eslint": "eslint \"{src,electron,scripts}/**/*.{js,cjs,ts,tsx,vue}\" *.{js,cjs,ts} --fix --cache",
     "lint:stylelint": "stylelint \"{src,electron,scripts}/**/*.{css,scss,less,html}\" --fix --cache",
     "lint:prettier": "prettier --write .",
     "prepare": "husky install"
