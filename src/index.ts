@@ -3,7 +3,7 @@ import fs, { renameSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { blue, cyan, green, red, reset, yellow } from 'kolorist';
+import { lightBlue, lightCyan, lightGreen, lightYellow, red, reset, yellow } from 'kolorist';
 import { camelCase } from 'lodash-es';
 import minimist from 'minimist';
 import prompts from 'prompts';
@@ -31,43 +31,64 @@ const cwd = process.cwd();
 
 const FRAMEWORKS: Framework[] = [
   {
-    name: 'vue',
-    display: 'Vue',
-    color: green,
+    name: 'web',
+    display: 'Web App',
+    color: lightGreen,
     variants: [
       {
         name: 'vue',
-        display: 'Web',
-        color: blue,
+        display: 'Vue',
+        color: lightGreen,
       },
       {
-        name: 'electron-vue',
-        display: 'Electron',
-        color: yellow,
+        name: 'react',
+        display: 'React',
+        color: lightBlue,
       },
     ],
   },
   {
-    name: 'react',
-    display: 'React',
-    color: cyan,
+    name: 'electron',
+    display: 'Electron App',
+    color: lightBlue,
     variants: [
       {
-        name: 'react',
-        display: 'Web',
-        color: blue,
+        name: 'electron-vue',
+        display: 'Vue',
+        color: lightGreen,
       },
       {
         name: 'electron-react',
-        display: 'Electron',
-        color: yellow,
+        display: 'React',
+        color: lightBlue,
+      },
+    ],
+  },
+  {
+    name: 'vscode',
+    display: 'VSCode Extension',
+    color: lightCyan,
+    options: [
+      { id: 'publish', name: 'Git Repository + NPM Publish' },
+      { id: 'ssh', name: 'Git init by SSH' },
+    ],
+    variants: [
+      {
+        name: 'vscode-vue',
+        display: 'Vue',
+        color: lightGreen,
+      },
+      {
+        name: 'vscode-react',
+        display: 'React',
+        color: lightBlue,
       },
     ],
   },
   {
     name: 'node',
     display: 'Node',
-    color: blue,
+    color: lightYellow,
     options: [
       { id: 'test', name: 'Test' },
       { id: 'publish', name: 'Git Repository + NPM Publish' },
@@ -267,7 +288,7 @@ async function createApp() {
     email: 'name@github.com',
   };
 
-  function getGitUrl(ssh) {
+  function getGitUrl(ssh = false) {
     const regName = pkgName.startsWith('@')
       ? pkgName.split('/')[0].substring(1)
       : camelCase(gitUser.name);
@@ -366,6 +387,14 @@ async function createApp() {
         pkg.author = Object.assign(pkg.author, gitUser);
       }
 
+      pkg.publishConfig = {
+        access: 'public',
+        registry: 'https://registry.npmjs.org/',
+      };
+
+      pkg.repository ??= {
+        type: 'git',
+      };
       pkg.repository.url = `git+${getGitUrl()}`;
     } else {
       delete pkg.author;
