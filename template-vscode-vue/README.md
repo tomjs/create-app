@@ -27,7 +27,7 @@ vite + extension + vue
 
 ## Debug
 
-Run `Run Extension` through `vscode` to debug. For debugging tools, refer to [Official Documentation](https://code.visualstudio.com/docs/editor/debugging)
+Run `Debug Extension` through `vscode` to debug. For debugging tools, refer to [Official Documentation](https://code.visualstudio.com/docs/editor/debugging)
 
 `launch.json` is configured as follows:
 
@@ -36,7 +36,7 @@ Run `Run Extension` through `vscode` to debug. For debugging tools, refer to [Of
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run Extension",
+      "name": "Debug Extension",
       "type": "extensionHost",
       "request": "launch",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],

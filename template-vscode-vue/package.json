@@ -38,17 +38,17 @@
   },
   "dependencies": {
     "@vscode/webview-ui-toolkit": "^1.4.0",
-    "vue": "^3.3.12"
+    "vue": "^3.3.13"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
-    "@tomjs/commitlint": "^2.0.8",
-    "@tomjs/eslint": "^1.1.4",
-    "@tomjs/prettier": "^1.0.9",
-    "@tomjs/stylelint": "^2.0.2",
-    "@tomjs/tsconfig": "^1.1.5",
-    "@tomjs/vite-plugin-vscode": "^1.0.0",
-    "@tomjs/vscode-extension-webview": "^1.0.1",
+    "@tomjs/commitlint": "^2.1.1",
+    "@tomjs/eslint": "^1.2.1",
+    "@tomjs/prettier": "^1.1.1",
+    "@tomjs/stylelint": "^2.1.1",
+    "@tomjs/tsconfig": "^1.2.1",
+    "@tomjs/vite-plugin-vscode": "^1.1.0",
+    "@tomjs/vscode-extension-webview": "^1.1.0",
     "@types/node": "^18.19.3",
     "@types/vscode": "^1.85.0",
     "@types/vscode-webview": "^1.57.4",

@@ -4,7 +4,7 @@
 
 ![npm](https://img.shields.io/npm/v/@tomjs/create-app) ![node-current (scoped)](https://img.shields.io/node/v/@tomjs/create-app) ![NPM](https://img.shields.io/npm/l/@tomjs/create-app)
 
-> 创建基于 [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomgao365/tomjs) 的 web 应用。
+> 创建基于 [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomjs) 的 web 应用。
 
 ## 创建项目
 

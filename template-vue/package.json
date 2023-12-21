@@ -17,15 +17,15 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "vue": "^3.3.12"
+    "vue": "^3.3.13"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
-    "@tomjs/commitlint": "^2.0.8",
-    "@tomjs/eslint": "^1.1.4",
-    "@tomjs/prettier": "^1.0.9",
-    "@tomjs/stylelint": "^2.0.2",
-    "@tomjs/tsconfig": "^1.1.5",
+    "@tomjs/commitlint": "^2.1.1",
+    "@tomjs/eslint": "^1.2.1",
+    "@tomjs/prettier": "^1.1.1",
+    "@tomjs/stylelint": "^2.1.1",
+    "@tomjs/tsconfig": "^1.2.1",
     "@types/node": "^18.19.3",
     "@vitejs/plugin-vue": "^4.5.2",
     "cross-env": "^7.0.3",

@@ -20,18 +20,18 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@tomjs/electron-devtools-installer": "^2.0.5",
+    "@tomjs/electron-devtools-installer": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
-    "@tomjs/commitlint": "^2.0.8",
-    "@tomjs/eslint": "^1.1.4",
-    "@tomjs/prettier": "^1.0.9",
-    "@tomjs/stylelint": "^2.0.2",
-    "@tomjs/tsconfig": "^1.1.5",
-    "@tomjs/vite-plugin-electron": "^1.7.0",
+    "@tomjs/commitlint": "^2.1.1",
+    "@tomjs/eslint": "^1.2.1",
+    "@tomjs/prettier": "^1.1.1",
+    "@tomjs/stylelint": "^2.1.1",
+    "@tomjs/tsconfig": "^1.2.1",
+    "@tomjs/vite-plugin-electron": "^1.8.0",
     "@types/node": "^18.19.3",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",

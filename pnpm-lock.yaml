@@ -28,20 +28,20 @@ importers:
         specifier: ^18.4.3
         version: 18.4.3(typescript@5.3.3)
       '@tomjs/commitlint':
-        specifier: ^2.0.8
-        version: 2.0.8(@commitlint/cli@18.4.3)
+        specifier: ^2.1.1
+        version: 2.1.1(@commitlint/cli@18.4.3)
       '@tomjs/eslint':
-        specifier: ^1.1.4
-        version: 1.1.4(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+        specifier: ^1.2.1
+        version: 1.2.1(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
       '@tomjs/prettier':
-        specifier: ^1.0.9
-        version: 1.0.9(prettier@3.1.1)
+        specifier: ^1.1.1
+        version: 1.1.1(prettier@3.1.1)
       '@tomjs/stylelint':
-        specifier: ^2.0.2
-        version: 2.0.2(prettier@3.1.1)(stylelint@16.0.2)
+        specifier: ^2.1.1
+        version: 2.1.1(prettier@3.1.1)(stylelint@16.0.2)
       '@tomjs/tsconfig':
-        specifier: ^1.1.5
-        version: 1.1.5
+        specifier: ^1.2.1
+        version: 1.2.1
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1141,8 +1141,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@tomjs/commitlint@2.0.8(@commitlint/cli@18.4.3):
-    resolution: {integrity: sha512-VTP6DJTC+dZ4q/DdNr/zUoC/L1bGZ2s85TawbLtUqvLF6MlomTk/N3fAKpZeBXWGoika29X90lNwGDIDMi0/qQ==}
+  /@tomjs/commitlint@2.1.1(@commitlint/cli@18.4.3):
+    resolution: {integrity: sha512-Iow/FI++T6utwuT9RaacxCg8hNwV44/Th3lvB3/T+2HaGqAReT+l2fGmU1kIHX5FJxMi7G13SXES6vtcLJC8Dw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@commitlint/cli': '>=18.2.0'
@@ -1151,8 +1151,8 @@ packages:
       '@commitlint/config-conventional': 18.4.3
     dev: true
 
-  /@tomjs/eslint@1.1.4(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
-    resolution: {integrity: sha512-suYQJcCjp/hx4fokJJhdNPp4VF9N+VFNRPp7E1R10M0xmbhB3GAB9TV3A1NHua8ZEpgy+vC1zkVPQZGIfsLDvw==}
+  /@tomjs/eslint@1.2.1(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3):
+    resolution: {integrity: sha512-+qI6q1KlPUujOkmyE17E0lZLQCT9f68755IT9PKHsW3XJjA2g399bp/+kGLRGNmHo1mjtq+ylMUU0JoufmyfLw==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
       eslint: '>=8.0.0'
@@ -1187,8 +1187,8 @@ packages:
       - supports-color
     dev: true
 
-  /@tomjs/prettier@1.0.9(prettier@3.1.1):
-    resolution: {integrity: sha512-mx7spzMwItV9F0k2bDV5JcIlUkRuZkwa0BFVRJZB2mYn5/204+kQaS0NAV06WAaW4tiRXxCxmYpZ9GPNGe8zjw==}
+  /@tomjs/prettier@1.1.1(prettier@3.1.1):
+    resolution: {integrity: sha512-pGARDr18xFu87kGH8lcnUKkriOBe9BU13d0N2tfcn0BhPvFDfvJeOwONKKDKxXsLW8rHHLsZO5rK6DY3i0OUYQ==}
     engines: {node: '>=16'}
     peerDependencies:
       prettier: '>=3.0.0'
@@ -1196,8 +1196,8 @@ packages:
       prettier: 3.1.1
     dev: true
 
-  /@tomjs/stylelint@2.0.2(prettier@3.1.1)(stylelint@16.0.2):
-    resolution: {integrity: sha512-jYQPpopf3nka7Y/SzZfZGlCmNP4Opofy6ydN+iTOlEvBubd75oLbaFPAzIk30a0nZ1chhh+Ngs+cxkSSW2AnPA==}
+  /@tomjs/stylelint@2.1.1(prettier@3.1.1)(stylelint@16.0.2):
+    resolution: {integrity: sha512-5svG5riIPckyWx2nd0ysT/ZmSjazUW8OQCiPFSulgaRZ08HzAz+P9zxT2Rj7JBxItE2S03RA1mpv3l03pQ8f8Q==}
     engines: {node: '>=18.2.0'}
     peerDependencies:
       prettier: '>=3.0.0'
@@ -1218,8 +1218,8 @@ packages:
       stylelint-prettier: 4.1.0(prettier@3.1.1)(stylelint@16.0.2)
     dev: true
 
-  /@tomjs/tsconfig@1.1.5:
-    resolution: {integrity: sha512-QAajHvGZ/0lx3WxOpQoqVVuHKjtQoiHaIzQ/AKhgUzGvfF2jL/PEKSfA/EyDVFZOCFRe6JVioYMFaRcDC5XL/w==}
+  /@tomjs/tsconfig@1.2.1:
+    resolution: {integrity: sha512-BNPsV8Ai8fgNCx3vlCPwC+GkzCRslC//NiEkpbdd0Lz8apSyrFs8glYlD8ezT2mUOo3mR7TX+/cg9iTejjoiWw==}
     engines: {node: '>=16'}
     dependencies:
       '@vue/tsconfig': 0.4.0

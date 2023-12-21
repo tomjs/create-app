@@ -4,7 +4,7 @@
 
 **English** | [中文](./README.zh_CN.md)
 
-> Create a web application based on [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomgao365/tomjs).
+> Create a web application based on [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomjs).
 
 ## Creating a Project
 
