@@ -276,7 +276,10 @@ async function createApp() {
 
     for (const file of files) {
       const destFile = file.startsWith('_') ? file.replace('_', '.') : file;
-      if (isNode && !options.includes('examples') && file.includes('stylelint')) {
+      if (
+        ((isNode && !options.includes('examples')) || template === 'vscode') &&
+        file.includes('stylelint')
+      ) {
         continue;
       }
 
