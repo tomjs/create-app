@@ -74,6 +74,11 @@ const FRAMEWORKS: Framework[] = [
     ],
     variants: [
       {
+        name: 'vscode',
+        display: 'Base',
+        color: lightYellow,
+      },
+      {
         name: 'vscode-vue',
         display: 'Vue',
         color: lightGreen,
@@ -384,7 +389,7 @@ async function createApp() {
       if (shell.which('git')) {
         gitUser.name = getGitInfo('user.name') || os.userInfo().username;
         gitUser.email = getGitInfo('user.email') || '';
-        pkg.author = Object.assign(pkg.author, gitUser);
+        pkg.author = Object.assign({}, pkg.author, gitUser);
       }
 
       pkg.publishConfig = {

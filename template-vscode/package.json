@@ -1,12 +1,17 @@
 {
   "name": "template-vscode",
   "version": "0.0.0",
-  "description": "vite + vscode + react",
+  "description": "vscode extension template",
+  "author": {
+    "name": "name",
+    "email": "name@github.com"
+  },
+  "license": "MIT",
   "engines": {
     "node": ">=14",
     "vscode": "^1.56.0"
   },
-  "main": "dist/extension/index.js",
+  "main": "dist/index.js",
   "activationEvents": [
     "onCommand:hello-world.showHelloWorld"
   ],
@@ -27,35 +32,22 @@
     "url": "git+https://github.com/xxx/template.git"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "npm run clean && vite build",
-    "clean": "rimraf ./dist",
-    "lint": "run-s lint:eslint lint:stylelint lint:prettier",
-    "lint:eslint": "eslint \"{src,extension,scripts}/**/*.{js,cjs,ts,tsx}\" *.{js,cjs,ts} --fix --cache",
-    "lint:stylelint": "stylelint \"{src,extension,scripts}/**/*.{css,scss,less,html}\" --fix --cache",
+    "dev": "tsup --watch",
+    "build": "tsup --minify",
+    "lint": "run-s lint:eslint lint:prettier",
+    "lint:eslint": "eslint \"{src,scripts}/**/*.{js,cjs,ts}\" *.{js,cjs,ts} --fix --cache",
     "lint:prettier": "prettier --write .",
     "prepare": "husky install"
-  },
-  "dependencies": {
-    "@vscode/webview-ui-toolkit": "^1.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@tomjs/commitlint": "^2.1.1",
     "@tomjs/eslint": "^1.2.1",
     "@tomjs/prettier": "^1.1.1",
-    "@tomjs/stylelint": "^2.1.1",
     "@tomjs/tsconfig": "^1.2.1",
-    "@tomjs/vite-plugin-vscode": "^1.1.0",
-    "@tomjs/vscode-extension-webview": "^1.1.0",
     "@types/node": "^18.19.3",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.18",
     "@types/vscode": "^1.85.0",
-    "@types/vscode-webview": "^1.57.4",
-    "@vitejs/plugin-react-swc": "^3.5.0",
+    "@vitejs/plugin-vue": "^4.5.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "husky": "^8.0.3",
@@ -63,9 +55,8 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^3.1.1",
     "rimraf": "^5.0.5",
-    "stylelint": "^16.0.2",
+    "tsup": "^8.0.1",
     "tsx": "^4.7.0",
-    "typescript": "~5.3.3",
-    "vite": "^5.0.10"
+    "typescript": "~5.3.3"
   }
 }

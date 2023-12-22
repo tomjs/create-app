@@ -1,5 +1,5 @@
 {
-  "name": "vscode-app",
+  "name": "template-vscode",
   "version": "0.0.0",
   "description": "vite + vscode + vue",
   "engines": {
