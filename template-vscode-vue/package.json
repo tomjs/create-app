@@ -48,7 +48,7 @@
     "@tomjs/stylelint": "^2.1.1",
     "@tomjs/tsconfig": "^1.2.1",
     "@tomjs/vite-plugin-vscode": "^1.1.0",
-    "@tomjs/vscode-extension-webview": "^1.1.0",
+    "@tomjs/vscode-extension-webview": "^1.1.1",
     "@types/node": "^18.19.3",
     "@types/vscode": "^1.85.0",
     "@types/vscode-webview": "^1.57.4",
