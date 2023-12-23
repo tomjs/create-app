@@ -46,6 +46,9 @@ Support templates:
 - electron-vue
 - electron-react
 - node
+- vscode
+- vscode-vue
+- vscode-react
 
 ## Reference project
 

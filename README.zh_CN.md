@@ -46,6 +46,9 @@ npm create @tomjs/app@latest my-app -- --template vue
 - electron-vue
 - electron-react
 - node
+- vscode
+- vscode-vue
+- vscode-react
 
 ## 参考项目
 
