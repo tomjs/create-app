@@ -44,6 +44,7 @@
   },
   "scripts": {
     "dev": "tsup --watch",
+    "debug": "cross-env VSCODE_DEBUG=1 tsup --watch",
     "build": "tsup --minify",
     "lint": "run-s lint:eslint lint:stylelint lint:prettier",
     "lint:eslint": "eslint \"{src,template-*}/**/*.{js,cjs,ts}\" *.{js,cjs,ts} --fix --cache",
@@ -71,6 +72,7 @@
     "@types/node": "^18.19.3",
     "@types/prompts": "^2.4.9",
     "@types/shelljs": "^0.8.15",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",

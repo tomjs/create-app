@@ -29,6 +29,8 @@ import {
 const argv = formatArgs(minimist<Args>(process.argv.slice(2), { string: ['_'] }));
 const cwd = process.cwd();
 
+const ALL_PROMPT_OPTIONS: PromptOption[] = ['test', 'vite', 'electron', 'examples'];
+
 const FRAMEWORKS: Framework[] = [
   {
     name: 'web',
@@ -252,7 +254,10 @@ async function createApp() {
 
   const options = result.options || [];
 
-  const root = path.join(cwd, pureTargetDir);
+  let root = path.join(cwd, pureTargetDir);
+  if (process.env.VSCODE_DEBUG) {
+    root = path.join(cwd, '.temp', pureTargetDir);
+  }
 
   if (overwrite) {
     emptyDir(root);
@@ -348,6 +353,20 @@ async function createApp() {
    * replace template name and user info
    */
   function handleReplaceContent() {
+    replaceOptionFiles('lintstagedrc.cjs', 'jest.config', 'tsconfig.json', 'tsup.config.ts');
+
+    const isDevPkg = options.find(s => ['vite'].includes(s));
+    const pkgInstall = [
+      '#pnpm',
+      `pnpm add ${pkgName}${isDevPkg ? ' -D' : ''}`,
+      '',
+      '#yarn',
+      `yarn add ${pkgName}${isDevPkg ? ' -D' : ''}`,
+      '',
+      '#npm',
+      `npm i ${pkgName}${isDevPkg ? ' --save-dev' : ''}`,
+    ].join('\n');
+
     ['LICENSE', 'README.md', 'README.zh_CN.md'].forEach(name => {
       const file = path.join(root, name);
       if (!options.includes('publish')) {
@@ -367,6 +386,7 @@ async function createApp() {
       const content = fs
         .readFileSync(file, 'utf-8')
         .replace(new RegExp('{{pkg.name}}', 'g'), pkgName)
+        .replace(new RegExp('{{pkg.install}}', 'g'), pkgInstall)
         .replace(new RegExp('{{user.name}}', 'g'), gitUser.name)
         .replace(new RegExp('{{user.email}}', 'g'), gitUser.email);
 
@@ -433,23 +453,30 @@ async function createApp() {
     const filePath = path.join(root, fileName);
     const propFilePath = path.join(root, propName);
 
+    if (!fs.existsSync(propFilePath)) {
+      return;
+    }
+
     if (options.includes(option)) {
       rmSync(filePath);
-      if (fs.existsSync(propFilePath)) {
-        renameSync(propFilePath, filePath);
-      }
+      renameSync(propFilePath, filePath);
     } else {
       rmSync(propFilePath);
     }
+  }
+
+  function replaceOptionFiles(...fileNames: string[]) {
+    fileNames.forEach(fileName => {
+      ALL_PROMPT_OPTIONS.forEach(option => {
+        replaceOptionFile(fileName, option);
+      });
+    });
   }
 
   /**
    * handle test
    */
   function handleTest() {
-    replaceOptionFile('tsconfig.json', 'test');
-    replaceOptionFile('jest.config.cjs', 'electron');
-
     if (options.includes('test')) {
       return;
     }
@@ -475,8 +502,6 @@ async function createApp() {
 
   function handleExample() {
     // .lintstagedrc.cjs
-    replaceOptionFile('.lintstagedrc.cjs', 'examples');
-
     if (!options.includes('examples')) {
       // package.json
       const pkg = readJson(path.join(root, `package.json`));

@@ -5,6 +5,7 @@ export default defineConfig(options => {
     entry: ['src/index.ts'],
     format: ['esm', 'cjs'],
     target: ['es2021', 'node16'],
+    external: ['vite'],
     shims: true,
     clean: true,
     sourcemap: !!options.watch,

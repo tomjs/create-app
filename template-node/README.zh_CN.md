@@ -9,12 +9,5 @@
 ## 安装
 
 ```bash
-# pnpm
-pnpm add {{pkg.name}} -D
-
-# yarn
-yarn add {{pkg.name}} -D
-
-# npm
-npm i {{pkg.name}} --save-dev
+{{pkg.install}}
 ```
