@@ -47,7 +47,7 @@
     "@tomjs/tsconfig": "^1.2.1",
     "@types/node": "^18.19.3",
     "@types/vscode": "^1.85.0",
-    "@vitejs/plugin-vue": "^4.5.2",
+    "@vitejs/plugin-vue": "^5.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "husky": "^8.0.3",
