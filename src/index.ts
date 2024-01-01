@@ -355,7 +355,7 @@ async function createApp() {
    * replace template name and user info
    */
   function handleReplaceContent() {
-    replaceOptionFiles('lintstagedrc.cjs', 'jest.config.cjs', 'tsconfig.json', 'tsup.config.ts');
+    replaceOptionFiles('.lintstagedrc.cjs', 'jest.config.cjs', 'tsconfig.json', 'tsup.config.ts');
 
     const isDevPkg = options.find(s => ['vite'].includes(s));
     const pkgInstall = [
@@ -403,6 +403,18 @@ async function createApp() {
           delete pkg[key][dep];
         }
       });
+    });
+  }
+
+  function removeFiles(...files: string[]) {
+    if (!Array.isArray(files) || files.length === 0) {
+      return;
+    }
+    files.forEach(s => {
+      const file = path.join(root, s);
+      if (fs.existsSync(file)) {
+        rmSync(file);
+      }
     });
   }
 
@@ -479,26 +491,37 @@ async function createApp() {
    * handle test
    */
   function handleTest() {
-    if (options.includes('test')) {
-      return;
-    }
-
-    // test config and folder
-    fs.readdirSync(root)
-      .filter(s => s.startsWith('jest.config') || ['test'].includes(s))
-      .forEach(file => {
-        rmSync(path.join(root, file));
-      });
-
     // package.json
     const pkgPath = path.join(root, `package.json`);
     const pkg = readJson(pkgPath);
+
+    if (options.includes('test')) {
+      // remove vitest
+      if (options.includes('electron')) {
+        removeDeps(pkg, 'vitest');
+        writeJson(pkgPath, pkg);
+
+        const testFilePath = path.join(root, 'test/simple.test.ts');
+        if (fs.existsSync(testFilePath)) {
+          const content = fs.readFileSync(testFilePath, { encoding: 'utf8' });
+          fs.writeFileSync(
+            testFilePath,
+            content.replace(`import { describe, expect, it } from 'vitest';`, ''),
+            { encoding: 'utf8' },
+          );
+        }
+      } else {
+        removeFiles('jest.config.cjs');
+      }
+      return;
+    }
+
     delete pkg.scripts.test;
     pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',test', '');
 
     // remove jest deps
-    removeDeps(pkg, 'jest');
-
+    removeDeps(pkg, 'jest', 'vitest');
+    removeFiles('.lintstagedrc.cjs', 'jest.config.cjs', 'test');
     writeJson(pkgPath, pkg);
   }
 
