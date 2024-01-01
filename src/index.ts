@@ -121,7 +121,11 @@ function getGitInfo(name: string) {
 }
 
 function getPureTargetDir(targetDir: string) {
-  return targetDir.length > 1 ? targetDir.substring(targetDir.indexOf('/') + 1) : targetDir;
+  let target = targetDir.length > 1 ? targetDir.substring(targetDir.indexOf('/') + 1) : targetDir;
+  if (process.env.VSCODE_DEBUG) {
+    target = path.join('../.create-app', target);
+  }
+  return target;
 }
 
 async function createApp() {
@@ -143,6 +147,7 @@ async function createApp() {
         initial: defaultTargetDir,
         onState: state => {
           targetDir = formatTargetDir(state.value) || defaultTargetDir;
+
           pureTargetDir = getPureTargetDir(targetDir);
         },
       },
@@ -254,10 +259,7 @@ async function createApp() {
 
   const options = result.options || [];
 
-  let root = path.join(cwd, pureTargetDir);
-  if (process.env.VSCODE_DEBUG) {
-    root = path.join(cwd, '.temp', pureTargetDir);
-  }
+  const root = path.join(cwd, pureTargetDir);
 
   if (overwrite) {
     emptyDir(root);
@@ -353,7 +355,7 @@ async function createApp() {
    * replace template name and user info
    */
   function handleReplaceContent() {
-    replaceOptionFiles('lintstagedrc.cjs', 'jest.config', 'tsconfig.json', 'tsup.config.ts');
+    replaceOptionFiles('lintstagedrc.cjs', 'jest.config.cjs', 'tsconfig.json', 'tsup.config.ts');
 
     const isDevPkg = options.find(s => ['vite'].includes(s));
     const pkgInstall = [
