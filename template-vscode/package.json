@@ -40,12 +40,12 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.3",
+    "@commitlint/cli": "^18.4.4",
     "@tomjs/commitlint": "^2.1.1",
     "@tomjs/eslint": "^1.2.1",
     "@tomjs/prettier": "^1.1.1",
     "@tomjs/tsconfig": "^1.2.1",
-    "@types/node": "^18.19.4",
+    "@types/node": "^18.19.5",
     "@types/vscode": "^1.85.0",
     "@vitejs/plugin-vue": "^5.0.2",
     "cross-env": "^7.0.3",

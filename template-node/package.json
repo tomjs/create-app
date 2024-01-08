@@ -50,18 +50,18 @@
     "kolorist": "^1.8.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.3",
+    "@commitlint/cli": "^18.4.4",
     "@jest/globals": "^29.7.0",
-    "@kayahr/jest-electron-runner": "^29.10.0",
+    "@kayahr/jest-electron-runner": "^29.11.0",
     "@tomjs/commitlint": "^2.1.1",
     "@tomjs/eslint": "^1.2.1",
     "@tomjs/prettier": "^1.1.1",
     "@tomjs/stylelint": "^2.1.1",
     "@tomjs/tsconfig": "^1.2.1",
     "@types/jest": "^29.5.11",
-    "@types/node": "^18.19.4",
+    "@types/node": "^18.19.5",
     "cross-env": "^7.0.3",
-    "electron": "^28.1.0",
+    "electron": "^28.1.1",
     "eslint": "^8.56.0",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
@@ -75,7 +75,7 @@
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "~5.3.3",
-    "vite": "^5.0.10",
-    "vitest": "^1.1.1"
+    "vite": "^5.0.11",
+    "vitest": "^1.1.3"
   }
 }

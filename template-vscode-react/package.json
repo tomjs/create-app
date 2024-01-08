@@ -42,16 +42,16 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.3",
+    "@commitlint/cli": "^18.4.4",
     "@tomjs/commitlint": "^2.1.1",
     "@tomjs/eslint": "^1.2.1",
     "@tomjs/prettier": "^1.1.1",
     "@tomjs/stylelint": "^2.1.1",
     "@tomjs/tsconfig": "^1.2.1",
-    "@tomjs/vite-plugin-vscode": "^1.2.0",
+    "@tomjs/vite-plugin-vscode": "^1.3.2",
     "@tomjs/vscode-extension-webview": "^1.2.0",
-    "@types/node": "^18.19.4",
-    "@types/react": "^18.2.46",
+    "@types/node": "^18.19.5",
+    "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "@types/vscode": "^1.85.0",
     "@types/vscode-webview": "^1.57.4",
@@ -66,6 +66,6 @@
     "stylelint": "^16.1.0",
     "tsx": "^4.7.0",
     "typescript": "~5.3.3",
-    "vite": "^5.0.10"
+    "vite": "^5.0.11"
   }
 }
