@@ -6,8 +6,8 @@
     "node"
   ],
   "author": {
-    "name": "{{git.name}}",
-    "email": "{{git.email}}"
+    "name": "{{user.name}}",
+    "email": "{{user.email}}"
   },
   "license": "MIT",
   "main": "./dist/index.js",

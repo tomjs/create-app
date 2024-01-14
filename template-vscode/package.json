@@ -1,7 +1,9 @@
 {
   "name": "{{pkg.name}}",
+  "displayName": "{{pkg.name}}",
+  "description": "",
   "version": "0.0.0",
-  "description": "vscode extension template",
+  "publisher": "{{git.org}}",
   "license": "MIT",
   "engines": {
     "node": ">=14",

@@ -306,25 +306,28 @@ async function createApp() {
 
   const textVars = {
     'pkg.name': pkgName,
-    'git.name': gitUser.name,
-    'git.email': gitUser.email,
+    'user.name': gitUser.name,
+    'user.email': gitUser.email,
+    'git.org': getOrgName(),
     'git.url': getGitUrl(),
     'git.fullUrl': getFullGitUrl(),
   };
 
   function getGitUrl() {
-    const regName = pkgName.startsWith('@')
-      ? pkgName.split('/')[0].substring(1)
-      : camelCase(gitUser.name);
-    const url = gitUserUrl || `https://github.com/${regName}`;
+    const url = gitUserUrl || `https://github.com/${getOrgName()}`;
     return `${url}/${pkgName.substring(pkgName.indexOf('/') + 1)}`;
   }
 
+  function getOrgName() {
+    if (gitUserUrl) {
+      return gitUserUrl.substring(gitUserUrl.lastIndexOf('/') + 1);
+    }
+
+    return pkgName.startsWith('@') ? pkgName.split('/')[0].substring(1) : camelCase(gitUser.name);
+  }
+
   function getFullGitUrl(ssh = false) {
-    const regName = pkgName.startsWith('@')
-      ? pkgName.split('/')[0].substring(1)
-      : camelCase(gitUser.name);
-    let url = gitUserUrl || `https://github.com/${regName}`;
+    let url = gitUserUrl || `https://github.com/${getOrgName()}`;
     if (ssh) {
       url = url.replace(/http(s):\/\//g, 'git@').replace(/\//, ':');
     }

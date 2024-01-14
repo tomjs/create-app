@@ -46,6 +46,7 @@ tsconfig.tsbuildinfo
 *.tar.*
 *.tgz
 *.zip
+*.vsix
 
 # IDEA
 .idea
