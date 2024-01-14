@@ -55,7 +55,7 @@
     "@tomjs/vite-plugin-vscode": "^1.3.2",
     "@tomjs/vscode-extension-webview": "^1.2.0",
     "@types/node": "^18.19.6",
-    "@types/vscode": "^1.85.0",
+    "@types/vscode": "^1.56.0",
     "@types/vscode-webview": "^1.57.4",
     "@vitejs/plugin-vue": "^5.0.3",
     "cross-env": "^7.0.3",
