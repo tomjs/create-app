@@ -19,6 +19,7 @@ import {
   isEmpty,
   isValidPackageName,
   pkgFromUserAgent,
+  readFile,
   readJson,
   rmSync,
   toValidPackageName,
@@ -299,11 +300,27 @@ async function createApp() {
 
   // get git user info
   const gitUser = {
-    name: 'UserName',
-    email: 'name@github.com',
+    name: getGitInfo('user.name') || os.userInfo().username,
+    email: getGitInfo('user.email') || '',
   };
 
-  function getGitUrl(ssh = false) {
+  const textVars = {
+    'pkg.name': pkgName,
+    'git.name': gitUser.name,
+    'git.email': gitUser.email,
+    'git.url': getGitUrl(),
+    'git.fullUrl': getFullGitUrl(),
+  };
+
+  function getGitUrl() {
+    const regName = pkgName.startsWith('@')
+      ? pkgName.split('/')[0].substring(1)
+      : camelCase(gitUser.name);
+    const url = gitUserUrl || `https://github.com/${regName}`;
+    return `${url}/${pkgName.substring(pkgName.indexOf('/') + 1)}`;
+  }
+
+  function getFullGitUrl(ssh = false) {
     const regName = pkgName.startsWith('@')
       ? pkgName.split('/')[0].substring(1)
       : camelCase(gitUser.name);
@@ -331,7 +348,7 @@ async function createApp() {
   if (shell.which('git')) {
     shell.exec(`cd ${root} && git init`);
     if (options.includes('publish')) {
-      shell.exec(`cd ${root} && git remote add origin ${getGitUrl(options.includes('ssh'))}`);
+      shell.exec(`cd ${root} && git remote add origin ${getFullGitUrl(options.includes('ssh'))}`);
     }
   }
 
@@ -385,14 +402,17 @@ async function createApp() {
       if (!fs.existsSync(file)) {
         return;
       }
-      const content = fs
-        .readFileSync(file, 'utf-8')
-        .replace(new RegExp('{{pkg.name}}', 'g'), pkgName)
-        .replace(new RegExp('{{pkg.install}}', 'g'), pkgInstall)
-        .replace(new RegExp('{{user.name}}', 'g'), gitUser.name)
-        .replace(new RegExp('{{user.email}}', 'g'), gitUser.email);
 
-      fs.writeFileSync(file, content);
+      const newTextVars = Object.assign({}, textVars, {
+        'pkg.install': pkgInstall,
+      });
+
+      let content = fs.readFileSync(file, 'utf-8');
+      Object.keys(newTextVars).forEach(key => {
+        content = content.replace(new RegExp('{{' + key + '}}', 'g'), newTextVars[key]);
+      });
+
+      fs.writeFileSync(file, content, 'utf8');
     });
   }
 
@@ -419,26 +439,11 @@ async function createApp() {
   }
 
   function handlePkgJson() {
-    const pkg = readJson(path.join(root, `package.json`));
+    const pkgPath = path.join(root, `package.json`);
+    const pkg = readJson(pkgPath);
     pkg.name = pkgName;
 
-    if (options.includes('publish')) {
-      if (shell.which('git')) {
-        gitUser.name = getGitInfo('user.name') || os.userInfo().username;
-        gitUser.email = getGitInfo('user.email') || '';
-        pkg.author = Object.assign({}, pkg.author, gitUser);
-      }
-
-      pkg.publishConfig = {
-        access: 'public',
-        registry: 'https://registry.npmjs.org/',
-      };
-
-      pkg.repository ??= {
-        type: 'git',
-      };
-      pkg.repository.url = `git+${getGitUrl()}`;
-    } else {
+    if (!options.includes('publish')) {
       delete pkg.author;
       delete pkg.publishConfig;
       delete pkg.repository;
@@ -457,7 +462,14 @@ async function createApp() {
       }
     }
 
-    writeJson(path.join(root, 'package.json'), pkg);
+    writeJson(pkgPath, pkg);
+
+    let text = readFile(pkgPath);
+    Object.keys(textVars).forEach(key => {
+      text = text.replace(new RegExp('{{' + key + '}}', 'g'), textVars[key]);
+    });
+
+    fs.writeFileSync(pkgPath, text);
   }
 
   function replaceOptionFile(fileName: string, option: PromptOption) {

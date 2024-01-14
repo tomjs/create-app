@@ -1,11 +1,7 @@
 {
-  "name": "template-vscode",
+  "name": "{{pkg.name}}",
   "version": "0.0.0",
   "description": "vscode extension template",
-  "author": {
-    "name": "name",
-    "email": "name@github.com"
-  },
   "license": "MIT",
   "engines": {
     "node": ">=14",
@@ -23,13 +19,18 @@
       }
     ]
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xxx/template.git"
+    "url": "git+{{git.url}}.git"
+  },
+  "bugs": {
+    "url": "git+{{git.url}}/issues"
+  },
+  "homepage": "{{git.url}}/blob/main/README.md",
+  "icon": "images/icon.png",
+  "vsce": {
+    "dependencies": false,
+    "yarn": false
   },
   "scripts": {
     "dev": "tsup --watch",

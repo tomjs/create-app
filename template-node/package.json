@@ -6,8 +6,8 @@
     "node"
   ],
   "author": {
-    "name": "name",
-    "email": "name@github.com"
+    "name": "{{git.name}}",
+    "email": "{{git.email}}"
   },
   "license": "MIT",
   "main": "./dist/index.js",
@@ -32,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xxx/node-template.git"
+    "url": "git+{{git.url}}.git"
   },
   "scripts": {
     "dev": "tsup --watch",

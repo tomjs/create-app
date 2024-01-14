@@ -1,7 +1,8 @@
 {
-  "name": "template-vscode",
+  "name": "{{pkg.name}}",
   "version": "0.0.0",
   "description": "vite + vscode + react",
+  "keywords": [],
   "engines": {
     "node": ">=14",
     "vscode": "^1.56.0"
@@ -18,13 +19,18 @@
       }
     ]
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xxx/template.git"
+    "url": "git+{{git.url}}.git"
+  },
+  "bugs": {
+    "url": "git+{{git.url}}/issues"
+  },
+  "homepage": "{{git.url}}/blob/main/README.md",
+  "icon": "images/icon.png",
+  "vsce": {
+    "dependencies": false,
+    "yarn": false
   },
   "scripts": {
     "dev": "vite",

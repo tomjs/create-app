@@ -93,6 +93,17 @@ export function writeJson(path: string, data: any) {
   fs.writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
 }
 
+export function readFile(path: string) {
+  if (!fs.existsSync(path)) {
+    return '';
+  }
+  return fs.readFileSync(path, 'utf8');
+}
+
+export function writeFile(path: string, data: any) {
+  fs.writeFileSync(path, data);
+}
+
 export function rmSync(path: string) {
   if (!fs.existsSync(path)) {
     return;
