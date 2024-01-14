@@ -72,7 +72,7 @@ const FRAMEWORKS: Framework[] = [
     display: 'VSCode Extension',
     color: lightCyan,
     options: [
-      { id: 'publish', name: 'Git Repository + NPM Publish' },
+      { id: 'publish', name: 'Git Repository' },
       { id: 'ssh', name: 'Git init by SSH' },
     ],
     variants: [
