@@ -26,7 +26,7 @@
     "url": "git+{{git.url}}/issues"
   },
   "homepage": "{{git.url}}/blob/main/README.md",
-  "icon": "images/icon.png",
+  "icon": "resources/logo.png",
   "vsce": {
     "dependencies": false,
     "yarn": false
