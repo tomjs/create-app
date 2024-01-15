@@ -1,5 +1,5 @@
 import { Disposable, Uri, ViewColumn, Webview, WebviewPanel, window } from 'vscode';
-// import __getWebviewHtml from '@tomjs/vscode-extension-webview';
+// import __getWebviewHtml__ from '@tomjs/vscode-extension-webview';
 
 function uuid() {
   let text = '';
@@ -119,8 +119,7 @@ export class MainPanel {
     const nonce = uuid();
 
     if (process.env.VITE_DEV_SERVER_URL) {
-      // @ts-ignore
-      return __getWebviewHtml({ serverUrl: process.env.VITE_DEV_SERVER_URL });
+      return __getWebviewHtml__(process.env.VITE_DEV_SERVER_URL);
     }
 
     // Tip: Install the es6-string-html VS Code extension to enable code highlighting below
