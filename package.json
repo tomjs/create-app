@@ -1,6 +1,6 @@
 {
   "name": "@tomjs/create-app",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "description": "create tomjs web app",
   "keywords": [
     "tomjs",
