@@ -1,7 +1,7 @@
 {
-  "name": "{{pkg.name}}",
-  "displayName": "{{pkg.name}}",
-  "description": "",
+  "name": "vscode-extension",
+  "displayName": "%displayName%",
+  "description": "%description%",
   "version": "0.0.0",
   "publisher": "{{git.org}}",
   "license": "MIT",
@@ -10,6 +10,12 @@
     "vscode": "^1.56.0"
   },
   "main": "dist/index.js",
+  "keywords": [
+    "vscode"
+  ],
+  "categories": [
+    "Other"
+  ],
   "activationEvents": [
     "onCommand:hello-world.showHelloWorld"
   ],

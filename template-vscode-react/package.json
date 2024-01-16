@@ -1,13 +1,21 @@
 {
-  "name": "{{pkg.name}}",
+  "name": "vscode-extension",
+  "displayName": "%displayName%",
+  "description": "%description%",
   "version": "0.0.0",
-  "description": "vite + vscode + react",
-  "keywords": [],
+  "publisher": "{{git.org}}",
+  "license": "MIT",
   "engines": {
     "node": ">=14",
     "vscode": "^1.56.0"
   },
   "main": "dist/extension/index.js",
+  "keywords": [
+    "vscode"
+  ],
+  "categories": [
+    "Other"
+  ],
   "activationEvents": [
     "onCommand:hello-world.showHelloWorld"
   ],

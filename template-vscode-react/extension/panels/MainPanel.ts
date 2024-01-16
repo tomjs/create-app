@@ -1,5 +1,4 @@
 import { Disposable, Uri, ViewColumn, Webview, WebviewPanel, window } from 'vscode';
-// import __getWebviewHtml__ from '@tomjs/vscode-extension-webview';
 
 function uuid() {
   let text = '';
@@ -15,11 +14,11 @@ function getUri(webview: Webview, extensionUri: Uri, pathList: string[]) {
 }
 
 /**
- * This class manages the state and behavior of HelloWorld webview panels.
+ * This class manages the state and behavior of Main webview panels.
  *
  * It contains all the data and methods for:
  *
- * - Creating and rendering HelloWorld webview panels
+ * - Creating and rendering Main webview panels
  * - Properly cleaning up and disposing of webview resources when the panel is closed
  * - Setting the HTML (and by proxy CSS/JavaScript) content of the webview panel
  * - Setting message listeners so data can be passed between the webview and extension
@@ -30,7 +29,7 @@ export class MainPanel {
   private _disposables: Disposable[] = [];
 
   /**
-   * The HelloWorldPanel class private constructor (called only from the render method).
+   * The MainPanel class private constructor (called only from the render method).
    *
    * @param panel A reference to the webview panel
    * @param extensionUri The URI of the directory containing the extension
@@ -111,9 +110,8 @@ export class MainPanel {
    * rendered within the webview panel
    */
   private _getWebviewContent(webview: Webview, extensionUri: Uri) {
-    // The CSS file from the Vue build output
+    // The file from the vite build output
     const stylesUri = getUri(webview, extensionUri, ['dist', 'webview', 'assets', 'index.css']);
-    // The JS file from the Vue build output
     const scriptUri = getUri(webview, extensionUri, ['dist', 'webview', 'assets', 'index.js']);
 
     const nonce = uuid();
@@ -122,7 +120,6 @@ export class MainPanel {
       return __getWebviewHtml__(process.env.VITE_DEV_SERVER_URL);
     }
 
-    // Tip: Install the es6-string-html VS Code extension to enable code highlighting below
     return /*html*/ `
       <!doctype html>
       <html lang="en">
