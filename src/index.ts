@@ -536,8 +536,9 @@ async function createApp() {
 
     // remove jest deps
     removeDeps(pkg, 'jest', 'vitest');
-    removeFiles('.lintstagedrc.cjs', 'jest.config.cjs', 'test');
     writeJson(pkgPath, pkg);
+
+    removeFiles('.lintstagedrc.cjs', 'jest.config.cjs', 'test');
   }
 
   function handleExample() {
