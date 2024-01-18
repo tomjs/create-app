@@ -15,7 +15,15 @@ export default defineConfig(() => {
         '@': path.join(__dirname, 'src'),
       },
     },
-    plugins: [vue(), vscode()],
-    clearScreen: false,
+    plugins: [
+      vue({
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag: string) => tag.startsWith('vscode-'),
+          },
+        },
+      }),
+      vscode(),
+    ],
   };
 });

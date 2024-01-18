@@ -16,6 +16,5 @@ export default defineConfig(() => {
       },
     },
     plugins: [react(), vscode()],
-    clearScreen: false,
   };
 });
