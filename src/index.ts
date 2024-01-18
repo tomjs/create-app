@@ -102,6 +102,7 @@ const FRAMEWORKS: Framework[] = [
       { id: 'publish', name: 'Git Repository + NPM Publish' },
       { id: 'ssh', name: 'Git init by SSH' },
       { id: 'vite', name: 'Vite Plugin' },
+      { id: 'tsup', name: 'Use tsup build' },
       { id: 'electron', name: 'Electron' },
       { id: 'examples', name: 'Examples' },
     ],
@@ -375,7 +376,7 @@ async function createApp() {
    * replace template name and user info
    */
   function handleReplaceContent() {
-    replaceOptionFiles('.lintstagedrc.cjs', 'jest.config.cjs', 'tsconfig.json', 'tsup.config.ts');
+    replaceOptionFiles('.lintstagedrc.cjs', 'jest.config.cjs', 'tsconfig.json');
 
     const isDevPkg = options.find(s => ['vite'].includes(s));
     const pkgInstall = [
@@ -461,7 +462,22 @@ async function createApp() {
       }
 
       if (!options.includes('vite')) {
-        removeDeps(pkg, 'vite');
+        if (options.includes('tsup')) {
+          removeDeps(pkg, 'vite');
+        }
+      }
+
+      if (options.includes('tsup')) {
+        pkg.scripts.dev = 'tsup --watch';
+        pkg.scripts.build = 'tsup';
+
+        removeFiles('vite.config.ts');
+      } else {
+        pkg.scripts.dev = 'vite';
+        pkg.scripts.build = 'vite build';
+
+        removeDeps(pkg, 'tsup');
+        removeFiles('tsup.config.ts');
       }
     }
 
@@ -513,21 +529,20 @@ async function createApp() {
     if (options.includes('test')) {
       // remove vitest
       if (options.includes('electron')) {
+        pkg.scripts.test = 'jest';
         removeDeps(pkg, 'vitest');
         writeJson(pkgPath, pkg);
 
-        const testFilePath = path.join(root, 'test/simple.test.ts');
-        if (fs.existsSync(testFilePath)) {
-          const content = fs.readFileSync(testFilePath, { encoding: 'utf8' });
-          fs.writeFileSync(
-            testFilePath,
-            content.replace(`import { describe, expect, it } from 'vitest';`, ''),
-            { encoding: 'utf8' },
-          );
-        }
+        removeFiles('test/simple.test.ts');
       } else {
+        pkg.scripts.test = 'vitest';
+        removeDeps(pkg, 'jest');
+        writeJson(pkgPath, pkg);
+
+        removeFiles('test/electron.test.ts');
         removeFiles('jest.config.cjs');
       }
+
       return;
     }
 
@@ -538,7 +553,7 @@ async function createApp() {
     removeDeps(pkg, 'jest', 'vitest');
     writeJson(pkgPath, pkg);
 
-    removeFiles('.lintstagedrc.cjs', 'jest.config.cjs', 'test');
+    removeFiles('jest.config.cjs', 'test');
   }
 
   function handleExample() {

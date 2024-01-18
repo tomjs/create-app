@@ -35,8 +35,8 @@
     "url": "git+{{git.url}}.git"
   },
   "scripts": {
-    "dev": "tsup --watch",
     "start": "tsx ./scripts/info.ts",
+    "dev": "tsup --watch",
     "build": "tsup",
     "test": "jest",
     "lint": "run-s lint:eslint lint:stylelint lint:prettier",
@@ -76,6 +76,10 @@
     "tsx": "^4.7.0",
     "typescript": "~5.3.3",
     "vite": "^5.0.11",
+    "vite-plugin-dts": "^3.7.1",
     "vitest": "^1.2.0"
+  },
+  "peerDependencies": {
+    "vite": ">=2.0.0"
   }
 }
