@@ -50,7 +50,7 @@
     "kolorist": "^1.8.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.4",
+    "@commitlint/cli": "^18.5.0",
     "@jest/globals": "^29.7.0",
     "@kayahr/jest-electron-runner": "^29.11.0",
     "@tomjs/commitlint": "^2.2.0",
@@ -75,7 +75,7 @@
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "~5.3.3",
-    "vite": "^5.0.11",
+    "vite": "^5.0.12",
     "vite-plugin-dts": "^3.7.1",
     "vitest": "^1.2.1"
   },
