@@ -43,7 +43,7 @@
     "lint:eslint": "eslint \"{src,scripts,test,examples}/**/*.ts\" *.{js,cjs,ts} --fix --cache",
     "lint:stylelint": "stylelint \"examples/**/*.{css,scss,less,vue,html}\" --fix --cache",
     "lint:prettier": "prettier --write .",
-    "prepare": "husky install",
+    "prepare": "husky",
     "prepublishOnly": "npm run build && np --any-branch --no-yarn --yolo --no-publish --message \"chore: release v%s\""
   },
   "dependencies": {
@@ -63,7 +63,7 @@
     "cross-env": "^7.0.3",
     "electron": "^28.2.1",
     "eslint": "^8.56.0",
-    "husky": "^8.0.3",
+    "husky": "^9.0.10",
     "jest": "^29.7.0",
     "lint-staged": "^15.2.1",
     "np": "^9.2.0",
