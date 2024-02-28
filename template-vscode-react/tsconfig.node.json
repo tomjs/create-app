@@ -3,5 +3,5 @@
   "compilerOptions": {
     "composite": true
   },
-  "include": ["extension", "scripts", "package.json", "vite.config.ts"]
+  "include": ["extension", "package.json", "vite.config.ts"]
 }
