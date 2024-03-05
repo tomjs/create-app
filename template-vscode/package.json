@@ -16,9 +16,7 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:hello-world.showHelloWorld"
-  ],
+  "activationEvents": [],
   "contributes": {
     "commands": [
       {
