@@ -32,13 +32,13 @@
     "@tomjs/stylelint": "^2.3.0",
     "@tomjs/tsconfig": "^1.4.0",
     "@tomjs/vite-plugin-electron": "^1.9.0",
-    "@types/node": "^18.19.19",
-    "@types/react": "^18.2.52",
-    "@types/react-dom": "^18.2.18",
+    "@types/node": "^18.19.21",
+    "@types/react": "^18.2.63",
+    "@types/react-dom": "^18.2.20",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "cross-env": "^7.0.3",
-    "electron": "^28.2.4",
-    "electron-builder": "^24.12.0",
+    "electron": "^28.2.5",
+    "electron-builder": "^24.13.3",
     "eslint": "^8.57.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
@@ -48,7 +48,7 @@
     "stylelint": "^16.2.1",
     "tsx": "^4.7.1",
     "typescript": "~5.3.3",
-    "vite": "^5.1.4",
+    "vite": "^5.1.5",
     "vite-plugin-electron-renderer": "^0.14.5"
   }
 }
