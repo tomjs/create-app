@@ -1,4 +1,5 @@
-#!/usr/bin/env node
+import type { Framework, PromptOption, PromptResult } from './types';
+import type { Args } from './utils';
 import fs, { renameSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -9,9 +10,7 @@ import minimist from 'minimist';
 import prompts from 'prompts';
 import shell from 'shelljs';
 import { beforeCreate, getAppConfig, getGitUserUrl } from './repo';
-import { Framework, PromptOption, PromptResult } from './types';
 import {
-  Args,
   copy,
   emptyDir,
   formatArgs,
@@ -280,7 +279,7 @@ async function createApp() {
 
   const isNode = template.includes('node');
   // copy template files
-  [templateDir, getTemplateDir('config')].forEach(dir => {
+  [getTemplateDir('config'), templateDir].forEach(dir => {
     const files = fs.readdirSync(dir);
 
     for (const file of files) {
@@ -292,8 +291,7 @@ async function createApp() {
         continue;
       }
 
-      const targetPath = path.join(root, destFile);
-      copy(path.join(dir, file), targetPath);
+      copy(path.join(dir, file), path.join(root, destFile));
     }
   });
 

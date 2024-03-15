@@ -1,4 +1,5 @@
-import { commands, ExtensionContext, window } from 'vscode';
+import type { ExtensionContext } from 'vscode';
+import { commands, window } from 'vscode';
 
 export function activate(context: ExtensionContext) {
   context.subscriptions.push(
