@@ -10,7 +10,7 @@ export type Framework = {
   /**
    * custom props for the framework
    */
-  options?: { id: string; name: string }[];
+  options?: { id: string; name: string; selected?: boolean }[];
 };
 
 export type FrameworkVariant = {
@@ -22,7 +22,15 @@ export type FrameworkVariant = {
   customCommand?: string;
 };
 
-export type PromptOption = 'test' | 'publish' | 'ssh' | 'tsup' | 'vite' | 'electron' | 'examples';
+export type PromptOption =
+  | 'test'
+  | 'publish'
+  | 'ssh'
+  | 'tsup'
+  | 'vite'
+  | 'vite-plugin'
+  | 'examples'
+  | 'workspace';
 
 export interface PromptResult {
   projectName?: string;

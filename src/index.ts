@@ -1,3 +1,4 @@
+import type { Choice } from 'prompts';
 import type { Framework, PromptOption, PromptResult } from './types';
 import type { Args } from './utils';
 import fs, { renameSync } from 'node:fs';
@@ -22,6 +23,7 @@ import {
   readJson,
   rmSync,
   toValidPackageName,
+  writeFile,
   writeJson,
 } from './utils';
 
@@ -29,9 +31,24 @@ import {
 const argv = formatArgs(minimist<Args>(process.argv.slice(2), { string: ['_'] }));
 const cwd = process.cwd();
 
-const ALL_PROMPT_OPTIONS: PromptOption[] = ['test', 'vite', 'electron', 'examples'];
+const ALL_PROMPT_OPTIONS: PromptOption[] = ['test', 'vite', 'examples'];
 
 const FRAMEWORKS: Framework[] = [
+  {
+    name: 'node',
+    display: 'Node',
+    color: lightYellow,
+    options: [
+      { id: 'test', name: 'Test' },
+      { id: 'publish', name: 'Git Repository + NPM Publish', selected: true },
+      { id: 'ssh', name: 'Git init by SSH', selected: true },
+      { id: 'tsup', name: 'Use tsup build', selected: true },
+      { id: 'vite', name: 'Use vite build' },
+      { id: 'vite-plugin', name: 'Vite Plugin' },
+      { id: 'examples', name: 'Examples' },
+      { id: 'workspace', name: 'Workspaces/Monorepo' },
+    ],
+  },
   {
     name: 'web',
     display: 'Web App',
@@ -90,20 +107,6 @@ const FRAMEWORKS: Framework[] = [
         display: 'React',
         color: lightBlue,
       },
-    ],
-  },
-  {
-    name: 'node',
-    display: 'Node',
-    color: lightYellow,
-    options: [
-      { id: 'test', name: 'Test' },
-      { id: 'publish', name: 'Git Repository + NPM Publish' },
-      { id: 'ssh', name: 'Git init by SSH' },
-      { id: 'vite', name: 'Vite Plugin' },
-      { id: 'tsup', name: 'Use tsup build' },
-      { id: 'electron', name: 'Electron' },
-      { id: 'examples', name: 'Examples' },
     ],
   },
 ];
@@ -224,7 +227,8 @@ async function createApp() {
             return {
               title: option.name,
               value: option.id,
-            };
+              selected: option.selected || false,
+            } as Choice;
           });
         },
       },
@@ -341,6 +345,7 @@ async function createApp() {
     handleReplaceContent();
     handleTest();
     handleExample();
+    handleWorkspace();
   }
 
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
@@ -370,23 +375,34 @@ async function createApp() {
       break;
   }
 
+  function readPkgJson() {
+    return readJson(path.join(root, 'package.json'));
+  }
+
+  function writePkgJson(data: any) {
+    writeJson(path.join(root, 'package.json'), data);
+  }
+
+  function readPkgFile() {
+    return readFile(path.join(root, 'package.json'));
+  }
+
+  function writePkgFile(data: any) {
+    writeFile(path.join(root, 'package.json'), data);
+  }
+
   /**
    * replace template name and user info
    */
   function handleReplaceContent() {
-    replaceOptionFiles('.lintstagedrc.cjs', 'jest.config.cjs', 'tsconfig.json');
+    replaceOptionFiles('.lintstagedrc.cjs', 'tsconfig.json');
 
-    const isDevPkg = options.find(s => ['vite'].includes(s));
-    const pkgInstall = [
-      '#pnpm',
-      `pnpm add ${pkgName}${isDevPkg ? ' -D' : ''}`,
-      '',
-      '#yarn',
-      `yarn add ${pkgName}${isDevPkg ? ' -D' : ''}`,
-      '',
-      '#npm',
-      `npm i ${pkgName}${isDevPkg ? ' --save-dev' : ''}`,
-    ].join('\n');
+    const isDevPkg =
+      options.find(s => ['vite-plugin'].includes(s)) ||
+      ['cli', 'plugin'].find(s => pkgName.includes(`-${s}`));
+    const pkgInstall = ['pnpm', 'yarn', 'npm']
+      .map(s => `# ${s}\n${s} add ${pkgName}${isDevPkg ? ' -D' : ''}`)
+      .join('\n\n');
 
     ['LICENSE', 'README.md', 'README.zh_CN.md'].forEach(name => {
       const file = path.join(root, name);
@@ -418,17 +434,35 @@ async function createApp() {
     });
   }
 
-  function removeDeps(pkg, ...names) {
-    ['dependencies', 'devDependencies'].forEach(key => {
-      Object.keys(pkg[key] || {}).forEach(dep => {
-        if (names.find(name => dep.includes(name))) {
-          delete pkg[key][dep];
-        }
-      });
+  function removeDevPkgDeps(pkg, ...names: string[]) {
+    removePkgDeps(pkg.devDependencies, ...names);
+  }
+
+  function removePkgPeerDeps(pkg, ...names: string[]) {
+    removePkgDeps(pkg.peerDependencies, ...names);
+  }
+
+  function removePkgDeps(pkgDeps: any, ...names: string[]) {
+    function checkDep(dep: string, name: string) {
+      if (dep.includes('@')) {
+        return dep
+          .replace('@', '')
+          .split('/')
+          .find(s => checkDep(s, name));
+      }
+      return name === dep || dep.includes(`-${name}`) || dep.includes(`${name}-`);
+    }
+
+    const obj = pkgDeps || {};
+
+    Object.keys(obj || {}).forEach(key => {
+      if (names.find(name => checkDep(key, name))) {
+        delete obj[key];
+      }
     });
   }
 
-  function removeFiles(...files: string[]) {
+  function removeFilesOrDirs(...files: string[]) {
     if (!Array.isArray(files) || files.length === 0) {
       return;
     }
@@ -440,9 +474,19 @@ async function createApp() {
     });
   }
 
+  function replaceFileContent(
+    fileName: string,
+    searchValue: string | RegExp,
+    replaceValue: string,
+  ) {
+    const filePath = path.join(root, fileName);
+    let content = readFile(filePath);
+    content = content.replaceAll(searchValue, replaceValue);
+    writeFile(filePath, content);
+  }
+
   function handlePkgJson() {
-    const pkgPath = path.join(root, `package.json`);
-    const pkg = readJson(pkgPath);
+    const pkg = readPkgJson();
     pkg.name = pkgName;
 
     if (!options.includes('publish')) {
@@ -454,39 +498,37 @@ async function createApp() {
     }
 
     if (isNode) {
-      if (!options.includes('electron')) {
-        removeDeps(pkg, 'electron');
-        pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',electron', '');
-      }
-
-      if (!options.includes('vite')) {
-        if (options.includes('tsup')) {
-          removeDeps(pkg, 'vite');
-        }
-      }
-
-      if (options.includes('tsup')) {
-        pkg.scripts.dev = 'tsup --watch';
-        pkg.scripts.build = 'tsup';
-
-        removeFiles('vite.config.ts');
-      } else {
+      if (options.includes('vite')) {
         pkg.scripts.dev = 'vite';
         pkg.scripts.build = 'vite build';
 
-        removeDeps(pkg, 'tsup');
-        removeFiles('tsup.config.ts');
+        removeDevPkgDeps(pkg, 'tsup');
+        removeFilesOrDirs('tsup.config.ts');
+      } else {
+        pkg.scripts.dev = 'tsup --watch';
+        pkg.scripts.build = 'tsup';
+
+        removeFilesOrDirs('vite.config.ts');
+
+        if (!options.includes('vite-plugin')) {
+          removeDevPkgDeps(pkg, 'vite');
+          replaceFileContent('tsup.config.ts', `'vite'`, '');
+        }
+      }
+
+      if (!options.includes('vite-plugin')) {
+        removePkgPeerDeps(pkg, 'vite');
       }
     }
 
-    writeJson(pkgPath, pkg);
+    writePkgJson(pkg);
 
-    let text = readFile(pkgPath);
+    let text = readPkgFile();
     Object.keys(textVars).forEach(key => {
       text = text.replace(new RegExp('{{' + key + '}}', 'g'), textVars[key]);
     });
 
-    fs.writeFileSync(pkgPath, text);
+    writePkgFile(text);
   }
 
   function replaceOptionFile(fileName: string, option: PromptOption) {
@@ -520,60 +562,42 @@ async function createApp() {
    * handle test
    */
   function handleTest() {
-    // package.json
-    const pkgPath = path.join(root, `package.json`);
-    const pkg = readJson(pkgPath);
+    const pkg = readPkgJson();
 
     if (options.includes('test')) {
-      // remove vitest
-      if (options.includes('electron')) {
-        pkg.scripts.test = 'jest';
-        removeDeps(pkg, 'vitest');
-        writeJson(pkgPath, pkg);
-
-        removeFiles('test/simple.test.ts');
-      } else {
-        pkg.scripts.test = 'vitest';
-        removeDeps(pkg, 'jest');
-        writeJson(pkgPath, pkg);
-
-        removeFiles('test/electron.test.ts');
-        removeFiles('jest.config.cjs');
+      if (!options.includes('workspace')) {
+        removeFilesOrDirs('vitest.workspace.ts');
       }
-
       return;
     }
 
     delete pkg.scripts.test;
     pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',test', '');
 
-    // remove jest deps
-    removeDeps(pkg, 'jest', 'vitest');
-    writeJson(pkgPath, pkg);
+    // remove vitest deps
+    removeDevPkgDeps(pkg, 'vitest');
+    writePkgJson(pkg);
 
-    removeFiles('jest.config.cjs', 'test');
+    removeFilesOrDirs('test', 'vitest.workspace.ts');
   }
 
   function handleExample() {
-    // .lintstagedrc.cjs
     if (!options.includes('examples')) {
-      // package.json
-      const pkg = readJson(path.join(root, `package.json`));
+      const pkg = readPkgJson();
       pkg.scripts['lint'] = pkg.scripts['lint'].replace(' lint:stylelint', '');
       pkg.scripts['lint:eslint'] = pkg.scripts['lint:eslint'].replace(',examples', '');
       delete pkg.scripts['lint:stylelint'];
 
-      removeDeps(pkg, 'stylelint');
+      removeDevPkgDeps(pkg, 'stylelint');
 
-      writeJson(path.join(root, `package.json`), pkg);
+      writePkgJson(pkg);
       return;
     }
 
     const examplePath = path.join(root, 'examples');
     fs.mkdirSync(examplePath);
-    const isElectron = options.includes('electron');
     ['vue', 'react'].forEach(lang => {
-      const srcPath = getTemplateDir(isElectron ? `electron-${lang}` : lang);
+      const srcPath = getTemplateDir(lang);
       const destPath = path.join(examplePath, lang);
       if (!fs.existsSync(srcPath)) {
         console.log(`${yellow(srcPath)} template is not exist`);
@@ -582,7 +606,7 @@ async function createApp() {
       fs.cpSync(srcPath, destPath, { recursive: true });
 
       // remove other lint deps
-      const pkg = readJson(path.join(destPath, 'package.json'));
+      const pkg = readPkgJson();
 
       // remove lint scripts
       Object.keys(pkg.scripts).forEach(s => {
@@ -591,7 +615,7 @@ async function createApp() {
         }
       });
 
-      removeDeps(
+      removeDevPkgDeps(
         pkg,
         'eslint',
         'prettier',
@@ -603,7 +627,7 @@ async function createApp() {
         'lint-staged',
         'npm-run-all',
       );
-      writeJson(path.join(destPath, 'package.json'), pkg);
+      writePkgJson(pkg);
 
       // remove files
       ['_lintstagedrc.cjs'].forEach(s => {
@@ -613,13 +637,42 @@ async function createApp() {
         }
       });
     });
+  }
 
-    fs.writeFileSync(
-      path.join(root, 'pnpm-workspace.yaml'),
-      `packages:
-  - 'examples/*'`,
-      { encoding: 'utf-8' },
-    );
+  function handleWorkspace() {
+    const packages: string[] = [];
+    if (options.includes('examples')) {
+      packages.push('examples');
+    }
+
+    const pkg = readPkgJson();
+    if (options.includes('workspace')) {
+      packages.push('packages');
+
+      delete pkg.private;
+      delete pkg.version;
+      delete pkg.description;
+      delete pkg.keywords;
+      delete pkg.license;
+      delete pkg.main;
+      delete pkg.module;
+      delete pkg.types;
+      delete pkg.exports;
+      delete pkg.files;
+      delete pkg.publishConfig;
+      delete pkg.repository;
+    } else {
+      delete pkg.private;
+    }
+    writePkgJson(pkg);
+
+    if (packages.length) {
+      writeFile(
+        path.join(root, 'pnpm-workspace.yaml'),
+        `packages:
+${packages.map(s => `  - '${s}/*'`).join('\n')}`,
+      );
+    }
   }
 }
 
