@@ -58,7 +58,7 @@
     "@tomjs/eslint": "^2.3.0",
     "@tomjs/prettier": "^1.3.0",
     "@tomjs/stylelint": "^2.3.0",
-    "@tomjs/tsconfig": "^1.4.0",
+    "@tomjs/tsconfig": "^1.5.0",
     "@tomjs/vite-plugin-vscode": "^2.2.0",
     "@types/node": "^18.19.26",
     "@types/vscode": "^1.75.0",
