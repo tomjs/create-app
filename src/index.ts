@@ -1,6 +1,3 @@
-import type { Choice } from 'prompts';
-import type { Framework, PromptOption, PromptResult } from './types';
-import type { Args } from './utils';
 import fs, { renameSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -8,9 +5,12 @@ import { fileURLToPath } from 'node:url';
 import { lightBlue, lightCyan, lightGreen, lightYellow, red, reset, yellow } from 'kolorist';
 import { camelCase } from 'lodash-es';
 import minimist from 'minimist';
+import type { Choice } from 'prompts';
 import prompts from 'prompts';
 import shell from 'shelljs';
 import { beforeCreate, getAppConfig, getGitUserUrl } from './repo';
+import type { Framework, PromptOption, PromptResult } from './types';
+import type { Args } from './utils';
 import {
   copy,
   emptyDir,
@@ -130,6 +130,34 @@ function getPureTargetDir(targetDir: string) {
     target = path.join('../.create-app', target);
   }
   return target;
+}
+
+function removeDevPkgDeps(pkg, ...names: string[]) {
+  removePkgDeps(pkg.devDependencies, ...names);
+}
+
+function removePkgPeerDeps(pkg, ...names: string[]) {
+  removePkgDeps(pkg.peerDependencies, ...names);
+}
+
+function removePkgDeps(pkgDeps: any, ...names: string[]) {
+  function checkDep(dep: string, name: string) {
+    if (dep.includes('@')) {
+      return dep
+        .replace('@', '')
+        .split('/')
+        .find(s => checkDep(s, name));
+    }
+    return name === dep || dep.includes(`-${name}`) || dep.includes(`${name}-`);
+  }
+
+  const obj = pkgDeps || {};
+
+  Object.keys(obj || {}).forEach(key => {
+    if (names.find(name => checkDep(key, name))) {
+      delete obj[key];
+    }
+  });
 }
 
 async function createApp() {
@@ -340,12 +368,11 @@ async function createApp() {
 
   handlePkgJson();
 
-  // conditionally change files
   if (isNode) {
-    handleReplaceContent();
-    handleTest();
-    handleExample();
-    handleWorkspace();
+    handleNodeReplace();
+    handleNodeTest();
+    handleNodeExample();
+    handleNodeWorkspace();
   }
 
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
@@ -375,6 +402,8 @@ async function createApp() {
       break;
   }
 
+  /* #region utils */
+
   function readPkgJson() {
     return readJson(path.join(root, 'package.json'));
   }
@@ -391,10 +420,119 @@ async function createApp() {
     writeFile(path.join(root, 'package.json'), data);
   }
 
+  function removeFilesOrDirs(...files: string[]) {
+    if (!Array.isArray(files) || files.length === 0) {
+      return;
+    }
+    files.forEach(s => {
+      const file = path.join(root, s);
+      if (fs.existsSync(file)) {
+        rmSync(file);
+      }
+    });
+  }
+
+  function replaceFileContent(
+    fileName: string,
+    searchValue: string | RegExp,
+    replaceValue: string,
+  ) {
+    const filePath = path.join(root, fileName);
+    let content = readFile(filePath);
+    content = content.replaceAll(searchValue, replaceValue);
+    writeFile(filePath, content);
+  }
+
+  function replaceOptionFile(fileName: string, option: PromptOption) {
+    const lastIndex = fileName.lastIndexOf('.');
+    const propName =
+      fileName.substring(0, lastIndex) + '.' + option + fileName.substring(lastIndex);
+    const filePath = path.join(root, fileName);
+    const propFilePath = path.join(root, propName);
+
+    if (!fs.existsSync(propFilePath)) {
+      return;
+    }
+
+    if (options.includes(option)) {
+      rmSync(filePath);
+      renameSync(propFilePath, filePath);
+    } else {
+      rmSync(propFilePath);
+    }
+  }
+
+  function replaceOptionFiles(...fileNames: string[]) {
+    fileNames.forEach(fileName => {
+      ALL_PROMPT_OPTIONS.forEach(option => {
+        replaceOptionFile(fileName, option);
+      });
+    });
+  }
+
+  /* #endregion */
+
+  function handlePkgJson() {
+    const pkg = readPkgJson();
+    pkg.name = pkgName;
+
+    if (!options.includes('publish')) {
+      delete pkg.author;
+      delete pkg.publishConfig;
+      delete pkg.repository;
+      delete pkg.scripts.prepublishOnly;
+      delete pkg.devDependencies.np;
+    }
+
+    if (pkgName.endsWith('-cli')) {
+      delete pkg.main;
+      delete pkg.module;
+      delete pkg.types;
+      delete pkg.exports;
+    } else {
+      delete pkg.bin;
+    }
+
+    if (isNode) {
+      if (options.includes('vite')) {
+        pkg.scripts.dev = 'vite';
+        pkg.scripts.build = 'vite build';
+
+        removeDevPkgDeps(pkg, 'tsup');
+        removeFilesOrDirs('tsup.config.ts');
+      } else {
+        pkg.scripts.dev = 'tsup --watch';
+        pkg.scripts.build = 'tsup';
+
+        removeFilesOrDirs('vite.config.ts');
+
+        if (!options.includes('vite-plugin')) {
+          removeDevPkgDeps(pkg, 'vite');
+          replaceFileContent('tsup.config.ts', `'vite'`, '');
+        }
+      }
+
+      if (!options.includes('vite-plugin')) {
+        removePkgPeerDeps(pkg, 'vite');
+      }
+    }
+
+    writePkgJson(pkg);
+
+    let text = readPkgFile();
+    Object.keys(textVars).forEach(key => {
+      text = text.replace(new RegExp('{{' + key + '}}', 'g'), textVars[key]);
+    });
+
+    writePkgFile(text);
+  }
+
+  /* #region node handle */
+
   /**
    * replace template name and user info
    */
-  function handleReplaceContent() {
+  function handleNodeReplace() {
     replaceOptionFiles('.lintstagedrc.cjs', 'tsconfig.json');
 
     const isDevPkg =
@@ -434,134 +572,7 @@ async function createApp() {
     });
   }
 
-  function removeDevPkgDeps(pkg, ...names: string[]) {
-    removePkgDeps(pkg.devDependencies, ...names);
-  }
-
-  function removePkgPeerDeps(pkg, ...names: string[]) {
-    removePkgDeps(pkg.peerDependencies, ...names);
-  }
-
-  function removePkgDeps(pkgDeps: any, ...names: string[]) {
-    function checkDep(dep: string, name: string) {
-      if (dep.includes('@')) {
-        return dep
-          .replace('@', '')
-          .split('/')
-          .find(s => checkDep(s, name));
-      }
-      return name === dep || dep.includes(`-${name}`) || dep.includes(`${name}-`);
-    }
-
-    const obj = pkgDeps || {};
-
-    Object.keys(obj || {}).forEach(key => {
-      if (names.find(name => checkDep(key, name))) {
-        delete obj[key];
-      }
-    });
-  }
-
-  function removeFilesOrDirs(...files: string[]) {
-    if (!Array.isArray(files) || files.length === 0) {
-      return;
-    }
-    files.forEach(s => {
-      const file = path.join(root, s);
-      if (fs.existsSync(file)) {
-        rmSync(file);
-      }
-    });
-  }
-
-  function replaceFileContent(
-    fileName: string,
-    searchValue: string | RegExp,
-    replaceValue: string,
-  ) {
-    const filePath = path.join(root, fileName);
-    let content = readFile(filePath);
-    content = content.replaceAll(searchValue, replaceValue);
-    writeFile(filePath, content);
-  }
-
-  function handlePkgJson() {
-    const pkg = readPkgJson();
-    pkg.name = pkgName;
-
-    if (!options.includes('publish')) {
-      delete pkg.author;
-      delete pkg.publishConfig;
-      delete pkg.repository;
-      delete pkg.scripts.prepublishOnly;
-      delete pkg.devDependencies.np;
-    }
-
-    if (isNode) {
-      if (options.includes('vite')) {
-        pkg.scripts.dev = 'vite';
-        pkg.scripts.build = 'vite build';
-
-        removeDevPkgDeps(pkg, 'tsup');
-        removeFilesOrDirs('tsup.config.ts');
-      } else {
-        pkg.scripts.dev = 'tsup --watch';
-        pkg.scripts.build = 'tsup';
-
-        removeFilesOrDirs('vite.config.ts');
-
-        if (!options.includes('vite-plugin')) {
-          removeDevPkgDeps(pkg, 'vite');
-          replaceFileContent('tsup.config.ts', `'vite'`, '');
-        }
-      }
-
-      if (!options.includes('vite-plugin')) {
-        removePkgPeerDeps(pkg, 'vite');
-      }
-    }
-
-    writePkgJson(pkg);
-
-    let text = readPkgFile();
-    Object.keys(textVars).forEach(key => {
-      text = text.replace(new RegExp('{{' + key + '}}', 'g'), textVars[key]);
-    });
-
-    writePkgFile(text);
-  }
-
-  function replaceOptionFile(fileName: string, option: PromptOption) {
-    const lastIndex = fileName.lastIndexOf('.');
-    const propName =
-      fileName.substring(0, lastIndex) + '.' + option + fileName.substring(lastIndex);
-    const filePath = path.join(root, fileName);
-    const propFilePath = path.join(root, propName);
-
-    if (!fs.existsSync(propFilePath)) {
-      return;
-    }
-
-    if (options.includes(option)) {
-      rmSync(filePath);
-      renameSync(propFilePath, filePath);
-    } else {
-      rmSync(propFilePath);
-    }
-  }
-
-  function replaceOptionFiles(...fileNames: string[]) {
-    fileNames.forEach(fileName => {
-      ALL_PROMPT_OPTIONS.forEach(option => {
-        replaceOptionFile(fileName, option);
-      });
-    });
-  }
-
-  /**
-   * handle test
-   */
-  function handleTest() {
+  function handleNodeTest() {
     const pkg = readPkgJson();
 
     if (options.includes('test')) {
@@ -581,7 +592,7 @@ async function createApp() {
     removeFilesOrDirs('test', 'vitest.workspace.ts');
   }
 
-  function handleExample() {
+  function handleNodeExample() {
     if (!options.includes('examples')) {
       const pkg = readPkgJson();
       pkg.scripts['lint'] = pkg.scripts['lint'].replace(' lint:stylelint', '');
@@ -639,7 +650,7 @@ async function createApp() {
     });
   }
 
-  function handleWorkspace() {
+  function handleNodeWorkspace() {
     const packages: string[] = [];
     if (options.includes('examples')) {
       packages.push('examples');
@@ -674,6 +685,7 @@ ${packages.map(s => `  - '${s}/*'`).join('\n')}`,
       );
     }
   }
+  /* #endregion */
 }
 
 beforeCreate()
