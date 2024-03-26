@@ -42,7 +42,7 @@
     "start": "tsx ./scripts/info.ts",
     "dev": "tsup --watch",
     "build": "tsup",
-    "test": "jest",
+    "test": "vitest",
     "lint": "run-s lint:eslint lint:stylelint lint:prettier",
     "lint:eslint": "eslint \"{src,scripts,test,examples}/**/*.ts\" *.{js,cjs,ts} --fix --cache",
     "lint:stylelint": "stylelint \"examples/**/*.{css,scss,less,vue,html}\" --fix --cache",
