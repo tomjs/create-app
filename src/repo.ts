@@ -1,10 +1,10 @@
-import type { GitRepo } from './types';
-import type { Args } from './utils';
 import os from 'node:os';
 import path from 'node:path';
 import { blue, red, reset } from 'kolorist';
 import minimist from 'minimist';
 import prompts from 'prompts';
+import type { GitRepo } from './types';
+import type { Args } from './utils';
 import { formatArgs, mkdirp, readJson, writeJson } from './utils';
 
 // cli args

@@ -1,7 +1,8 @@
+import '../polyfills';
+
 import { release } from 'node:os';
 import { join } from 'node:path';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
-import '../polyfills';
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration();

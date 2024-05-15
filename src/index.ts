@@ -481,7 +481,6 @@ async function createApp() {
       delete pkg.publishConfig;
       delete pkg.repository;
       delete pkg.scripts.prepublishOnly;
-      delete pkg.devDependencies.np;
     }
 
     if (pkgName.endsWith('-cli')) {

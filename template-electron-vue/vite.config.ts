@@ -1,8 +1,8 @@
 import path from 'node:path';
-import { defineConfig } from 'vite';
-import renderer from 'vite-plugin-electron-renderer';
 import electron from '@tomjs/vite-plugin-electron';
 import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite';
+import renderer from 'vite-plugin-electron-renderer';
 import pkg from './package.json';
 
 // https://vitejs.dev/config/
