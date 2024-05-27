@@ -15,11 +15,6 @@ module.exports = {
     {
       files: ['*.vue'],
       extends: [require.resolve('@tomjs/eslint/vue')],
-      rules: {
-        'vue/max-attributes-per-line': 'off',
-        'vue/html-self-closing': 'off',
-        'vue/singleline-html-element-content-newline': 'off',
-      },
     },
     {
       files: ['*.tsx'],

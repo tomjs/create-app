@@ -40,8 +40,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(@commitlint/cli@19.3.0(@types/node@18.19.33)(typescript@5.4.5))
       '@tomjs/eslint':
-        specifier: ^3.0.1
-        version: 3.0.1(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.5)
+        specifier: ^3.1.0
+        version: 3.1.0(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.5)
       '@tomjs/prettier':
         specifier: ^1.4.1
         version: 1.4.1(prettier@3.2.5)
@@ -857,8 +857,8 @@ packages:
     peerDependencies:
       '@commitlint/cli': ^19.3.0
 
-  '@tomjs/eslint@3.0.1':
-    resolution: {integrity: sha512-aaOVTFd7DlMnYF61Ob81DbjJxRuS0wjLlBVh6FbpAG1Ul89embXac7RV5tqKOCZgPzLfDn1e0iTs1F6HVXoTsw==}
+  '@tomjs/eslint@3.1.0':
+    resolution: {integrity: sha512-IM1ttVSmEBGi8bpGPNhvPWSBXACAf+ynjItV1LtlfaZ2RWYVlV6pHJReibenRZZVKc0uJYClCdMKr+4X1fuppw==}
     engines: {node: ^18.18.0 || >=20.0.0}
     peerDependencies:
       eslint: ^8.56.0
@@ -4471,7 +4471,7 @@ snapshots:
       '@commitlint/cli': 19.3.0(@types/node@18.19.33)(typescript@5.4.5)
       '@commitlint/config-conventional': 19.2.2
 
-  '@tomjs/eslint@3.0.1(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.5)':
+  '@tomjs/eslint@3.1.0(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.5)':
     dependencies:
       '@typescript-eslint/eslint-plugin': 7.9.0(@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.9.0(eslint@8.57.0)(typescript@5.4.5)

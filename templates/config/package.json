@@ -8,7 +8,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
     "@tomjs/commitlint": "^3.2.0",
-    "@tomjs/eslint": "^3.0.1",
+    "@tomjs/eslint": "^3.1.0",
     "@tomjs/prettier": "^1.4.1",
     "@tomjs/tsconfig": "^1.6.0",
     "@types/node": "^18.19.33",
