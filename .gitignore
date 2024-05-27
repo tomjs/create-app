@@ -32,7 +32,7 @@ web_modules
 tsconfig.tsbuildinfo
 
 # environment
-*.local
+.env
 
 # macOS
 .DS_Store

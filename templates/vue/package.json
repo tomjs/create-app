@@ -1,0 +1,27 @@
+{
+  "name": "template-vue",
+  "version": "0.0.0",
+  "description": "vite + vue",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "run-s lint:eslint lint:stylelint lint:prettier",
+    "lint:eslint": "eslint \"src/**/*.{ts,tsx,vue}\" *.{js,cjs,mjs,ts} --fix --cache",
+    "stylelint": "stylelint \"src/**/*.{css,scss,less,html,vue}\"  *.html --fix --cache"
+  },
+  "dependencies": {
+    "vue": "^3.4.27"
+  },
+  "devDependencies": {
+    "@tomjs/stylelint": "^2.5.0",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "stylelint": "^16.5.0",
+    "vite": "^5.2.11",
+    "vue-tsc": "^2.0.19"
+  }
+}

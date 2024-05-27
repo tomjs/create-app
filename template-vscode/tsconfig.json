@@ -1,5 +1,0 @@
-{
-  "extends": "@tomjs/tsconfig/node.json",
-  "compilerOptions": {},
-  "include": ["src", "scripts", "package.json", "vite.config.ts"]
-}

@@ -12,11 +12,11 @@
         "<node_internals>/**"
       ],
       "runtimeExecutable": "tsx",
-      "runtimeArgs": [
-        "-r",
-        "dotenv/config"
-      ],
       "program": "${workspaceFolder}\\src\\index.ts",
+      "args": [
+        "--config",
+        "${workspaceFolder}\\xxx.config.cjs"
+      ],
       "console": "integratedTerminal"
     }
   ]

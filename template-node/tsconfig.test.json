@@ -1,4 +1,0 @@
-{
-  "extends": "@tomjs/tsconfig/node.json",
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "test/**/*.ts", "test/**/*.d.ts"]
-}

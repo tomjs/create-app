@@ -1,0 +1,76 @@
+{
+  "$schema": "./schema.json",
+  "list": [
+    {
+      "name": "node",
+      "display": "Node",
+      "variants": [
+        {
+          "name": "node",
+          "display": "Node Base"
+        },
+        {
+          "name": "node-cli",
+          "display": "Node CLI",
+          "devDependencies": true,
+          "workspaces": true
+        },
+        {
+          "name": "node-vite-plugin",
+          "display": "Vite Plugin",
+          "templates": ["node"],
+          "examples": ["vue", "react"],
+          "devDependencies": true
+        }
+      ]
+    },
+    {
+      "name": "web",
+      "display": "Web",
+      "variants": [
+        {
+          "name": "vue",
+          "display": "Vue"
+        },
+        {
+          "name": "react",
+          "display": "React"
+        }
+      ]
+    },
+    {
+      "name": "electron",
+      "display": "Electron",
+      "variants": [
+        {
+          "name": "electron-vue",
+          "display": "Vue",
+          "templates": ["vue", "electron"]
+        },
+        {
+          "name": "electron-react",
+          "display": "React",
+          "templates": ["react", "electron"]
+        }
+      ]
+    },
+    {
+      "name": "vscode",
+      "display": "VSCode Extension",
+      "variants": [
+        {
+          "name": "vscode",
+          "display": "Base"
+        },
+        {
+          "name": "vscode-vue",
+          "display": "Vue"
+        },
+        {
+          "name": "vscode-react",
+          "display": "React"
+        }
+      ]
+    }
+  ]
+}

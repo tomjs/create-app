@@ -1,3 +1,0 @@
-# react
-
-vite + react
