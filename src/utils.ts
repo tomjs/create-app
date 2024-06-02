@@ -10,6 +10,7 @@ import type {
   Question,
 } from 'inquirer';
 import inquirer from 'inquirer';
+import type { PackageJson } from 'type-fest';
 import type { CLIOptions } from './types.js';
 
 export const logger = new Logger({
@@ -195,7 +196,11 @@ export async function run(cmd: string | string[], options?: RunExecaOptions): Pr
   }
 }
 
-export function getPackageManagerName() {
+export function getPackageManagerName(pkg?: PackageJson) {
+  if (pkg && pkg.packageManager) {
+    return pkg.packageManager.split('@')[0];
+  }
+
   const userAgent = process.env.npm_config_user_agent;
   if (!userAgent) return undefined;
   const pkgSpec = userAgent.split(' ')[0];

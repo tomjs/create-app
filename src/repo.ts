@@ -3,8 +3,8 @@ import path from 'node:path';
 import { mkdirSync, readJsonSync, writeJsonSync } from '@tomjs/node';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import type { AppConfig, GitRepo } from '../types.js';
-import { askConfirm, askList } from '../utils.js';
+import type { AppConfig, GitRepo } from './types.js';
+import { askConfirm, askList } from './utils.js';
 
 const defaultGitRepo = {
   repo: 'https://github.com',
@@ -63,7 +63,12 @@ function saveGitRepos(gitRepos: GitRepo[]) {
   saveAppConfig({ gitRepos });
 }
 
-async function setGitRepoPrompt(list: GitRepo[]) {
+export async function setGitRepoPrompt(list?: GitRepo[], edit = false) {
+  if (!list) {
+    const cfg = getConfig();
+    list = cfg.gitRepos || [];
+  }
+
   const choices = list
     .map(s => {
       return {
@@ -73,11 +78,11 @@ async function setGitRepoPrompt(list: GitRepo[]) {
     })
     .concat([
       {
-        name: 'Add',
+        name: chalk.green('+ Add'),
         value: 'add',
       },
       {
-        name: chalk.red('Exit'),
+        name: chalk.yellow('← Exit'),
         value: 'exit',
       },
     ]);
@@ -97,28 +102,28 @@ async function setGitRepoPrompt(list: GitRepo[]) {
     const add = await saveOrUpdateGitRepoPrompt();
     list.push(add);
     saveGitRepos(list);
-    return setGitRepoPrompt(list);
+    return setGitRepoPrompt(list, edit);
   }
 
   const itemIndex = list.findIndex(s => s.id === repoId);
 
   const action = await askList('Select an action?', [
     {
-      name: 'Edit',
+      name: chalk.green('^ Edit'),
       value: 'edit',
     },
     {
-      name: 'Remove',
+      name: chalk.red('- Remove'),
       value: 'remove',
     },
     {
-      name: 'Exit',
+      name: chalk.yellow('← Exit'),
       value: 'exit',
     },
   ]);
 
   if (action === 'exit') {
-    return getAppConfig();
+    return edit ? setGitRepoPrompt(list, edit) : getConfig();
   }
 
   if (action === 'remove') {
@@ -127,13 +132,13 @@ async function setGitRepoPrompt(list: GitRepo[]) {
       list.splice(itemIndex, 1);
       saveGitRepos(list);
     }
-    return setGitRepoPrompt(list);
+    return setGitRepoPrompt(list, edit);
   }
 
   const update = await saveOrUpdateGitRepoPrompt(list[itemIndex]);
   list[itemIndex] = update;
   saveGitRepos(list);
-  return setGitRepoPrompt(list);
+  return setGitRepoPrompt(list, edit);
 }
 
 export async function getAppConfig() {
@@ -144,6 +149,5 @@ export async function getAppConfig() {
     console.log(`You need to set the ${chalk.blue('git remote repository')} for the first time.`);
     await setGitRepoPrompt(list);
   }
-
   return config;
 }

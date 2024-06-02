@@ -1,0 +1,37 @@
+{
+  "keywords": [],
+  "author": {
+    "name": "{{gitUserName}}",
+    "email": "{{gitUserEmail}}"
+  },
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "import": {
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.mts"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+{{gitUrl}}.git"
+  },
+  "scripts": {
+    "lint:eslint": "eslint \"{src,test}/**/*.ts\" *.{js,cjs,mjs,ts} --fix --cache"
+  }
+}

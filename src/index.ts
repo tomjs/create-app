@@ -1,5 +1,5 @@
 import meow from 'meow';
-import { createApp } from './create/app.js';
+import { createApp } from './app.js';
 import type { CLIOptions } from './types.js';
 import { logger } from './utils.js';
 
@@ -14,6 +14,7 @@ Options
   --cwd                 The current working directory (default: ".")
   -e, --example         Only create examples
   -p, --package         Only create packages
+  --git                 Only manage git repository
   --verbose             Display verbose output
   -h, --help            Display this message
   -v, --version         Display version number

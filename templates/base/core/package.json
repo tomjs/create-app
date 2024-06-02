@@ -1,4 +1,11 @@
 {
+  "name": "{{pkgName}}",
+  "version": "0.0.0",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=16"
+  },
+  "packageManager": "pnpm@9.1.4",
   "scripts": {
     "lint": "run-s lint:eslint lint:prettier",
     "lint:eslint": "eslint \"src/**/*.ts\" *.{js,cjs,mjs,ts} --fix --cache",
@@ -7,8 +14,8 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
-    "@tomjs/commitlint": "^3.2.0",
-    "@tomjs/eslint": "^3.1.0",
+    "@tomjs/commitlint": "^3.3.0",
+    "@tomjs/eslint": "^3.1.1",
     "@tomjs/prettier": "^1.4.1",
     "@tomjs/tsconfig": "^1.6.0",
     "@types/node": "^18.19.33",

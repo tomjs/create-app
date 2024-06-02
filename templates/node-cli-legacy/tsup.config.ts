@@ -6,7 +6,7 @@ export default defineConfig(options => {
   return {
     entry: ['src/index.ts'],
     format: ['esm'],
-    target: 'node18',
+    target: 'node16',
     shims: false,
     clean: true,
     sourcemap: isDev,

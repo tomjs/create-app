@@ -7,6 +7,7 @@ export interface CLIOptions {
   type?: AppType;
   example?: boolean;
   package?: boolean;
+  git?: boolean;
   verbose?: boolean;
 }
 
@@ -28,6 +29,64 @@ export type Framework = {
   variants: FrameworkVariant[];
 };
 
+export interface TextVars {
+  /**
+   * Package name
+   */
+  pkgName: string;
+  /**
+   * Package name (without scope)
+   */
+  pkgShortName: string;
+
+  /**
+   * Package installation string
+   */
+  pkgInstall: string;
+
+  /**
+   * User's name
+   */
+  gitUserName: string;
+
+  /**
+   * User's email
+   */
+  gitUserEmail: string;
+
+  /**
+   * Git organization name
+   */
+  gitOrg: string;
+
+  /**
+   * Git URL
+   */
+  gitUrl: string;
+
+  /**
+   * Full Git URL
+   */
+  gitFullUrl: string;
+
+  /**
+   * Full Git SSH URL
+   */
+  gitFullSSHUrl: string;
+
+  /**
+   * Current year
+   */
+  dateYear: number;
+}
+
+export interface UserOptions {
+  pkgName: string;
+  projectDir: string;
+  gitUserUrl: string;
+  textVars: TextVars;
+}
+
 export type FrameworkVariant = {
   name: string;
   display: string;
@@ -39,5 +98,7 @@ export type FrameworkVariant = {
     ignore?: boolean;
   };
   workspaces?: boolean;
-  devDependencies?: boolean;
+  test?: boolean;
+  devDependencies?: 0 | 1 | 2;
+  userOptions: UserOptions;
 };

@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "lint:stylelint": "stylelint \"src/**/*.{css,less,scss,html}\" *.html --fix --cache"
+  },
+  "devDependencies": {
+    "@tomjs/stylelint": "^2.5.0",
+    "stylelint": "^16.6.1"
+  }
+}
