@@ -1,1 +1,6 @@
-{}
+{
+  "scripts": {
+    "build": "vscode-dev i18n && vue-tsc --noEmit && vite build",
+    "lint:eslint": "eslint \"{src,extension}/**/*.{js,cjs,ts,tsx,vue}\" *.{js,cjs,ts} --fix --cache"
+  }
+}

@@ -67,12 +67,12 @@
         {
           "name": "electron-vue",
           "display": "Vue",
-          "templates": ["vue", "base/electron"]
+          "templates": ["base/vue", "base/electron"]
         },
         {
           "name": "electron-react",
           "display": "React",
-          "templates": ["react", "base/electron"]
+          "templates": ["base/react", "base/electron"]
         }
       ]
     },
@@ -86,11 +86,13 @@
         },
         {
           "name": "vscode-vue",
-          "display": "Vue"
+          "display": "Vue",
+          "templates": ["base/style", "base/vue", "base/vscode"]
         },
         {
           "name": "vscode-react",
-          "display": "React"
+          "display": "React",
+          "templates": ["base/style", "base/react", "base/vscode"]
         }
       ]
     }

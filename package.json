@@ -81,9 +81,10 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.5",
     "stylelint": "^16.6.1",
-    "tsup": "^8.0.2",
+    "tsup": "^8.1.0",
     "tsx": "^4.11.0",
     "type-fest": "^4.18.3",
     "typescript": "~5.4.5"
-  }
+  },
+  "packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0"
 }

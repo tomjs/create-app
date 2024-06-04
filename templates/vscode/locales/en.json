@@ -1,0 +1,5 @@
+{
+  "tomjs.commands.hello": "Show Hello",
+  "description": "This is a Tomjs Extension.",
+  "displayName": "Tomjs Extension"
+}

@@ -52,13 +52,16 @@ const TEMPLATES_NAMES = FRAMEWORKS.map(
 const PKG_FIELDS = [
   'name',
   'version',
+  'displayName',
   'description',
-  'keywords',
   'private',
   'type',
   'engines',
   'packageManager',
+  'keywords',
+  'categories',
   'author',
+  'publisher',
   'contributors',
   'homepage',
   'bugs',
@@ -71,10 +74,16 @@ const PKG_FIELDS = [
   'exports',
   'publishConfig',
   'repository',
+  'activationEvents',
+  'contributes',
+  'badges',
+  'icon',
+  'vsce',
   'scripts',
   'dependencies',
   'devDependencies',
   'peerDependencies',
+  'optionalDependencies',
 ];
 
 async function getGitInfo(name: string) {
@@ -100,15 +109,8 @@ function writePkgJson(filePath: string, data: any) {
 function sortObjectKeys(values: any, startKeys?: string[], endKeys?: string[]) {
   const obj = {};
   const allKeys = Object.keys(values).sort();
-  let sKeys = startKeys || [];
-  if (sKeys.length > 0) {
-    sKeys = sKeys.filter(key => allKeys.includes(key));
-  }
-
-  let eKeys = endKeys || [];
-  if (eKeys.length > 0) {
-    eKeys = eKeys.filter(key => allKeys.includes(key));
-  }
+  const sKeys = initKeys(startKeys);
+  const eKeys = initKeys(endKeys);
 
   sKeys
     .concat(allKeys.filter(key => !sKeys.includes(key) && !eKeys.includes(key)))
@@ -118,6 +120,27 @@ function sortObjectKeys(values: any, startKeys?: string[], endKeys?: string[]) {
     });
 
   return obj;
+
+  function initKeys(customKeys?: string[]) {
+    let cKeys = Array.isArray(customKeys) ? customKeys : [];
+    if (cKeys.length > 0) {
+      cKeys = cKeys.reduce((acc, key) => {
+        if (key.endsWith(':*')) {
+          const sk = key.replace(':*', ':');
+          console.log(`sk:`, sk);
+          const keys = allKeys.filter(k => !acc.includes(k) && k.startsWith(sk));
+          return acc.concat(keys);
+        }
+
+        if (allKeys.includes(key)) {
+          return acc.concat(key);
+        }
+
+        return acc;
+      }, [] as string[]);
+    }
+    return cKeys;
+  }
 }
 
 export async function createApp(options: CLIOptions) {
@@ -272,9 +295,11 @@ function handleFinalPkg(pkg: PackageJson, appType: AppType, variant: FrameworkVa
         pkg[key],
         [
           'dev',
+          'dev:*',
           'debug',
           'start',
           'build',
+          'build:*',
           'preview',
           'test',
           'lint',
@@ -478,8 +503,9 @@ async function getUserVariant(appType: AppType, rootDir: string, template?: stri
             })
         : variants.map(s => ({ name: s.display, value: s.name }));
 
+    const frameworkName = FRAMEWORKS.find(s => s.name === framework)?.display;
     const _variant = await askList(
-      'Select a variant:',
+      `Select a ${chalk.blue(frameworkName)} variant:`,
       _variants.concat([{ name: chalk.yellow('← Back'), value: '_' }]),
     );
 

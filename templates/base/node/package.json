@@ -32,6 +32,15 @@
     "url": "git+{{gitUrl}}.git"
   },
   "scripts": {
-    "lint:eslint": "eslint \"{src,test}/**/*.ts\" *.{js,cjs,mjs,ts} --fix --cache"
+    "lint:eslint": "eslint \"{src,test}/**/*.ts\" *.{js,cjs,mjs,ts} --fix --cache",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@tomjs/node": "^2.1.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.11.2",
+    "type-fest": "^4.18.3",
+    "vitest": "^1.6.0"
   }
 }

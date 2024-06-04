@@ -9,19 +9,27 @@
     "node": ">=14",
     "vscode": "^1.56.0"
   },
-  "main": "dist/index.js",
+  "main": "dist/extension/index.js",
   "keywords": [
     "vscode"
   ],
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:tomjs.xxx.showHello",
+    "onCommand:tomjs.xxx.showPanel"
+  ],
   "contributes": {
     "commands": [
       {
         "command": "tomjs.xxx.showHello",
         "title": "%tomjs.commands.hello%",
+        "category": "%displayName%"
+      },
+      {
+        "command": "tomjs.xxx.showPanel",
+        "title": "%tomjs.commands.panel%",
         "category": "%displayName%"
       }
     ]
@@ -42,16 +50,21 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:i18n": "vscode-dev i18n --watch",
-    "dev:dist": "tsup --watch",
-    "build": "vscode-dev i18n && tsup --minify"
+    "dev:dist": "vite",
+    "build": "vscode-dev i18n && vite build",
+    "lint": "run-s lint:eslint lint:stylelint lint:prettier",
+    "lint:eslint": "eslint \"{src,extension}/**/*.{js,cjs,ts,tsx}\" *.{js,cjs,ts} --fix --cache"
   },
   "dependencies": {
     "@tomjs/node": "^2.1.0",
-    "@tomjs/vscode": "^2.0.1"
+    "@tomjs/vscode": "^2.0.1",
+    "@vscode/webview-ui-toolkit": "^1.4.0"
   },
   "devDependencies": {
+    "@tomjs/vite-plugin-vscode": "^2.3.1",
     "@tomjs/vscode-dev": "^1.2.3",
     "@types/vscode": "^1.56.0",
-    "tsup": "^8.1.0"
+    "@types/vscode-webview": "^1.57.5",
+    "vite": "^5.2.12"
   }
 }

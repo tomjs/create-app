@@ -41,6 +41,7 @@
                       "base/react",
                       "base/style",
                       "base/vue",
+                      "base/vscode",
                       "react",
                       "vue"
                     ]
