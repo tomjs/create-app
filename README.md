@@ -46,6 +46,10 @@ Support templates:
 - electron-vue
 - electron-react
 - node
+- node-cli
+- node-cli-legacy
+- node-vite-plugin
+- node-workspaces
 - vscode
 - vscode-vue
 - vscode-react
