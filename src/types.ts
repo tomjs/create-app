@@ -100,5 +100,6 @@ export type FrameworkVariant = {
   workspaces?: boolean;
   test?: boolean;
   devDependencies?: 0 | 1 | 2;
+  git?: 0 | 1 | 2;
   userOptions: UserOptions;
 };

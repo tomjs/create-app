@@ -27,7 +27,7 @@ async function saveOrUpdateGitRepoPrompt(git?: GitRepo): Promise<GitRepo> {
     {
       type: 'text',
       name: 'owner',
-      message: `${git?.owner ? 'Edit' : 'Add '} git repository owner:`,
+      message: `${git?.owner ? 'Edit' : 'Add'} git repository owner:`,
       default: git?.owner || defaultGitRepo.owner,
     },
   ]);

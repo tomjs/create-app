@@ -91,6 +91,11 @@
                 "test": {
                   "type": "boolean",
                   "description": "Whether to use test"
+                },
+                "git": {
+                  "type": "integer",
+                  "enum": [0, 1, 2],
+                  "description": "Whether to select git repository.\n0: not used\n1: used\n2: prompt"
                 }
               },
               "required": ["name", "display"]

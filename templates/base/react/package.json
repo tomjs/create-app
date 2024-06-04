@@ -4,8 +4,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "run-s lint:eslint lint:stylelint lint:prettier",
-    "lint:eslint": "eslint \"src/**/*.{ts,tsx}\" *.{js,cjs,mjs,ts} --fix --cache",
-    "lint:stylelint": "stylelint \"src/**/*.{css,less,scss,html}\" *.html --fix --cache"
+    "lint:eslint": "eslint \"src/**/*.{ts,tsx}\" *.{js,cjs,mjs,ts} --fix --cache"
   },
   "dependencies": {
     "react": "^18.3.1",

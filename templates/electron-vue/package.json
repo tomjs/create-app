@@ -1,1 +1,6 @@
-{}
+{
+  "description": "vite + electron + vue",
+  "scripts": {
+    "lint:eslint": "eslint \"{src,electron}/**/*.{ts,tsx,vue}\" *.{js,cjs,mjs,ts} --fix --cache"
+  }
+}

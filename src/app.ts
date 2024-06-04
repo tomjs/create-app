@@ -86,6 +86,23 @@ const PKG_FIELDS = [
   'optionalDependencies',
 ];
 
+const PKG_SCRIPTS = [
+  'dev',
+  'dev:*',
+  'debug',
+  'start',
+  'build',
+  'build:*',
+  'release',
+  'clean',
+  'preview',
+  'test',
+  'lint',
+  'lint:eslint',
+  'lint:stylelint',
+  'lint:prettier',
+];
+
 async function getGitInfo(name: string) {
   return run(`git config --get ${name}`, { trim: true });
 }
@@ -291,24 +308,7 @@ function handleFinalPkg(pkg: PackageJson, appType: AppType, variant: FrameworkVa
       return;
     }
     if (key === 'scripts') {
-      pkg[key] = sortObjectKeys(
-        pkg[key],
-        [
-          'dev',
-          'dev:*',
-          'debug',
-          'start',
-          'build',
-          'build:*',
-          'preview',
-          'test',
-          'lint',
-          'lint:eslint',
-          'lint:stylelint',
-          'lint:prettier',
-        ],
-        ['prepare'],
-      );
+      pkg[key] = sortObjectKeys(pkg[key], PKG_SCRIPTS, ['prepare']);
     } else {
       pkg[key] = sortObjectKeys(pkg[key]);
     }
@@ -567,23 +567,25 @@ async function getUserVariant(appType: AppType, rootDir: string, template?: stri
   } else if (appType === 'package') {
     variant.workspaces = false;
   } else {
-    gitUserUrl = await askList(
-      `Which git repository to publish to?`,
-      gitRepos
-        .map(repo => {
-          const url = getGitUserUrl(repo);
-          return {
-            name: url,
-            value: url,
-          };
-        })
-        .concat([
-          {
-            name: chalk.yellow('None'),
-            value: '',
-          },
-        ]),
-    );
+    if (variant.git) {
+      gitUserUrl = await askList(
+        `Which git repository do you want to choose?`,
+        gitRepos
+          .map(repo => {
+            const url = getGitUserUrl(repo);
+            return {
+              name: url,
+              value: url,
+            };
+          })
+          .concat([
+            {
+              name: chalk.yellow('None'),
+              value: '',
+            },
+          ]),
+      );
+    }
   }
 
   if (variant.devDependencies === 2) {

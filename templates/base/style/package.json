@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "lint": "run-s lint:eslint lint:stylelint lint:prettier",
     "lint:stylelint": "stylelint \"src/**/*.{css,less,scss,html}\" *.html --fix --cache"
   },
   "devDependencies": {

@@ -69,6 +69,23 @@ function createWindow() {
 
 app.whenReady().then(async () => {
   createWindow();
+
+  if (isDev) {
+    const { installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = await import(
+      '@tomjs/electron-devtools-installer'
+    );
+
+    installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
+      .then(exts => {
+        console.log(
+          'Added Extension: ',
+          exts.map(s => s.name),
+        );
+      })
+      .catch(() => {
+        console.log('Failed to install extensions');
+      });
+  }
 });
 
 app.on('window-all-closed', () => {
