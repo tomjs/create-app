@@ -29,7 +29,7 @@
   },
   "files": [
     "dist",
-    "template/**"
+    "templates/**"
   ],
   "engines": {
     "node": ">=18"
