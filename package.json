@@ -1,7 +1,7 @@
 {
   "name": "@tomjs/create-app",
   "type": "module",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "create tomjs web app",
   "keywords": [
     "tomjs",
