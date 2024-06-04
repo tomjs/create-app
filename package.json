@@ -50,7 +50,8 @@
     "lint:eslint": "eslint \"{src,templates}/**/*.{js,cjs,ts,tsx,vue}\" *.{js,cjs,ts} --fix --cache",
     "lint:stylelint": "stylelint \"templates/**/*.{css,scss,less,vue,html}\" --fix --cache",
     "lint:prettier": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@tomjs/logger": "^1.0.0",
