@@ -24,8 +24,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0
       inquirer:
-        specifier: ^9.2.22
-        version: 9.2.22
+        specifier: ^9.2.23
+        version: 9.2.23
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -35,19 +35,19 @@ importers:
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.3.0
-        version: 19.3.0(@types/node@18.19.33)(typescript@5.4.5)
+        version: 19.3.0(@types/node@18.19.34)(typescript@5.4.5)
       '@tomjs/commitlint':
         specifier: ^3.3.0
-        version: 3.3.0(@commitlint/cli@19.3.0(@types/node@18.19.33)(typescript@5.4.5))
+        version: 3.3.0(@commitlint/cli@19.3.0(@types/node@18.19.34)(typescript@5.4.5))
       '@tomjs/eslint':
-        specifier: ^3.1.0
-        version: 3.1.0(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.5)
+        specifier: ^3.1.1
+        version: 3.1.1(eslint@8.57.0)(prettier@3.3.0)(typescript@5.4.5)
       '@tomjs/prettier':
         specifier: ^1.4.1
-        version: 1.4.1(prettier@3.2.5)
+        version: 1.4.1(prettier@3.3.0)
       '@tomjs/stylelint':
         specifier: ^2.5.0
-        version: 2.5.0(prettier@3.2.5)(stylelint@16.6.1(typescript@5.4.5))
+        version: 2.5.0(prettier@3.3.0)(stylelint@16.6.1(typescript@5.4.5))
       '@tomjs/tsconfig':
         specifier: ^1.6.0
         version: 1.6.0
@@ -58,8 +58,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^18.19.33
-        version: 18.19.33
+        specifier: ^18.19.34
+        version: 18.19.34
       '@types/prompts':
         specifier: ^2.4.9
         version: 2.4.9
@@ -82,20 +82,20 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
       prettier:
-        specifier: ^3.2.5
-        version: 3.2.5
+        specifier: ^3.3.0
+        version: 3.3.0
       stylelint:
         specifier: ^16.6.1
         version: 16.6.1(typescript@5.4.5)
       tsup:
         specifier: ^8.1.0
-        version: 8.1.0(postcss@8.4.38)(ts-node@10.9.1(@types/node@18.19.33)(typescript@5.4.5))(typescript@5.4.5)
+        version: 8.1.0(postcss@8.4.38)(ts-node@10.9.1(@types/node@18.19.34)(typescript@5.4.5))(typescript@5.4.5)
       tsx:
-        specifier: ^4.11.0
-        version: 4.11.0
+        specifier: ^4.11.2
+        version: 4.11.2
       type-fest:
-        specifier: ^4.18.3
-        version: 4.18.3
+        specifier: ^4.19.0
+        version: 4.19.0
       typescript:
         specifier: ~5.4.5
         version: 5.4.5
@@ -732,8 +732,8 @@ packages:
   '@humanwhocodes/object-schema@2.0.2':
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
 
-  '@inquirer/figures@1.0.2':
-    resolution: {integrity: sha512-4F1MBwVr3c/m4bAUef6LgkvBfSjzwH+OfldgHqcuacWwSUetFebM2wi58WfG9uk1rR98U6GwLed4asLJbwdV5w==}
+  '@inquirer/figures@1.0.3':
+    resolution: {integrity: sha512-ErXXzENMH5pJt5/ssXV0DfWUZqly8nGzf0UcBV9xTnP+KyffE2mqyxIMBrZ8ijQck2nU0TQm40EQB53YreyWHw==}
     engines: {node: '>=18'}
 
   '@jridgewell/gen-mapping@0.3.3':
@@ -855,8 +855,8 @@ packages:
     peerDependencies:
       '@commitlint/cli': ^19.3.0
 
-  '@tomjs/eslint@3.1.0':
-    resolution: {integrity: sha512-IM1ttVSmEBGi8bpGPNhvPWSBXACAf+ynjItV1LtlfaZ2RWYVlV6pHJReibenRZZVKc0uJYClCdMKr+4X1fuppw==}
+  '@tomjs/eslint@3.1.1':
+    resolution: {integrity: sha512-sw3sd7oXne9m1fQeuoKNpLh1XVlyfV0KLkCCXn/oaB/39rsjQHXuVXd7bLd2++uj6nSMreQxXa1MJOgWzbQQFA==}
     engines: {node: ^18.18.0 || >=20.0.0}
     peerDependencies:
       eslint: ^8.56.0
@@ -930,8 +930,8 @@ packages:
   '@types/node@16.18.59':
     resolution: {integrity: sha512-PJ1w2cNeKUEdey4LiPra0ZuxZFOGvetswE8qHRriV/sUkL5Al4tTmPV9D2+Y/TPIxTHHgxTfRjZVKWhPw/ORhQ==}
 
-  '@types/node@18.19.33':
-    resolution: {integrity: sha512-NR9+KrpSajr2qBVp/Yt5TU/rp+b5Mayi3+OlMlcg2cVCfRmcG5PWZ7S4+MG9PZ5gWBoc9Pd0BKSRViuBCRPu0A==}
+  '@types/node@18.19.34':
+    resolution: {integrity: sha512-eXF4pfBNV5DAMKGbI02NnDtWrQ40hAN558/2vvS4gMpMIxaf6JmD7YjnZbq0Q9TDSSkKBamime8ewRoomHdt4g==}
 
   '@types/node@20.4.7':
     resolution: {integrity: sha512-bUBrPjEry2QUTsnuEjzjbS7voGWCc30W0qzgMf90GPeDGFRakvrz47ju+oqDAKCXLUCe39u57/ORMl/O/04/9g==}
@@ -2197,8 +2197,8 @@ packages:
     resolution: {integrity: sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  inquirer@9.2.22:
-    resolution: {integrity: sha512-SqLLa/Oe5rZUagTR9z+Zd6izyatHglbmbvVofo1KzuVB54YHleWzeHNLoR7FOICGOeQSqeLh1cordb3MzhGcEw==}
+  inquirer@9.2.23:
+    resolution: {integrity: sha512-kod5s+FBPIDM2xiy9fu+6wdU/SkK5le5GS9lh4FEBjBHqiMgD9lLFbCbuqFNAjNL2ZOy9Wd9F694IOzN9pZHBA==}
     engines: {node: '>=18'}
 
   internal-slot@1.0.7:
@@ -3002,8 +3002,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  prettier@3.2.5:
-    resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
+  prettier@3.3.0:
+    resolution: {integrity: sha512-J9odKxERhCQ10OC2yb93583f6UnYutOeiV5i0zEDS7UGTdUt0u+y8erxl3lBKvwo/JHyyoEdXjwp4dke9oyZ/g==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -3619,8 +3619,8 @@ packages:
       typescript:
         optional: true
 
-  tsx@4.11.0:
-    resolution: {integrity: sha512-vzGGELOgAupsNVssAmZjbUDfdm/pWP4R+Kg8TVdsonxbXk0bEpE1qh0yV6/QxUVXaVlNemgcPajGdJJ82n3stg==}
+  tsx@4.11.2:
+    resolution: {integrity: sha512-V5DL5v1BuItjsQ2FN9+4OjR7n5cr8hSgN+VGmm/fd2/0cgQdBIWHcQ3bFYm/5ZTmyxkTDBUIaRuW2divgfPe0A==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3656,8 +3656,8 @@ packages:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
     engines: {node: '>=14.16'}
 
-  type-fest@4.18.3:
-    resolution: {integrity: sha512-Q08/0IrpvM+NMY9PA2rti9Jb+JejTddwmwmVQGskAlhtcrw1wsRzoR6ode6mR+OAabNa75w/dxedSUY2mlphaQ==}
+  type-fest@4.19.0:
+    resolution: {integrity: sha512-CN2l+hWACRiejlnr68vY0/7734Kzu+9+TOslUXbSCQ1ruY9XIHDBSceVXCcHm/oXrdzhtLMMdJEKfemf1yXiZQ==}
     engines: {node: '>=16'}
 
   typed-array-buffer@1.0.0:
@@ -3875,11 +3875,11 @@ snapshots:
       - '@swc/core'
       - '@swc/wasm'
 
-  '@commitlint/cli@19.3.0(@types/node@18.19.33)(typescript@5.4.5)':
+  '@commitlint/cli@19.3.0(@types/node@18.19.34)(typescript@5.4.5)':
     dependencies:
       '@commitlint/format': 19.3.0
       '@commitlint/lint': 19.2.2
-      '@commitlint/load': 19.2.0(@types/node@18.19.33)(typescript@5.4.5)
+      '@commitlint/load': 19.2.0(@types/node@18.19.34)(typescript@5.4.5)
       '@commitlint/read': 19.2.1
       '@commitlint/types': 19.0.3
       execa: 8.0.1
@@ -3983,7 +3983,7 @@ snapshots:
       - '@swc/core'
       - '@swc/wasm'
 
-  '@commitlint/load@19.2.0(@types/node@18.19.33)(typescript@5.4.5)':
+  '@commitlint/load@19.2.0(@types/node@18.19.34)(typescript@5.4.5)':
     dependencies:
       '@commitlint/config-validator': 19.0.3
       '@commitlint/execute-rule': 19.0.0
@@ -3991,7 +3991,7 @@ snapshots:
       '@commitlint/types': 19.0.3
       chalk: 5.3.0
       cosmiconfig: 9.0.0(typescript@5.4.5)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@18.19.33)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@18.19.34)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -4328,7 +4328,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.2': {}
 
-  '@inquirer/figures@1.0.2': {}
+  '@inquirer/figures@1.0.3': {}
 
   '@jridgewell/gen-mapping@0.3.3':
     dependencies:
@@ -4414,12 +4414,12 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@tomjs/commitlint@3.3.0(@commitlint/cli@19.3.0(@types/node@18.19.33)(typescript@5.4.5))':
+  '@tomjs/commitlint@3.3.0(@commitlint/cli@19.3.0(@types/node@18.19.34)(typescript@5.4.5))':
     dependencies:
-      '@commitlint/cli': 19.3.0(@types/node@18.19.33)(typescript@5.4.5)
+      '@commitlint/cli': 19.3.0(@types/node@18.19.34)(typescript@5.4.5)
       '@commitlint/config-conventional': 19.2.2
 
-  '@tomjs/eslint@3.1.0(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.5)':
+  '@tomjs/eslint@3.1.1(eslint@8.57.0)(prettier@3.3.0)(typescript@5.4.5)':
     dependencies:
       '@typescript-eslint/eslint-plugin': 7.9.0(@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.9.0(eslint@8.57.0)(typescript@5.4.5)
@@ -4429,13 +4429,13 @@ snapshots:
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.9.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-n: 17.7.0(eslint@8.57.0)
       eslint-plugin-node-import: 1.0.4(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.2.5)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.3.0)
       eslint-plugin-react: 7.34.1(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       eslint-plugin-react-refresh: 0.4.7(eslint@8.57.0)
       eslint-plugin-simple-import-sort: 12.1.0(eslint@8.57.0)
       eslint-plugin-vue: 9.26.0(eslint@8.57.0)
-      prettier: 3.2.5
+      prettier: 3.3.0
       vue-eslint-parser: 9.4.2(eslint@8.57.0)
     optionalDependencies:
       typescript: 5.4.5
@@ -4454,17 +4454,17 @@ snapshots:
 
   '@tomjs/node@2.1.0': {}
 
-  '@tomjs/prettier@1.4.1(prettier@3.2.5)':
+  '@tomjs/prettier@1.4.1(prettier@3.3.0)':
     dependencies:
-      prettier: 3.2.5
+      prettier: 3.3.0
 
-  '@tomjs/stylelint@2.5.0(prettier@3.2.5)(stylelint@16.6.1(typescript@5.4.5))':
+  '@tomjs/stylelint@2.5.0(prettier@3.3.0)(stylelint@16.6.1(typescript@5.4.5))':
     dependencies:
       postcss: 8.4.38
       postcss-html: 1.7.0
       postcss-less: 6.0.0(postcss@8.4.38)
       postcss-scss: 4.0.9(postcss@8.4.38)
-      prettier: 3.2.5
+      prettier: 3.3.0
       stylelint: 16.6.1(typescript@5.4.5)
       stylelint-config-property-sort-order-smacss: 10.0.0(stylelint@16.6.1(typescript@5.4.5))
       stylelint-config-recommended: 14.0.0(stylelint@16.6.1(typescript@5.4.5))
@@ -4472,7 +4472,7 @@ snapshots:
       stylelint-config-standard: 36.0.0(stylelint@16.6.1(typescript@5.4.5))
       stylelint-config-standard-scss: 13.1.0(postcss@8.4.38)(stylelint@16.6.1(typescript@5.4.5))
       stylelint-order: 6.0.4(stylelint@16.6.1(typescript@5.4.5))
-      stylelint-prettier: 5.0.0(prettier@3.2.5)(stylelint@16.6.1(typescript@5.4.5))
+      stylelint-prettier: 5.0.0(prettier@3.3.0)(stylelint@16.6.1(typescript@5.4.5))
 
   '@tomjs/tsconfig@1.6.0': {}
 
@@ -4486,7 +4486,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.0':
     dependencies:
-      '@types/node': 18.19.33
+      '@types/node': 18.19.34
 
   '@types/inquirer@9.0.7':
     dependencies:
@@ -4507,7 +4507,7 @@ snapshots:
 
   '@types/node@16.18.59': {}
 
-  '@types/node@18.19.33':
+  '@types/node@18.19.34':
     dependencies:
       undici-types: 5.26.5
 
@@ -4517,14 +4517,14 @@ snapshots:
 
   '@types/prompts@2.4.9':
     dependencies:
-      '@types/node': 18.19.33
+      '@types/node': 18.19.34
       kleur: 3.0.3
 
   '@types/semver@7.5.2': {}
 
   '@types/through@0.0.33':
     dependencies:
-      '@types/node': 18.19.33
+      '@types/node': 18.19.34
 
   '@typescript-eslint/eslint-plugin@6.7.0(@typescript-eslint/parser@6.7.0)(eslint@8.49.0)(typescript@5.2.2)':
     dependencies:
@@ -5052,9 +5052,9 @@ snapshots:
       ts-node: 10.9.1(@types/node@16.18.59)(typescript@5.2.2)
       typescript: 5.2.2
 
-  cosmiconfig-typescript-loader@5.0.0(@types/node@18.19.33)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5):
+  cosmiconfig-typescript-loader@5.0.0(@types/node@18.19.34)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5):
     dependencies:
-      '@types/node': 18.19.33
+      '@types/node': 18.19.34
       cosmiconfig: 9.0.0(typescript@5.4.5)
       jiti: 1.21.0
       typescript: 5.4.5
@@ -5562,10 +5562,10 @@ snapshots:
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.5
 
-  eslint-plugin-prettier@5.1.3(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.2.5):
+  eslint-plugin-prettier@5.1.3(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.3.0):
     dependencies:
       eslint: 8.57.0
-      prettier: 3.2.5
+      prettier: 3.3.0
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.8
     optionalDependencies:
@@ -5629,7 +5629,7 @@ snapshots:
       globals: 13.24.0
       natural-compare: 1.4.0
       nth-check: 2.1.1
-      postcss-selector-parser: 6.0.16
+      postcss-selector-parser: 6.1.0
       semver: 7.6.0
       vue-eslint-parser: 9.4.2(eslint@8.57.0)
       xml-name-validator: 4.0.0
@@ -6134,9 +6134,9 @@ snapshots:
 
   ini@4.1.1: {}
 
-  inquirer@9.2.22:
+  inquirer@9.2.23:
     dependencies:
-      '@inquirer/figures': 1.0.2
+      '@inquirer/figures': 1.0.3
       '@ljharb/through': 2.3.13
       ansi-escapes: 4.3.2
       chalk: 5.3.0
@@ -6830,13 +6830,13 @@ snapshots:
     dependencies:
       postcss: 8.4.38
 
-  postcss-load-config@4.0.1(postcss@8.4.38)(ts-node@10.9.1(@types/node@18.19.33)(typescript@5.4.5)):
+  postcss-load-config@4.0.1(postcss@8.4.38)(ts-node@10.9.1(@types/node@18.19.34)(typescript@5.4.5)):
     dependencies:
       lilconfig: 2.1.0
       yaml: 2.4.2
     optionalDependencies:
       postcss: 8.4.38
-      ts-node: 10.9.1(@types/node@18.19.33)(typescript@5.4.5)
+      ts-node: 10.9.1(@types/node@18.19.34)(typescript@5.4.5)
 
   postcss-media-query-parser@0.2.3: {}
 
@@ -6923,7 +6923,7 @@ snapshots:
 
   prettier@3.0.3: {}
 
-  prettier@3.2.5: {}
+  prettier@3.3.0: {}
 
   pretty-ms@9.0.0:
     dependencies:
@@ -7395,9 +7395,9 @@ snapshots:
       prettier-linter-helpers: 1.0.0
       stylelint: 15.10.3(typescript@5.2.2)
 
-  stylelint-prettier@5.0.0(prettier@3.2.5)(stylelint@16.6.1(typescript@5.4.5)):
+  stylelint-prettier@5.0.0(prettier@3.3.0)(stylelint@16.6.1(typescript@5.4.5)):
     dependencies:
-      prettier: 3.2.5
+      prettier: 3.3.0
       prettier-linter-helpers: 1.0.0
       stylelint: 16.6.1(typescript@5.4.5)
 
@@ -7632,14 +7632,14 @@ snapshots:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
-  ts-node@10.9.1(@types/node@18.19.33)(typescript@5.4.5):
+  ts-node@10.9.1(@types/node@18.19.34)(typescript@5.4.5):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.9
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 18.19.33
+      '@types/node': 18.19.34
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3
@@ -7667,7 +7667,7 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsup@8.1.0(postcss@8.4.38)(ts-node@10.9.1(@types/node@18.19.33)(typescript@5.4.5))(typescript@5.4.5):
+  tsup@8.1.0(postcss@8.4.38)(ts-node@10.9.1(@types/node@18.19.34)(typescript@5.4.5))(typescript@5.4.5):
     dependencies:
       bundle-require: 4.0.2(esbuild@0.21.4)
       cac: 6.7.14
@@ -7677,7 +7677,7 @@ snapshots:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss-load-config: 4.0.1(postcss@8.4.38)(ts-node@10.9.1(@types/node@18.19.33)(typescript@5.4.5))
+      postcss-load-config: 4.0.1(postcss@8.4.38)(ts-node@10.9.1(@types/node@18.19.34)(typescript@5.4.5))
       resolve-from: 5.0.0
       rollup: 4.5.0
       source-map: 0.8.0-beta.0
@@ -7690,7 +7690,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  tsx@4.11.0:
+  tsx@4.11.2:
     dependencies:
       esbuild: 0.20.2
       get-tsconfig: 4.7.5
@@ -7715,7 +7715,7 @@ snapshots:
 
   type-fest@3.13.1: {}
 
-  type-fest@4.18.3: {}
+  type-fest@4.19.0: {}
 
   typed-array-buffer@1.0.0:
     dependencies:
