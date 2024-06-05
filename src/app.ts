@@ -144,7 +144,6 @@ function sortObjectKeys(values: any, startKeys?: string[], endKeys?: string[]) {
       cKeys = cKeys.reduce((acc, key) => {
         if (key.endsWith(':*')) {
           const sk = key.replace(':*', ':');
-          console.log(`sk:`, sk);
           const keys = allKeys.filter(k => !acc.includes(k) && k.startsWith(sk));
           return acc.concat(keys);
         }
