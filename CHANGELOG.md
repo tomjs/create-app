@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/tomjs/create-app/compare/v1.0.2...v1.1.0) (2024-06-05)
+
+- Merge branch 'main' of github.com:tomjs/create-app [757921c](https://github.com/tomjs/create-app/commit/757921c)
+- chore: update deps and change vscode dev script [bddd54f](https://github.com/tomjs/create-app/commit/bddd54f)
+- fix: remove the name field from the package.json of the vscode template [2266611](https://github.com/tomjs/create-app/commit/2266611)
+- chore: remote debug code [cc389b7](https://github.com/tomjs/create-app/commit/cc389b7)
+
 ## [1.0.2](https://github.com/tomjs/create-app/compare/v1.0.1...v1.0.2) (2024-06-04)
 
 - docs: add more node templates [b2282db](https://github.com/tomjs/create-app/commit/b2282db)
