@@ -87,17 +87,20 @@
       "variants": [
         {
           "name": "vscode",
-          "display": "Base"
+          "display": "Base",
+          "git": 2
         },
         {
           "name": "vscode-vue",
           "display": "Vue",
-          "templates": ["base/style", "base/vue", "base/vscode"]
+          "templates": ["base/style", "base/vue", "base/vscode"],
+          "git": 2
         },
         {
           "name": "vscode-react",
           "display": "React",
-          "templates": ["base/style", "base/react", "base/vscode"]
+          "templates": ["base/style", "base/react", "base/vscode"],
+          "git": 2
         }
       ]
     }

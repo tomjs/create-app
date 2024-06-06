@@ -350,6 +350,10 @@ function handleFinalPkg(pkg: PackageJson, appType: AppType, variant: FrameworkVa
   if (pkg.private === false) {
     delete pkg.private;
   }
+
+  if (!variant.userOptions.gitUserUrl) {
+    delete pkg.repository;
+  }
 }
 
 function copyTemplateFiles(appType: AppType, variant: FrameworkVariant, dir?: string) {
