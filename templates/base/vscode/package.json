@@ -39,7 +39,8 @@
     "url": "git+{{gitUrl}}.git"
   },
   "bugs": {
-    "url": "{{gitUrl}}/issues"
+    "url": "{{gitUrl}}/issues",
+    "email": "{{gitUserEmail}}"
   },
   "homepage": "{{gitUrl}}/blob/main/README.md",
   "icon": "resources/logo.png",
