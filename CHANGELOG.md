@@ -1,3 +1,11 @@
+## [1.2.0](https://github.com/tomjs/create-app/compare/v1.1.0...v1.2.0) (2024-06-10)
+
+- fix: scripts sort [3375e7a](https://github.com/tomjs/create-app/commit/3375e7a)
+- chore: vscode template add bugs.email [01b7d49](https://github.com/tomjs/create-app/commit/01b7d49)
+- chore: update deps [c77f36c](https://github.com/tomjs/create-app/commit/c77f36c)
+- fix: vscode template package.json [9c7feae](https://github.com/tomjs/create-app/commit/9c7feae)
+- chore: vscode template support git [884780c](https://github.com/tomjs/create-app/commit/884780c)
+
 ## [1.1.0](https://github.com/tomjs/create-app/compare/v1.0.2...v1.1.0) (2024-06-05)
 
 - Merge branch 'main' of github.com:tomjs/create-app [757921c](https://github.com/tomjs/create-app/commit/757921c)
