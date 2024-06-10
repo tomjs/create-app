@@ -420,7 +420,7 @@ async function replaceContentWithTextVars(variant: FrameworkVariant, dir?: strin
 
   const pkg = readPkgJson(projectDir);
   const publishFiles = ['LICENSE', 'README.md', 'README.zh_CN.md'];
-  if (!pkg.publishConfig) {
+  if (!pkg.publishConfig && !pkg.publisher) {
     publishFiles.forEach(name => {
       rmSync(path.join(projectDir, name));
     });
