@@ -39,7 +39,7 @@
     "url": "git+{{gitUrl}}.git"
   },
   "bugs": {
-    "url": "git+{{gitUrl}}/issues"
+    "url": "{{gitUrl}}/issues"
   },
   "homepage": "{{gitUrl}}/blob/main/README.md",
   "icon": "resources/logo.png",
@@ -62,9 +62,9 @@
   },
   "devDependencies": {
     "@tomjs/vite-plugin-vscode": "^2.3.1",
-    "@tomjs/vscode-dev": "^2.0.0",
+    "@tomjs/vscode-dev": "^2.2.0",
     "@types/vscode": "^1.56.0",
     "@types/vscode-webview": "^1.57.5",
-    "vite": "^5.2.12"
+    "vite": "^5.2.13"
   }
 }

@@ -30,7 +30,7 @@
     "url": "git+{{gitUrl}}.git"
   },
   "bugs": {
-    "url": "git+{{gitUrl}}/issues"
+    "url": "{{gitUrl}}/issues"
   },
   "homepage": "{{gitUrl}}/blob/main/README.md",
   "icon": "resources/logo.png",
@@ -40,16 +40,16 @@
   },
   "scripts": {
     "dev": "run-p dev:*",
-    "dev:i18n": "vscode-dev i18n --watch",
+    "dev:vsd": "vscode-dev --watch",
     "dev:dist": "tsup --watch",
-    "build": "vscode-dev i18n && tsup --minify"
+    "build": "vscode-dev && tsup --minify"
   },
   "dependencies": {
     "@tomjs/node": "^2.1.0",
-    "@tomjs/vscode": "^2.0.1"
+    "@tomjs/vscode": "^2.1.0"
   },
   "devDependencies": {
-    "@tomjs/vscode-dev": "^1.2.3",
+    "@tomjs/vscode-dev": "^2.2.0",
     "@types/vscode": "^1.56.0",
     "tsup": "^8.1.0"
   }
