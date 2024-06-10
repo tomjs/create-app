@@ -39,8 +39,8 @@
     "@tomjs/node": "^2.1.0"
   },
   "devDependencies": {
-    "tsx": "^4.11.2",
-    "type-fest": "^4.19.0",
+    "tsx": "^4.15.1",
+    "type-fest": "^4.20.0",
     "vitest": "^1.6.0"
   }
 }

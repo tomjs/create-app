@@ -88,11 +88,11 @@ const PKG_FIELDS = [
 
 const PKG_SCRIPTS = [
   'dev',
-  'dev:*',
+  'dev:',
   'debug',
   'start',
   'build',
-  'build:*',
+  'build:',
   'release',
   'clean',
   'preview',
@@ -125,7 +125,7 @@ function writePkgJson(filePath: string, data: any) {
 
 function sortObjectKeys(values: any, startKeys?: string[], endKeys?: string[]) {
   const obj = {};
-  const allKeys = Object.keys(values).sort();
+  const allKeys = Object.keys(values);
   const sKeys = initKeys(startKeys);
   const eKeys = initKeys(endKeys);
 
@@ -142,9 +142,8 @@ function sortObjectKeys(values: any, startKeys?: string[], endKeys?: string[]) {
     let cKeys = Array.isArray(customKeys) ? customKeys : [];
     if (cKeys.length > 0) {
       cKeys = cKeys.reduce((acc, key) => {
-        if (key.endsWith(':*')) {
-          const sk = key.replace(':*', ':');
-          const keys = allKeys.filter(k => !acc.includes(k) && k.startsWith(sk));
+        if (key.endsWith(':')) {
+          const keys = allKeys.filter(k => !acc.includes(k) && k.startsWith(key));
           return acc.concat(keys);
         }
 

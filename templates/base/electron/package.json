@@ -1,4 +1,5 @@
 {
+  "description": "vite + electron",
   "type": "module",
   "engines": {
     "node": ">=18"
@@ -17,9 +18,8 @@
   },
   "devDependencies": {
     "@tomjs/vite-plugin-electron": "^1.9.0",
-    "electron": "^30.0.9",
+    "electron": "^30.1.0",
     "electron-builder": "^24.13.3",
-    "vite": "^5.2.12",
     "vite-plugin-electron-renderer": "^0.14.5"
   }
 }
