@@ -6,7 +6,7 @@
   "publisher": "{{gitOrg}}",
   "license": "MIT",
   "engines": {
-    "node": ">=14",
+    "node": ">=14.16.0",
     "vscode": "^1.56.0"
   },
   "main": "dist/extension/index.js",
