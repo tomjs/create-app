@@ -125,7 +125,12 @@ function writePkgJson(filePath: string, data: any) {
 
 function sortObjectKeys(values: any, startKeys?: string[], endKeys?: string[]) {
   const obj = {};
-  const allKeys = Object.keys(values);
+  let allKeys = Object.keys(values);
+  {
+    const subScripts = allKeys.filter(s => s.includes(':'));
+    const scripts = allKeys.filter(s => !s.includes(':')).sort();
+    allKeys = scripts.concat(subScripts);
+  }
   const sKeys = initKeys(startKeys);
   const eKeys = initKeys(endKeys);
 
