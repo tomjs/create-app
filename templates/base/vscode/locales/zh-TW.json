@@ -1,5 +1,0 @@
-{
-  "tomjs.commands.hello": "顯示你好",
-  "description": "這是一個 Tomjs 延伸模組。",
-  "displayName": "Tomjs 延伸模組"
-}

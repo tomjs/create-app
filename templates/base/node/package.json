@@ -36,10 +36,10 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@tomjs/node": "^2.1.0"
+    "@tomjs/node": "^2.2.0"
   },
   "devDependencies": {
-    "tsx": "^4.15.1",
+    "tsx": "^4.15.4",
     "type-fest": "^4.20.0",
     "vitest": "^1.6.0"
   }

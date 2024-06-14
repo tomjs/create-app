@@ -16,10 +16,7 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:tomjs.xxx.showHello",
-    "onCommand:tomjs.xxx.showPanel"
-  ],
+  "activationEvents": [],
   "contributes": {
     "commands": [
       {
@@ -39,8 +36,7 @@
     "url": "git+{{gitUrl}}.git"
   },
   "bugs": {
-    "url": "{{gitUrl}}/issues",
-    "email": "{{gitUserEmail}}"
+    "url": "{{gitUrl}}/issues"
   },
   "homepage": "{{gitUrl}}/blob/main/README.md",
   "icon": "resources/logo.png",
@@ -57,15 +53,15 @@
     "lint:eslint": "eslint \"{src,extension}/**/*.{js,cjs,ts,tsx}\" *.{js,cjs,ts} --fix --cache"
   },
   "dependencies": {
-    "@tomjs/node": "^2.1.0",
-    "@tomjs/vscode": "^2.1.0",
+    "@tomjs/node": "^2.2.0",
+    "@tomjs/vscode": "^2.4.1",
     "@vscode/webview-ui-toolkit": "^1.4.0"
   },
   "devDependencies": {
     "@tomjs/vite-plugin-vscode": "^2.3.1",
-    "@tomjs/vscode-dev": "^2.2.0",
+    "@tomjs/vscode-dev": "^2.2.1",
     "@types/vscode": "^1.56.0",
     "@types/vscode-webview": "^1.57.5",
-    "vite": "^5.2.13"
+    "vite": "^5.3.0"
   }
 }
