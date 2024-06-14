@@ -1,3 +1,11 @@
+## [1.3.0](https://github.com/tomjs/create-app/compare/v1.2.0...v1.3.0) (2024-06-14)
+
+- chore: update deps [c9c2bff](https://github.com/tomjs/create-app/commit/c9c2bff)
+- fix: add license file [34827fc](https://github.com/tomjs/create-app/commit/34827fc)
+- feat: set engines.node to >=14.16.0 [84ea712](https://github.com/tomjs/create-app/commit/84ea712)
+- feat: add vscode.d.ts to .gitignore [01bd693](https://github.com/tomjs/create-app/commit/01bd693)
+- chore: update @tomjs/eslint [b964842](https://github.com/tomjs/create-app/commit/b964842)
+
 ## [1.2.0](https://github.com/tomjs/create-app/compare/v1.1.0...v1.2.0) (2024-06-10)
 
 - fix: scripts sort [3375e7a](https://github.com/tomjs/create-app/commit/3375e7a)
