@@ -398,7 +398,7 @@ function copyTemplateFiles(appType: AppType, variant: FrameworkVariant, dir?: st
   rmSync(tempPath);
 
   // test
-  rmProjectFiles(projectDir, 'tests');
+  rmProjectFiles(projectDir, 'test');
   replaceFileContent(path.join(projectDir, 'tsconfig.json'), `, "test"`, '');
 
   if (appType === 'package') {
