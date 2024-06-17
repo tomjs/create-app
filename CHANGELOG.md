@@ -1,3 +1,7 @@
+## [1.3.2](https://github.com/tomjs/create-app/compare/v1.3.1...v1.3.2) (2024-06-17)
+
+- fix: Issues with package type handling of package.json files [f2ccd5a](https://github.com/tomjs/create-app/commit/f2ccd5a)
+
 ## [1.3.1](https://github.com/tomjs/create-app/compare/v1.3.0...v1.3.1) (2024-06-17)
 
 - fix: test optional parameters for directory deletion issues [419e185](https://github.com/tomjs/create-app/commit/419e185)
