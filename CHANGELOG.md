@@ -1,3 +1,7 @@
+## [1.3.1](https://github.com/tomjs/create-app/compare/v1.3.0...v1.3.1) (2024-06-17)
+
+- fix: test optional parameters for directory deletion issues [419e185](https://github.com/tomjs/create-app/commit/419e185)
+
 ## [1.3.0](https://github.com/tomjs/create-app/compare/v1.2.0...v1.3.0) (2024-06-14)
 
 - chore: update deps [c9c2bff](https://github.com/tomjs/create-app/commit/c9c2bff)
