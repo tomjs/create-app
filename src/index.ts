@@ -38,12 +38,10 @@ Examples
       example: {
         shortFlag: 'e',
         type: 'boolean',
-        default: false,
       },
       package: {
         shortFlag: 'p',
         type: 'boolean',
-        default: false,
       },
       h: {
         type: 'boolean',
@@ -68,6 +66,8 @@ if (flags.h) {
 
   const opts = Object.assign({ name: input[0], type: 'project' }, flags) as CLIOptions;
   opts.cwd ||= process.env.CA_CWD || process.cwd();
+  opts.example ??= isTrue(process.env.CA_EXAMPLE);
+  opts.package ??= isTrue(process.env.CA_PACKAGE);
   logger.debug('final options:', opts);
 
   opts.type = getType(opts);
@@ -83,4 +83,8 @@ function getType(opts: CLIOptions) {
   } else {
     return 'project';
   }
+}
+
+function isTrue(str?: string) {
+  return str === '1' || str === 'true';
 }

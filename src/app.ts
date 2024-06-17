@@ -331,6 +331,13 @@ function handleFinalPkg(pkg: PackageJson, appType: AppType, variant: FrameworkVa
     if (pkg.repository && typeof pkg.repository === 'object') {
       pkg.repository.directory = `packages/${textVars.pkgShortName}`;
     }
+    if (pkg.scripts) {
+      Object.keys(pkg.scripts).forEach(s => {
+        if (s.startsWith('lint')) {
+          delete pkg.scripts![s];
+        }
+      });
+    }
   }
 
   if (!variant.test) {
@@ -366,8 +373,14 @@ function copyTemplateFiles(appType: AppType, variant: FrameworkVariant, dir?: st
   mkdirSync(tempPath);
 
   const templates = variant.templates || [];
-  const copyTemplates = appType !== 'project' ? templates : ['base/core', ...templates];
+  let baseTemplates: string[] = [];
+  if (appType === 'package') {
+    baseTemplates = ['base/package'];
+  } else if (appType === 'project') {
+    baseTemplates = ['base/core'];
+  }
 
+  const copyTemplates = baseTemplates.concat(templates);
   copyTemplates.forEach((name, index) => {
     const src = path.join(TEMPLATE_DIR, name);
     if (!fs.existsSync(src)) {
@@ -378,7 +391,7 @@ function copyTemplateFiles(appType: AppType, variant: FrameworkVariant, dir?: st
     // package.json
     const tempPkg = readPkgJson(tempPath) || {};
     let pkg = merge(tempPkg, readPkgJson(projectDir));
-    if (index === templates.length) {
+    if (index === copyTemplates.length - 1) {
       const newPkg = {};
 
       PKG_FIELDS.forEach(key => {
@@ -398,8 +411,10 @@ function copyTemplateFiles(appType: AppType, variant: FrameworkVariant, dir?: st
   rmSync(tempPath);
 
   // test
-  rmProjectFiles(projectDir, 'test');
-  replaceFileContent(path.join(projectDir, 'tsconfig.json'), `, "test"`, '');
+  if (!variant.test) {
+    rmProjectFiles(projectDir, 'test');
+    replaceFileContent(path.join(projectDir, 'tsconfig.json'), `, "test"`, '');
+  }
 
   if (appType === 'package') {
     const exclude = ['.vscode'].concat(variant.packages?.exclude ?? []);
