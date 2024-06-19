@@ -45,11 +45,11 @@
     "build": "vscode-dev && tsup --minify"
   },
   "dependencies": {
-    "@tomjs/node": "^2.2.0",
+    "@tomjs/node": "^2.2.1",
     "@tomjs/vscode": "^2.4.1"
   },
   "devDependencies": {
-    "@tomjs/vscode-dev": "^2.2.1",
+    "@tomjs/vscode-dev": "^2.2.2",
     "@types/vscode": "^1.56.0",
     "tsup": "^8.1.0"
   }
