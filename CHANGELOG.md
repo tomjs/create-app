@@ -1,3 +1,8 @@
+## [1.4.0](https://github.com/tomjs/create-app/compare/v1.3.2...v1.4.0) (2024-06-19)
+
+- chore: update deps [91535c5](https://github.com/tomjs/create-app/commit/91535c5)
+- feat: add more i18n-ally setting [8371ddb](https://github.com/tomjs/create-app/commit/8371ddb)
+
 ## [1.3.2](https://github.com/tomjs/create-app/compare/v1.3.1...v1.3.2) (2024-06-17)
 
 - fix: Issues with package type handling of package.json files [f2ccd5a](https://github.com/tomjs/create-app/commit/f2ccd5a)
