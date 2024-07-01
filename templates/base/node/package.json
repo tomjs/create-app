@@ -33,13 +33,14 @@
   },
   "scripts": {
     "lint:eslint": "eslint \"{src,test}/**/*.ts\" *.{js,cjs,mjs,ts} --fix --cache",
-    "test": "vitest"
+    "test": "vitest",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@tomjs/node": "^2.2.1"
   },
   "devDependencies": {
-    "tsx": "^4.15.6",
+    "tsx": "^4.16.0",
     "type-fest": "^4.20.1",
     "vitest": "^1.6.0"
   }

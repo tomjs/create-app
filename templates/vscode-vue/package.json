@@ -2,5 +2,8 @@
   "scripts": {
     "build": "vscode-dev && vue-tsc --noEmit && vite build",
     "lint:eslint": "eslint \"{src,extension}/**/*.{js,cjs,ts,tsx,vue}\" *.{js,cjs,ts} --fix --cache"
+  },
+  "dependencies": {
+    "vue-i18n": "^9.13.1"
   }
 }

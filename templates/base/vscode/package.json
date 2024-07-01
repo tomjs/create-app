@@ -54,14 +54,14 @@
   },
   "dependencies": {
     "@tomjs/node": "^2.2.1",
-    "@tomjs/vscode": "^2.4.1",
+    "@tomjs/vscode": "^2.4.2",
     "@vscode/webview-ui-toolkit": "^1.4.0"
   },
   "devDependencies": {
-    "@tomjs/vite-plugin-vscode": "^2.4.0",
-    "@tomjs/vscode-dev": "^2.2.2",
+    "@tomjs/vite-plugin-vscode": "^2.5.3",
+    "@tomjs/vscode-dev": "^3.0.2",
     "@types/vscode": "^1.56.0",
     "@types/vscode-webview": "^1.57.5",
-    "vite": "^5.3.1"
+    "vite": "^5.3.2"
   }
 }

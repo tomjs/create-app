@@ -46,10 +46,10 @@
   },
   "dependencies": {
     "@tomjs/node": "^2.2.1",
-    "@tomjs/vscode": "^2.4.1"
+    "@tomjs/vscode": "^2.4.2"
   },
   "devDependencies": {
-    "@tomjs/vscode-dev": "^2.2.2",
+    "@tomjs/vscode-dev": "^3.0.2",
     "@types/vscode": "^1.56.0",
     "tsup": "^8.1.0"
   }
