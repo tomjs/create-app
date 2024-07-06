@@ -1,3 +1,7 @@
+## [1.5.1](https://github.com/tomjs/create-app/compare/v1.5.0...v1.5.1) (2024-07-06)
+
+- fix: electron react template [424bf4d](https://github.com/tomjs/create-app/commit/424bf4d)
+
 ## [1.5.0](https://github.com/tomjs/create-app/compare/v1.4.0...v1.5.0) (2024-07-01)
 
 - chore: update deps [2c40b06](https://github.com/tomjs/create-app/commit/2c40b06)
