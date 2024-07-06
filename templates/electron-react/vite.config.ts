@@ -3,7 +3,7 @@ import electron from '@tomjs/vite-plugin-electron';
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import renderer from 'vite-plugin-electron-renderer';
-import pkg from '../../../create-app-legacy/template-electron-react/package.json';
+import pkg from './package.json';
 
 // https://vitejs.dev/config/
 export default defineConfig(() => {
