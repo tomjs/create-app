@@ -49,7 +49,9 @@ function createWindow() {
   if (isDev) {
     win.loadURL(serverUrl);
     // Open devTool if the app is not packaged
-    win.webContents.openDevTools();
+    setTimeout(() => {
+      win?.webContents.openDevTools();
+    }, 500);
   } else {
     win.loadFile(indexHtml);
   }
