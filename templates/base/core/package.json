@@ -17,7 +17,7 @@
     "@tomjs/commitlint": "^3.3.0",
     "@tomjs/eslint": "^3.3.0",
     "@tomjs/prettier": "^1.4.1",
-    "@tomjs/tsconfig": "^1.7.0",
+    "@tomjs/tsconfig": "^1.7.1",
     "@types/node": "^18.19.39",
     "eslint": "^8.57.0",
     "husky": "^9.0.11",

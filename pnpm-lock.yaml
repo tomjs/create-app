@@ -49,8 +49,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1(prettier@3.3.2)(stylelint@16.6.1(typescript@5.5.2))
       '@tomjs/tsconfig':
-        specifier: ^1.7.0
-        version: 1.7.0
+        specifier: ^1.7.1
+        version: 1.7.1
       '@types/inquirer':
         specifier: ^9.0.7
         version: 9.0.7
@@ -886,8 +886,8 @@ packages:
       prettier: ^3.0.0
       stylelint: ^16.3.1
 
-  '@tomjs/tsconfig@1.7.0':
-    resolution: {integrity: sha512-INo+JRIAFxU5nQqjAAIE1GJ0kmg1Yga4brZ6/4xVG1MrnEw+UIE7v56pmbwQbn4/swFsmcVSVCXP8FEW7rhTLA==}
+  '@tomjs/tsconfig@1.7.1':
+    resolution: {integrity: sha512-V0CCF54oReJwSjaEjNDtK9BhyDntWGtW3NcBLjh4Cd9lO3fe0nmEI8lfXHhhTEtnf4i5YmHPjRBEiI/FMiokVw==}
     engines: {node: '>=16'}
 
   '@tsconfig/node10@1.0.9':
@@ -4533,7 +4533,7 @@ snapshots:
       stylelint-order: 6.0.4(stylelint@16.6.1(typescript@5.5.2))
       stylelint-prettier: 5.0.0(prettier@3.3.2)(stylelint@16.6.1(typescript@5.5.2))
 
-  '@tomjs/tsconfig@1.7.0': {}
+  '@tomjs/tsconfig@1.7.1': {}
 
   '@tsconfig/node10@1.0.9': {}
 
