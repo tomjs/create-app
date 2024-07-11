@@ -1,3 +1,8 @@
+## [1.5.2](https://github.com/tomjs/create-app/compare/v1.5.1...v1.5.2) (2024-07-12)
+
+- fix: update tsconfig [61e477c](https://github.com/tomjs/create-app/commit/61e477c)
+- fix: electron vue template [5615e92](https://github.com/tomjs/create-app/commit/5615e92)
+
 ## [1.5.1](https://github.com/tomjs/create-app/compare/v1.5.0...v1.5.1) (2024-07-06)
 
 - fix: electron react template [424bf4d](https://github.com/tomjs/create-app/commit/424bf4d)
