@@ -17,6 +17,8 @@
     "vue",
     "react",
     "electron",
+    "vscode",
+    "web",
     "node"
   ],
   "author": {
