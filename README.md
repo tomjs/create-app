@@ -6,6 +6,8 @@
 
 > Create a web application based on [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomjs).
 
+This is only provided to [@tomjs](https://github.com/tomjs) and is not recommended for others to use.
+
 ## Creating a Project
 
 ```bash
@@ -21,23 +23,28 @@ npm create @tomjs/app@latest
 
 Then generate the project based on the prompts.
 
-You can also directly specify the project name, template.
-
 ```bash
-# pnpm
-pnpm create @tomjs/app my-app --template vue
+$ pnpm create @tomjs/app -h
 
-# yarn
-yarn create @tomjs/app my-app --template vue
+create tomjs web app
 
-# npm 7+, extra double-dash is needed:
-npm create @tomjs/app@latest my-app -- --template vue
+Usage
+  $ create-app [name] [options]
+
+  name                  The package name
+
+Options
+  --cwd                 The current working directory (default: ".")
+  -e, --example         Only create examples
+  -p, --package         Only create packages
+  --git                 Only manage git repository
+  --verbose             Display verbose output
+  -h, --help            Display this message
+  -v, --version         Display version number
+
+Examples
+  $ create-app my-project
 ```
-
-Parameters:
-
-- `-t --template` : specify the template
-- `--git`：git repository setting
 
 Support templates:
 

@@ -6,6 +6,8 @@
 
 > 创建基于 [vite](https://github.com/vitejs/vite) + [tomjs](https://github.com/tomjs) 的 web 应用。
 
+仅提供给 [@tomjs](https://github.com/tomjs) 使用，不推荐他人使用。
+
 ## 创建项目
 
 ```bash
@@ -21,23 +23,28 @@ npm create @tomjs/app@latest
 
 然后根据提示生成项目。
 
-你也可以直接指定项目名、模板。
-
 ```bash
-# pnpm
-pnpm create @tomjs/app my-app --template vue
+$ pnpm create @tomjs/app -h
 
-# yarn
-yarn create @tomjs/app my-app --template vue
+create tomjs web app
 
-# npm 7+，需要额外的双破折号：
-npm create @tomjs/app@latest my-app -- --template vue
+Usage
+  $ create-app [name] [options]
+
+  name                  The package name
+
+Options
+  --cwd                 The current working directory (default: ".")
+  -e, --example         Only create examples
+  -p, --package         Only create packages
+  --git                 Only manage git repository
+  --verbose             Display verbose output
+  -h, --help            Display this message
+  -v, --version         Display version number
+
+Examples
+  $ create-app my-project
 ```
-
-参数说明:
-
-- `-t --template`：指定模板
-- `--git`：git 仓库配置
 
 支持模板:
 
