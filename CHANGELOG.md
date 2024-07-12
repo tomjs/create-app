@@ -1,3 +1,8 @@
+## [1.5.3](https://github.com/tomjs/create-app/compare/v1.5.2...v1.5.3) (2024-07-12)
+
+- chore: add more keywords [4ecc173](https://github.com/tomjs/create-app/commit/4ecc173)
+- docs: update readme [b5716c6](https://github.com/tomjs/create-app/commit/b5716c6)
+
 ## [1.5.2](https://github.com/tomjs/create-app/compare/v1.5.1...v1.5.2) (2024-07-12)
 
 - fix: update tsconfig [61e477c](https://github.com/tomjs/create-app/commit/61e477c)
