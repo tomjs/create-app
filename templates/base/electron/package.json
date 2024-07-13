@@ -14,11 +14,11 @@
     "lint:eslint": "eslint \"{src,electron}/**/*.{ts,tsx}\" *.{js,cjs,mjs,ts} --fix --cache"
   },
   "dependencies": {
-    "@tomjs/electron-devtools-installer": "^2.2.1"
+    "@tomjs/electron-devtools-installer": "^2.3.2"
   },
   "devDependencies": {
-    "@tomjs/vite-plugin-electron": "^1.9.0",
-    "electron": "^31.1.0",
+    "@tomjs/vite-plugin-electron": "^1.9.1",
+    "electron": "^31.2.0",
     "electron-builder": "^24.13.3",
     "vite-plugin-electron-renderer": "^0.14.5"
   }

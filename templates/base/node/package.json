@@ -37,11 +37,11 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@tomjs/node": "^2.2.1"
+    "@tomjs/node": "^2.2.3"
   },
   "devDependencies": {
-    "tsx": "^4.16.0",
-    "type-fest": "^4.20.1",
-    "vitest": "^1.6.0"
+    "tsx": "^4.16.2",
+    "type-fest": "^4.21.0",
+    "vitest": "^2.0.2"
   }
 }

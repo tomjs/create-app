@@ -53,8 +53,8 @@
     "lint:eslint": "eslint \"{src,extension}/**/*.{js,cjs,ts,tsx}\" *.{js,cjs,ts} --fix --cache"
   },
   "dependencies": {
-    "@tomjs/node": "^2.2.1",
-    "@tomjs/vscode": "^2.4.2",
+    "@tomjs/node": "^2.2.3",
+    "@tomjs/vscode": "^2.4.4",
     "@vscode/webview-ui-toolkit": "^1.4.0"
   },
   "devDependencies": {
@@ -62,6 +62,6 @@
     "@tomjs/vscode-dev": "^3.0.2",
     "@types/vscode": "^1.56.0",
     "@types/vscode-webview": "^1.57.5",
-    "vite": "^5.3.2"
+    "vite": "^5.3.3"
   }
 }

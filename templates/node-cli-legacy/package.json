@@ -17,8 +17,8 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@tomjs/logger": "^1.1.2",
-    "@tomjs/node": "^2.2.1",
+    "@tomjs/logger": "^1.1.4",
+    "@tomjs/node": "^2.2.3",
     "cac": "^6.7.14",
     "chalk": "^4.1.2",
     "cosmiconfig": "^9.0.0",
