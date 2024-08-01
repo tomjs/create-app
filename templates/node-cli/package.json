@@ -28,6 +28,6 @@
     "ora": "^8.0.1"
   },
   "devDependencies": {
-    "tsup": "^8.1.0"
+    "tsup": "^8.2.3"
   }
 }
