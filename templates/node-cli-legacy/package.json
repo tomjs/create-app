@@ -25,7 +25,5 @@
     "execa": "^5.1.1",
     "ora": "^5.4.1"
   },
-  "devDependencies": {
-    "tsup": "^8.2.3"
-  }
+  "devDependencies": {}
 }

@@ -27,7 +27,5 @@
     "meow": "^13.2.0",
     "ora": "^8.0.1"
   },
-  "devDependencies": {
-    "tsup": "^8.2.3"
-  }
+  "devDependencies": {}
 }

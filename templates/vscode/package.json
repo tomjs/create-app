@@ -51,6 +51,6 @@
   "devDependencies": {
     "@tomjs/vscode-dev": "^3.0.2",
     "@types/vscode": "^1.56.0",
-    "tsup": "^8.2.3"
+    "tsup": "^8.2.4"
   }
 }

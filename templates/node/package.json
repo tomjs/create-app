@@ -6,7 +6,5 @@
     "build": "tsup"
   },
   "dependencies": {},
-  "devDependencies": {
-    "tsup": "^8.2.3"
-  }
+  "devDependencies": {}
 }

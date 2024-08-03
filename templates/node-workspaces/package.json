@@ -4,7 +4,5 @@
     "build": "pnpm -r --stream --filter=@tomjs/* build",
     "lint:eslint": "eslint \"packages/**/*.ts\" *.{js,cjs,ts} --fix --cache"
   },
-  "devDependencies": {
-    "tsup": "^8.2.3"
-  }
+  "devDependencies": {}
 }
