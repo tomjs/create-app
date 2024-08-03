@@ -19,6 +19,7 @@
     "@tomjs/prettier": "^1.4.1",
     "@tomjs/tsconfig": "^1.7.1",
     "@types/node": "^18.19.42",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "husky": "^9.1.4",
     "lint-staged": "^15.2.7",
