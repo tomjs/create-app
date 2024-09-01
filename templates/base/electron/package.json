@@ -18,8 +18,8 @@
   },
   "devDependencies": {
     "@tomjs/vite-plugin-electron": "^1.9.3",
+    "@tomjs/vite-plugin-electron-renderer": "^0.15.0",
     "electron": "^32.0.1",
-    "electron-builder": "^24.13.3",
-    "vite-plugin-electron-renderer": "^0.14.5"
+    "electron-builder": "^24.13.3"
   }
 }
