@@ -62,6 +62,6 @@
     "@tomjs/vscode-dev": "^3.0.2",
     "@types/vscode": "^1.56.0",
     "@types/vscode-webview": "^1.57.5",
-    "vite": "^5.3.5"
+    "vite": "^5.4.2"
   }
 }
