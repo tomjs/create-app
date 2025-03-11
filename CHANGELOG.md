@@ -1,3 +1,10 @@
+## [1.7.0](https://github.com/tomjs/create-app/compare/v1.6.1...v1.7.0) (2025-03-11)
+
+- chore: update eslint [8b1eaa0](https://github.com/tomjs/create-app/commit/8b1eaa0)
+- feat: use @tomjs/vite-plugin-electron-renderer [bfedc77](https://github.com/tomjs/create-app/commit/bfedc77)
+- chore: update deps [0c7952a](https://github.com/tomjs/create-app/commit/0c7952a)
+- chore: remote tsup from node template [7985c8c](https://github.com/tomjs/create-app/commit/7985c8c)
+
 ## [1.6.1](https://github.com/tomjs/create-app/compare/v1.6.0...v1.6.1) (2024-08-03)
 
 - fix: add cross-env dep [7192694](https://github.com/tomjs/create-app/commit/7192694)
