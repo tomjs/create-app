@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "run-s lint:eslint",
     "lint:eslint": "eslint --fix",
-    "prepare": "husky"
+    "prepare": "simple-git-hooks"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
