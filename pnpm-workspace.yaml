@@ -1,3 +1,5 @@
+publicHoistPattern:
+  - '@inquirer/*'
 onlyBuiltDependencies:
   - esbuild
   - simple-git-hooks
