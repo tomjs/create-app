@@ -17,15 +17,15 @@ export function getGitUserUrl(git: GitRepo): string {
 }
 
 async function saveOrUpdateGitRepoPrompt(git?: GitRepo): Promise<GitRepo> {
-  const result = await inquirer.prompt([
+  const result = await inquirer.prompt<{ repo: string; owner: string }>([
     {
-      type: 'text',
+      type: 'input',
       name: 'repo',
       message: `${git?.repo ? 'Edit' : 'Add'} git repository url:`,
       default: git?.repo || defaultGitRepo.repo,
     },
     {
-      type: 'text',
+      type: 'input',
       name: 'owner',
       message: `${git?.owner ? 'Edit' : 'Add'} git repository owner:`,
       default: git?.owner || defaultGitRepo.owner,
