@@ -1,14 +1,16 @@
-import '../polyfills';
-
 import { release } from 'node:os';
+
 import { join } from 'node:path';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import '../polyfills';
 
 // Disable GPU Acceleration for Windows 7
-if (release().startsWith('6.1')) app.disableHardwareAcceleration();
+if (release().startsWith('6.1'))
+  app.disableHardwareAcceleration();
 
 // Set application name for Windows 10+ notifications
-if (process.platform === 'win32') app.setAppUserModelId(app.getName());
+if (process.platform === 'win32')
+  app.setAppUserModelId(app.getName());
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
@@ -18,7 +20,7 @@ if (!app.requestSingleInstanceLock()) {
 // Remove electron security warnings
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
-process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -50,7 +52,8 @@ function createWindow() {
     win.loadURL(serverUrl);
     // Open devTool if the app is not packaged
     win.webContents.openDevTools();
-  } else {
+  }
+  else {
     win.loadFile(indexHtml);
   }
 
@@ -61,7 +64,8 @@ function createWindow() {
 
   // Make all links open with the browser, not with the application
   win.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith('https:')) shell.openExternal(url);
+    if (url.startsWith('https:'))
+      shell.openExternal(url);
     return { action: 'deny' };
   });
   // win.webContents.on('will-navigate', (event, url) => { }) #344
@@ -73,13 +77,15 @@ app.whenReady().then(async () => {
 
 app.on('window-all-closed', () => {
   win = null;
-  if (process.platform !== 'darwin') app.quit();
+  if (process.platform !== 'darwin')
+    app.quit();
 });
 
 app.on('second-instance', () => {
   if (win) {
     // Focus on the main window if the user tried to open another
-    if (win.isMinimized()) win.restore();
+    if (win.isMinimized())
+      win.restore();
     win.focus();
   }
 });
@@ -88,7 +94,8 @@ app.on('activate', () => {
   const allWindows = BrowserWindow.getAllWindows();
   if (allWindows.length) {
     allWindows[0].focus();
-  } else {
+  }
+  else {
     createWindow();
   }
 });
@@ -105,7 +112,8 @@ ipcMain.handle('open-win', (_, arg) => {
 
   if (serverUrl) {
     childWindow.loadURL(`${serverUrl}#${arg}`);
-  } else {
+  }
+  else {
     childWindow.loadFile(indexHtml, { hash: arg });
   }
 });

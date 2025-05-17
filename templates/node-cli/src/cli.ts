@@ -1,7 +1,7 @@
+import type { XxxCLIOptions } from './types.js';
 import meow from 'meow';
 import { getReleaseConfig } from './config.js';
 import { isDev } from './constants.js';
-import type { XxxCLIOptions } from './types.js';
 
 const cli = meow(
   `
@@ -44,9 +44,11 @@ Options
 const { input, flags } = cli;
 if (flags.h) {
   cli.showHelp(0);
-} else if (flags.v) {
+}
+else if (flags.v) {
   cli.showVersion();
-} else {
+}
+else {
   console.log(input, flags);
 
   const cliOpts = Object.assign({}, flags);

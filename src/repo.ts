@@ -1,10 +1,10 @@
+import type { AppConfig, GitRepo } from './types';
 import os from 'node:os';
 import path from 'node:path';
 import { mkdirSync, readJsonSync, writeJsonSync } from '@tomjs/node';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import type { AppConfig, GitRepo } from './types.js';
-import { askConfirm, askList } from './utils.js';
+import { askConfirm, askList } from './utils';
 
 const defaultGitRepo = {
   repo: 'https://github.com',
@@ -52,7 +52,8 @@ function saveAppConfig(config: AppConfig) {
   const cfg = getConfig();
   if (!cfg.createTime) {
     cfg.createTime = Date.now();
-  } else {
+  }
+  else {
     cfg.updateTime = Date.now();
   }
 
@@ -70,7 +71,7 @@ export async function setGitRepoPrompt(list?: GitRepo[], edit = false) {
   }
 
   const choices = list
-    .map(s => {
+    .map((s) => {
       return {
         name: getGitUserUrl(s),
         value: s.id,

@@ -35,7 +35,8 @@ class VSCodeAPIWrapper {
   public postMessage(message: unknown) {
     if (this.vsCodeApi) {
       this.vsCodeApi.postMessage(message);
-    } else {
+    }
+    else {
       window.parent.postMessage({ type: 'page:message', data: message }, '*');
       console.log(message);
     }
@@ -52,7 +53,8 @@ class VSCodeAPIWrapper {
   public getState(): unknown | undefined {
     if (this.vsCodeApi) {
       return this.vsCodeApi.getState();
-    } else {
+    }
+    else {
       const state = localStorage.getItem('vscodeState');
       return state ? JSON.parse(state) : undefined;
     }
@@ -72,7 +74,8 @@ class VSCodeAPIWrapper {
   public setState<T extends unknown | undefined>(newState: T): T {
     if (this.vsCodeApi) {
       return this.vsCodeApi.setState(newState);
-    } else {
+    }
+    else {
       localStorage.setItem('vscodeState', JSON.stringify(newState));
       return newState;
     }

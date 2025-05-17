@@ -1,15 +1,16 @@
+import type { XxxCLIOptions } from './types';
 import path from 'node:path';
 import { readJsonSync } from '@tomjs/node';
 import cac from 'cac';
 import { getReleaseConfig } from './config';
-import type { XxxCLIOptions } from './types';
 import { logger } from './utils';
 
 let version: string = '';
 try {
   const pkg = readJsonSync(path.join(__dirname, '../package.json')) || {};
   version = pkg.version;
-} catch (e) {
+}
+catch (e) {
   console.error(e);
 }
 

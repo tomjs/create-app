@@ -1,20 +1,29 @@
 {
-  "displayName": "%displayName%",
-  "description": "%description%",
-  "version": "0.0.0",
   "publisher": "{{gitOrg}}",
+  "displayName": "%displayName%",
+  "version": "0.0.0",
+  "description": "%description%",
   "license": "MIT",
-  "engines": {
-    "node": ">=14.16.0",
-    "vscode": "^1.56.0"
+  "homepage": "{{gitUrl}}/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+{{gitUrl}}.git"
   },
-  "main": "dist/index.js",
+  "bugs": {
+    "url": "{{gitUrl}}/issues"
+  },
   "keywords": [
     "vscode"
   ],
   "categories": [
     "Other"
   ],
+  "main": "dist/index.js",
+  "icon": "resources/logo.png",
+  "engines": {
+    "node": ">=14.16.0",
+    "vscode": "^1.56.0"
+  },
   "activationEvents": [],
   "contributes": {
     "commands": [
@@ -25,15 +34,6 @@
       }
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+{{gitUrl}}.git"
-  },
-  "bugs": {
-    "url": "{{gitUrl}}/issues"
-  },
-  "homepage": "{{gitUrl}}/blob/main/README.md",
-  "icon": "resources/logo.png",
   "vsce": {
     "dependencies": false,
     "yarn": false
@@ -41,8 +41,8 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:vsd": "vscode-dev --watch",
-    "dev:dist": "tsup --watch",
-    "build": "vscode-dev && tsup --minify"
+    "dev:dist": "tsdown --watch",
+    "build": "vscode-dev && tsdown --minify"
   },
   "dependencies": {
     "@tomjs/node": "^2.2.3",
@@ -51,6 +51,6 @@
   "devDependencies": {
     "@tomjs/vscode-dev": "^3.0.2",
     "@types/vscode": "^1.56.0",
-    "tsup": "^8.2.4"
+    "tsdown": "^0.11.9"
   }
 }

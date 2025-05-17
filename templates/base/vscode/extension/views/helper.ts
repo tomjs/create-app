@@ -17,7 +17,6 @@ export class WebviewHelper {
         switch (command) {
           case 'hello':
             window.showInformationMessage(text);
-            return;
         }
       },
       undefined,

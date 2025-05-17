@@ -1,7 +1,7 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 import pkg from './package.json';
 
-export default defineConfig(options => {
+export default defineConfig((options) => {
   const isDev = !!options.watch;
 
   return {
@@ -13,6 +13,5 @@ export default defineConfig(options => {
     clean: true,
     dts: true,
     sourcemap: isDev,
-    splitting: true,
   };
 });

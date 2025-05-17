@@ -1,6 +1,6 @@
+import type { XxxCLIOptions } from './types.js';
 import fs from 'node:fs';
 import { cosmiconfig } from 'cosmiconfig';
-import type { XxxCLIOptions } from './types.js';
 
 export async function getReleaseConfig(opts: XxxCLIOptions) {
   const explorer = cosmiconfig('xxx', {

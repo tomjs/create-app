@@ -1,3 +1,12 @@
+import type { PackageJson } from 'type-fest';
+import type {
+  AppType,
+  CLIOptions,
+  Framework,
+  FrameworkVariant,
+  TextVars,
+  UserOptions,
+} from './types';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -13,16 +22,7 @@ import {
 } from '@tomjs/node';
 import chalk from 'chalk';
 import { camelCase, cloneDeep, merge } from 'lodash-es';
-import type { PackageJson } from 'type-fest';
-import { getAppConfig, getGitUserUrl, setGitRepoPrompt } from './repo.js';
-import type {
-  AppType,
-  CLIOptions,
-  Framework,
-  FrameworkVariant,
-  TextVars,
-  UserOptions,
-} from './types.js';
+import { getAppConfig, getGitUserUrl, setGitRepoPrompt } from './repo';
 import {
   askCheckbox,
   askConfirm,
@@ -31,7 +31,7 @@ import {
   getPackageManagerName,
   logger,
   run,
-} from './utils.js';
+} from './utils';
 
 const opts: CLIOptions = {};
 
@@ -98,22 +98,23 @@ const PKG_SCRIPTS = [
   'preview',
   'test',
   'lint',
-  'lint:eslint',
   'lint:stylelint',
-  'lint:prettier',
+  'lint:eslint',
 ];
 
 async function getGitInfo(name: string) {
   return run(`git config --get ${name}`, { trim: true });
 }
 
-const checkNpmName = (name: string) =>
-  /^(?:(@[a-z0-9.+-]+(-[a-z0-9.+-]+)*\/)?([a-z0-9][a-z0-9._-]*[a-z0-9]))$/.test(name);
+function checkNpmName(name: string) {
+  return /^(?:@[a-z0-9.+-]+\/)?[a-z0-9][a-z0-9._-]*[a-z0-9]$/.test(name);
+}
 
 const checkFolderName = (name: string) => /^[a-z0-9._-]+$/.test(name);
 
-const getProjectFolder = (name: string) =>
-  name.includes('/') ? name.substring(name.indexOf('/') + 1) : name;
+function getProjectFolder(name: string) {
+  return name.includes('/') ? name.substring(name.indexOf('/') + 1) : name;
+}
 
 function readPkgJson(filePath: string) {
   return (readJsonSync(path.join(filePath, 'package.json')) || {}) as PackageJson;
@@ -137,7 +138,7 @@ function sortObjectKeys(values: any, startKeys?: string[], endKeys?: string[]) {
   sKeys
     .concat(allKeys.filter(key => !sKeys.includes(key) && !eKeys.includes(key)))
     .concat(eKeys)
-    .forEach(prop => {
+    .forEach((prop) => {
       obj[prop] = values[prop];
     });
 
@@ -173,7 +174,8 @@ export async function createApp(options: CLIOptions) {
 
   if (opts.type === 'project') {
     await crateProject();
-  } else {
+  }
+  else {
     await createExampleOrPackage(opts.type!);
   }
 }
@@ -223,8 +225,8 @@ async function crateProject() {
     }
   }
 
-  const hasPackages =
-    fs.existsSync(packagesPath) && fs.readdirSync(path.join(projectDir, 'packages')).length > 0;
+  const hasPackages
+    = fs.existsSync(packagesPath) && fs.readdirSync(path.join(projectDir, 'packages')).length > 0;
   if (hasPackages || hasExamples) {
     const pkg = readPkgJson(projectDir);
     const pm = getPackageManagerName(pkg) || 'npm';
@@ -242,7 +244,8 @@ async function crateProject() {
       if (!fs.existsSync(workspace)) {
         writeFileSync(workspace, `packages:\n${names.map(s => `  - '${s}/*'\n`)}`);
       }
-    } else {
+    }
+    else {
       pkg.workspaces ??= names.map(s => `"${s}/*"`);
       writePkgJson(projectDir, pkg);
     }
@@ -283,7 +286,7 @@ function rmProjectFiles(projectDir: string, ...files: string[]) {
   if (!Array.isArray(files) || files.length === 0) {
     return;
   }
-  files.forEach(s => {
+  files.forEach((s) => {
     const file = path.join(projectDir, s);
     if (fs.existsSync(file)) {
       rmSync(file);
@@ -306,13 +309,14 @@ function handleFinalPkg(pkg: PackageJson, appType: AppType, variant: FrameworkVa
   const { textVars } = opts;
 
   // merge and sort fields for package.json
-  ['scripts', 'dependencies', 'devDependencies', 'peerDependencies'].forEach(key => {
+  ['scripts', 'dependencies', 'devDependencies', 'peerDependencies'].forEach((key) => {
     if (!pkg[key]) {
       return;
     }
     if (key === 'scripts') {
       pkg[key] = sortObjectKeys(pkg[key], PKG_SCRIPTS, ['prepare']);
-    } else {
+    }
+    else {
       pkg[key] = sortObjectKeys(pkg[key]);
     }
   });
@@ -327,12 +331,13 @@ function handleFinalPkg(pkg: PackageJson, appType: AppType, variant: FrameworkVa
     delete pkg.license;
 
     pkg.private = true;
-  } else if (appType === 'package') {
+  }
+  else if (appType === 'package') {
     if (pkg.repository && typeof pkg.repository === 'object') {
       pkg.repository.directory = `packages/${textVars.pkgShortName}`;
     }
     if (pkg.scripts) {
-      Object.keys(pkg.scripts).forEach(s => {
+      Object.keys(pkg.scripts).forEach((s) => {
         if (s.startsWith('lint')) {
           delete pkg.scripts![s];
         }
@@ -376,7 +381,8 @@ function copyTemplateFiles(appType: AppType, variant: FrameworkVariant, dir?: st
   let baseTemplates: string[] = [];
   if (appType === 'package') {
     baseTemplates = ['base/package'];
-  } else if (appType === 'project') {
+  }
+  else if (appType === 'project') {
     baseTemplates = ['base/core'];
   }
 
@@ -394,7 +400,7 @@ function copyTemplateFiles(appType: AppType, variant: FrameworkVariant, dir?: st
     if (index === copyTemplates.length - 1) {
       const newPkg = {};
 
-      PKG_FIELDS.forEach(key => {
+      PKG_FIELDS.forEach((key) => {
         if (key in pkg) {
           newPkg[key] = pkg[key];
           delete pkg[key];
@@ -403,7 +409,8 @@ function copyTemplateFiles(appType: AppType, variant: FrameworkVariant, dir?: st
       pkg = Object.assign(newPkg, pkg);
       handleFinalPkg(pkg, appType, variant);
       writePkgJson(projectDir, pkg);
-    } else {
+    }
+    else {
       writePkgJson(tempPath, pkg);
     }
   });
@@ -429,26 +436,26 @@ async function replaceContentWithTextVars(variant: FrameworkVariant, dir?: strin
 
   fs.readdirSync(projectDir)
     .filter(s => s.startsWith('_'))
-    .forEach(name => {
+    .forEach((name) => {
       fs.renameSync(path.join(projectDir, name), path.join(projectDir, name.replace('_', '.')));
     });
 
   const pkg = readPkgJson(projectDir);
   const publishFiles = ['LICENSE', 'README.md', 'README.zh_CN.md'];
   if (!pkg.publishConfig && !pkg.publisher) {
-    publishFiles.forEach(name => {
+    publishFiles.forEach((name) => {
       rmSync(path.join(projectDir, name));
     });
   }
 
-  ['package.json', ...publishFiles].forEach(name => {
+  ['package.json', ...publishFiles].forEach((name) => {
     const filePath = path.join(projectDir, name);
     if (!fs.existsSync(filePath)) {
       return;
     }
     let content = readFileSync(filePath);
-    Object.keys(textVars).forEach(key => {
-      content = content.replace(new RegExp('{{' + key + '}}', 'g'), textVars[key]);
+    Object.keys(textVars).forEach((key) => {
+      content = content.replace(new RegExp(`{{${key}}}`, 'g'), textVars[key]);
     });
 
     writeFileSync(filePath, content);
@@ -497,7 +504,7 @@ async function getUserVariant(appType: AppType, rootDir: string, template?: stri
       !variant && template
         ? `${chalk.red(template)} is invalid, please select a framework again:`
         : 'Select a framework:',
-      FRAMEWORKS.filter(s => {
+      FRAMEWORKS.filter((s) => {
         if (!s.variants || !s.variants.length) {
           return false;
         }
@@ -512,11 +519,11 @@ async function getUserVariant(appType: AppType, rootDir: string, template?: stri
     logger.debug('framework:', framework);
 
     const variants = FRAMEWORKS.find(s => s.name === framework)?.variants || [];
-    const _variants =
-      appType === 'package'
+    const _variants
+      = appType === 'package'
         ? variants
             .filter(s => !s.packages?.ignore)
-            .map(s => {
+            .map((s) => {
               const parent = s.parent;
               if (parent) {
                 return { name: `${parent.display} > ${s.display}`, value: s.name };
@@ -534,7 +541,8 @@ async function getUserVariant(appType: AppType, rootDir: string, template?: stri
     logger.debug('variant:', _variant);
     if (_variant === '_') {
       await selectVariant(template);
-    } else {
+    }
+    else {
       variant = variants.find(s => s.name === _variant);
     }
   };
@@ -562,7 +570,7 @@ async function getUserVariant(appType: AppType, rootDir: string, template?: stri
   if (appType === 'project' && Array.isArray(variant.examples)) {
     variant.examples = await askCheckbox<string>(
       'Select examples:',
-      variant.examples.map(name => {
+      variant.examples.map((name) => {
         const item = VARIANTS.find(s => s.name === name);
         if (!item) {
           throw new Error(
@@ -586,14 +594,16 @@ async function getUserVariant(appType: AppType, rootDir: string, template?: stri
     variant.devDependencies = 0;
     variant.workspaces = false;
     variant.test = false;
-  } else if (appType === 'package') {
+  }
+  else if (appType === 'package') {
     variant.workspaces = false;
-  } else {
+  }
+  else {
     if (variant.git) {
       gitUserUrl = await askList(
         `Which git repository do you want to choose?`,
         gitRepos
-          .map(repo => {
+          .map((repo) => {
             const url = getGitUserUrl(repo);
             return {
               name: url,
@@ -670,9 +680,9 @@ async function getTextVars(variant: FrameworkVariant) {
     .join('\n\n');
 
   const textVars: TextVars = {
-    pkgName: pkgName,
+    pkgName,
     pkgShortName: pkgName.startsWith('@') ? pkgName.split('/')[1] : pkgName,
-    pkgInstall: pkgInstall,
+    pkgInstall,
     gitUserName: gitUser.name,
     gitUserEmail: gitUser.email,
     gitOrg: getOrgName(),

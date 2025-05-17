@@ -1,6 +1,6 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 
-export default defineConfig(options => {
+export default defineConfig((options) => {
   return {
     entry: ['src/index.ts'],
     format: ['esm'],
@@ -11,6 +11,5 @@ export default defineConfig(options => {
     shims: true,
     clean: true,
     sourcemap: !!options.watch,
-    splitting: true,
   };
 });

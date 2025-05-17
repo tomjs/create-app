@@ -1,6 +1,4 @@
-import Logger from '@tomjs/logger';
 import type { Options as ExecaOptions } from 'execa';
-import { $ } from 'execa';
 import type {
   Answers,
   CheckboxQuestionOptions,
@@ -9,9 +7,11 @@ import type {
   ListQuestionOptions,
   Question,
 } from 'inquirer';
-import inquirer from 'inquirer';
 import type { PackageJson } from 'type-fest';
-import type { CLIOptions } from './types.js';
+import type { CLIOptions } from './types';
+import Logger from '@tomjs/logger';
+import { $ } from 'execa';
+import inquirer from 'inquirer';
 
 export const logger = new Logger({
   directory: 'create-app/logs',
@@ -21,7 +21,8 @@ function mergeQuestionOpts<T>(message: string, value?: any, opts?: any) {
   const question: Question<Answers> = { message };
   if (Array.isArray(value) || typeof value !== 'object') {
     question.default = value;
-  } else {
+  }
+  else {
     Object.assign(question, value);
   }
 
@@ -170,7 +171,8 @@ export async function run(cmd: string | string[], options?: RunExecaOptions): Pr
   const log = (str: string) => {
     if (_opts.verbose) {
       logger.debug(str);
-    } else {
+    }
+    else {
       logger.write(str);
     }
   };
@@ -187,7 +189,8 @@ export async function run(cmd: string | string[], options?: RunExecaOptions): Pr
       return stdout.trim().replace(/\n|\r/g, '');
     }
     return stdout.trim();
-  } catch (e: any) {
+  }
+  catch (e: any) {
     const msg = e.stderr || e.message;
 
     log(msg);
@@ -202,7 +205,8 @@ export function getPackageManagerName(pkg?: PackageJson) {
   }
 
   const userAgent = process.env.npm_config_user_agent;
-  if (!userAgent) return undefined;
+  if (!userAgent)
+    return undefined;
   const pkgSpec = userAgent.split(' ')[0];
   const pkgSpecArr = pkgSpec.split('/');
   return pkgSpecArr[0];

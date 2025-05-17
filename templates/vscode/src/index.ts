@@ -1,5 +1,5 @@
-import { i18n, initExtension } from '@tomjs/vscode';
 import type { ExtensionContext } from 'vscode';
+import { i18n, initExtension } from '@tomjs/vscode';
 import { commands, window } from 'vscode';
 
 export function activate(context: ExtensionContext) {

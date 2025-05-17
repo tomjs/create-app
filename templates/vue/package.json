@@ -1,8 +1,8 @@
 {
   "name": "template-vue",
+  "type": "module",
   "version": "0.0.0",
   "description": "vite + vue",
-  "type": "module",
   "engines": {
     "node": ">=18"
   },

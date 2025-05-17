@@ -1,21 +1,21 @@
 {
+  "packageManager": "pnpm@8.6.12",
   "description": "node cli",
   "keywords": [
     "cli"
-  ],
-  "packageManager": "pnpm@8.6.12",
-  "files": [
-    "dist",
-    "index.d.ts"
   ],
   "bin": {
     "xxx": "./dist/index.js",
     "xxx-cli": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
   "scripts": {
-    "dev": "tsup --watch",
+    "dev": "tsdown --watch",
     "start": "tsx ./src/index.ts",
-    "build": "tsup"
+    "build": "tsdown"
   },
   "dependencies": {
     "@tomjs/logger": "^1.1.4",

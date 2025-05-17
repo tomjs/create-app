@@ -23,11 +23,11 @@ export interface GitRepo {
   owner: string;
 }
 
-export type Framework = {
+export interface Framework {
   name: string;
   display: string;
   variants: FrameworkVariant[];
-};
+}
 
 export interface TextVars {
   /**
@@ -87,7 +87,7 @@ export interface UserOptions {
   textVars: TextVars;
 }
 
-export type FrameworkVariant = {
+export interface FrameworkVariant {
   name: string;
   display: string;
   parent?: Framework;
@@ -102,4 +102,4 @@ export type FrameworkVariant = {
   devDependencies?: 0 | 1 | 2;
   git?: 0 | 1 | 2;
   userOptions: UserOptions;
-};
+}

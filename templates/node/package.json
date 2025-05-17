@@ -2,8 +2,8 @@
   "description": "node module",
   "keywords": [],
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup"
+    "dev": "tsdown --watch",
+    "build": "tsdown"
   },
   "dependencies": {},
   "devDependencies": {}

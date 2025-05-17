@@ -1,31 +1,28 @@
 {
   "name": "{{pkgName}}",
-  "version": "0.0.0",
   "type": "commonjs",
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.9.0",
   "engines": {
     "node": ">=16"
   },
-  "packageManager": "pnpm@9.9.0",
   "scripts": {
-    "lint": "run-s lint:eslint lint:prettier",
-    "lint:eslint": "eslint \"src/**/*.ts\" *.{js,cjs,mjs,ts} --fix --cache",
-    "lint:prettier": "prettier --write .",
+    "lint": "run-s lint:eslint",
+    "lint:eslint": "eslint --fix",
     "prepare": "husky"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.4.1",
-    "@tomjs/commitlint": "^3.3.0",
-    "@tomjs/eslint": "^3.3.0",
-    "@tomjs/prettier": "^1.4.1",
-    "@tomjs/tsconfig": "^1.7.1",
-    "@types/node": "^18.19.47",
+    "@commitlint/cli": "^19.8.1",
+    "@tomjs/commitlint": "^4.0.0",
+    "@tomjs/eslint": "^5.0.0",
+    "@tomjs/tsconfig": "^2.0.0",
+    "@types/node": "^18.19.100",
     "cross-env": "^7.0.3",
-    "eslint": "^8.57.0",
-    "husky": "^9.1.5",
-    "lint-staged": "^15.2.9",
+    "eslint": "^9.27.0",
+    "lint-staged": "^15.5.2",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.3.3",
     "rimraf": "^5.0.10",
-    "typescript": "~5.5.4"
+    "simple-git-hooks": "^2.13.0",
+    "typescript": "~5.8.3"
   }
 }

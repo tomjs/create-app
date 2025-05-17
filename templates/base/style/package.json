@@ -4,7 +4,7 @@
     "lint:stylelint": "stylelint \"src/**/*.{css,less,scss,html}\" *.html --fix --cache"
   },
   "devDependencies": {
-    "@tomjs/stylelint": "^2.6.1",
-    "stylelint": "^16.9.0"
+    "@tomjs/stylelint": "^6.0.0",
+    "stylelint": "^16.19.1"
   }
 }

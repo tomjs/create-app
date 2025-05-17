@@ -1,7 +1,7 @@
+import type { CLIOptions } from './types';
 import meow from 'meow';
-import { createApp } from './app.js';
-import type { CLIOptions } from './types.js';
-import { logger } from './utils.js';
+import { createApp } from './app';
+import { logger } from './utils';
 
 const cli = meow(
   `
@@ -58,9 +58,11 @@ Examples
 const { input, flags } = cli;
 if (flags.h) {
   cli.showHelp(0);
-} else if (flags.v) {
+}
+else if (flags.v) {
   cli.showVersion();
-} else {
+}
+else {
   logger.enableDebug(flags.verbose);
   logger.debug('cli options:', input, flags);
 
@@ -72,15 +74,18 @@ if (flags.h) {
 
   opts.type = getType(opts);
 
+  // eslint-disable-next-line antfu/no-top-level-await
   await createApp(opts);
 }
 
 function getType(opts: CLIOptions) {
   if (opts.example) {
     return 'example';
-  } else if (opts.package) {
+  }
+  else if (opts.package) {
     return 'package';
-  } else {
+  }
+  else {
     return 'project';
   }
 }
