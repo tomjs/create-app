@@ -19,6 +19,7 @@ Options
   importMeta: import.meta,
   booleanDefault: undefined,
   helpIndent: 0,
+  description: t('app.description'),
   flags: {
     overwrite: {
       type: 'string',

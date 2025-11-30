@@ -26,40 +26,33 @@ npm create @tomjs/app@latest
 ```bash
 $ pnpm create @tomjs/app -h
 
-create tomjs web app
+创建基于 tomjs 的 node/web/electron/vscode 的模板
 
 Usage
-  $ create-app [name] [options]
+  $ create-app [options] <dir>
 
-  name                  The package name
+  dir                  项目目录
 
 Options
-  --cwd                 The current working directory (default: ".")
-  -e, --example         Only create examples
-  -p, --package         Only create packages
-  --git                 Only manage git repository
-  --verbose             Display verbose output
-  -h, --help            Display this message
-  -v, --version         Display version number
-
-Examples
-  $ create-app my-project
+  -o, --overwrite       覆盖已存在的目录
+  -p, --private         设为私有项目
+  --verbose             显示详细日志
+  -h, --help            显示帮助信息
+  -v, --version         显示版本信息
 ```
 
 支持模板:
 
-- vue
-- react
 - electron-vue
 - electron-react
-- node
+- node-base
 - node-cli
-- node-cli-legacy
-- node-vite-plugin
-- node-workspaces
-- vscode
+- node-vite
+- vscode-base
 - vscode-vue
 - vscode-react
+- web-vue
+- web-react
 
 ## 参考项目
 

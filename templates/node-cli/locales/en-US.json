@@ -1,4 +1,5 @@
 {
+  "app.description": "Create a project",
   "options.config": "Configuration file path (e.g., \"./xxx.config.json\")",
   "options.dir": "Current working directory (default: \".\")",
   "options.help": "Display help information",

@@ -22,6 +22,7 @@ Options
     importMeta: import.meta,
     booleanDefault: undefined,
     helpIndent: 0,
+    description: t('app.description'),
     flags: {
       dir: {
         type: 'string',

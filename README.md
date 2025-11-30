@@ -26,40 +26,33 @@ Then generate the project based on the prompts.
 ```bash
 $ pnpm create @tomjs/app -h
 
-create tomjs web app
+Create a template based on tomjs node/web/electron/vscode
 
 Usage
-  $ create-app [name] [options]
+  $ create-app [options] <dir>
 
-  name                  The package name
+  dir                  Project directory
 
 Options
-  --cwd                 The current working directory (default: ".")
-  -e, --example         Only create examples
-  -p, --package         Only create packages
-  --git                 Only manage git repository
-  --verbose             Display verbose output
-  -h, --help            Display this message
-  -v, --version         Display version number
-
-Examples
-  $ create-app my-project
+  -o, --overwrite       Overwrite existing project
+  -p, --private         Set as private project
+  --verbose             Show verbose logs
+  -h, --help            Show help information
+  -v, --version         Show version information
 ```
 
 Support templates:
 
-- vue
-- react
 - electron-vue
 - electron-react
-- node
+- node-base
 - node-cli
-- node-cli-legacy
-- node-vite-plugin
-- node-workspaces
-- vscode
+- node-vite
+- vscode-base
 - vscode-vue
 - vscode-react
+- web-vue
+- web-react
 
 ## Reference project
 

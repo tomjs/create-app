@@ -2,8 +2,7 @@
   // i18n Ally
   "i18n-ally.disabled": false,
   "i18n-ally.localesPaths": [
-    "locales",
-    "templates/node-cli/locales"
+    "locales"
   ],
   "i18n-ally.displayLanguage": "zh-CN",
   "i18n-ally.sourceLanguage": "zh-CN",

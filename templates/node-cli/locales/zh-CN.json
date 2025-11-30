@@ -1,4 +1,5 @@
 {
+  "app.description": "创建一个项目",
   "options.config": "配置文件路径 (如: \"./xxx.config.json\")",
   "options.dir": "当前工作目录 (默认: \".\")",
   "options.help": "显示帮助信息",
