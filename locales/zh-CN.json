@@ -1,5 +1,5 @@
 {
-  "app.description": "创建基于 tomjs 的 node/web/electron/vscode 的模板",
+  "app.description": "创建基于 tomjs 的 node/web/electron/vscode 项目",
   "options.dir": "项目目录",
   "options.help": "显示帮助信息",
   "options.interactive": "强制互动",

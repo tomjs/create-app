@@ -1,5 +1,5 @@
 {
-  "app.description": "Create a template based on tomjs node/web/electron/vscode",
+  "app.description": "Create a node/web/electron/vscode project based on tomjs",
   "options.dir": "Project directory",
   "options.help": "Show help information",
   "options.interactive": "Force interactive",
