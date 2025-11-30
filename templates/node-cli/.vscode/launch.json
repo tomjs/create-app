@@ -5,18 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug CLI",
+      "name": "Debug",
       "type": "node",
       "request": "launch",
       "skipFiles": [
         "<node_internals>/**"
       ],
       "runtimeExecutable": "tsx",
-      "program": "${workspaceFolder}\\src\\index.ts",
-      "args": [
-        "--config",
-        "${workspaceFolder}\\xxx.config.cjs"
-      ],
+      "runtimeArgs": [],
+      "program": "${workspaceFolder}/src/debug.ts",
       "console": "integratedTerminal"
     }
   ]

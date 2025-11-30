@@ -1,0 +1,11 @@
+{
+  "options.config": "配置文件路径 (如: \"./xxx.config.json\")",
+  "options.dir": "当前工作目录 (默认: \".\")",
+  "options.help": "显示帮助信息",
+  "options.verbose": "显示详细日志",
+  "options.version": "显示版本信息",
+  "prompt.cancel": "操作取消",
+  "prompt.confirm.no": "否",
+  "prompt.confirm.yes": "是",
+  "prompt.public.message": "是否为公开？"
+}

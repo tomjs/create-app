@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "lint": "run-s lint:stylelint lint:eslint",
+    "lint:stylelint": "stylelint \"src/**/*.{css,scss,vue}\" --fix",
+    "lint:eslint": "eslint --fix"
+  },
+  "devDependencies": {
+    "@tomjs/stylelint": "^7.0.0",
+    "sass": "1.94.2",
+    "stylelint": "^16.26.1"
+  }
+}

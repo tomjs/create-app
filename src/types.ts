@@ -1,105 +1,51 @@
-export type AppType = 'project' | 'example' | 'package';
+import type { ChalkInstance } from 'chalk';
 
-export interface CLIOptions {
-  cwd?: string;
-  name?: string;
-  template?: string;
-  type?: AppType;
-  example?: boolean;
-  package?: boolean;
-  git?: boolean;
+export interface CreateAppOptions {
+  dir?: string;
+  overwrite?: 'yes' | 'no' | 'ignore';
+  /**
+   * Whether to make the project private.
+   */
+  private?: boolean;
+  install?: boolean;
   verbose?: boolean;
 }
 
-export interface AppConfig {
-  gitRepos: GitRepo[];
-  createTime?: number;
-  updateTime?: number;
+export interface ProjectOptions {
+  targetDir: string;
+  packageName: string;
+  template: string;
+  templateOptions: ProjectTemplate;
+  isPublic: boolean;
+  gitUrl?: string;
+  gitOrg?: string;
+  initGit?: boolean;
+}
+
+/**
+ * The template to use for the app.
+ */
+export interface ProjectTemplate {
+  name: string;
+  display: string;
+  color: ChalkInstance;
+  hasStyle?: boolean;
+  isPublic?: boolean | 'public';
+}
+
+/**
+ * The template group to use for the app.
+ */
+export interface ProjectTemplateGroup {
+  name: string;
+  display: string;
+  color: ChalkInstance;
+  hasStyle?: boolean;
+  children: ProjectTemplate[];
 }
 
 export interface GitRepo {
   id: string;
-  repo: string;
-  owner: string;
-}
-
-export interface Framework {
+  url: string;
   name: string;
-  display: string;
-  variants: FrameworkVariant[];
-}
-
-export interface TextVars {
-  /**
-   * Package name
-   */
-  pkgName: string;
-  /**
-   * Package name (without scope)
-   */
-  pkgShortName: string;
-
-  /**
-   * Package installation string
-   */
-  pkgInstall: string;
-
-  /**
-   * User's name
-   */
-  gitUserName: string;
-
-  /**
-   * User's email
-   */
-  gitUserEmail: string;
-
-  /**
-   * Git organization name
-   */
-  gitOrg: string;
-
-  /**
-   * Git URL
-   */
-  gitUrl: string;
-
-  /**
-   * Full Git URL
-   */
-  gitFullUrl: string;
-
-  /**
-   * Full Git SSH URL
-   */
-  gitFullSSHUrl: string;
-
-  /**
-   * Current year
-   */
-  dateYear: number;
-}
-
-export interface UserOptions {
-  pkgName: string;
-  projectDir: string;
-  gitUserUrl: string;
-  textVars: TextVars;
-}
-
-export interface FrameworkVariant {
-  name: string;
-  display: string;
-  parent?: Framework;
-  templates?: string[];
-  examples?: string[];
-  packages?: {
-    exclude?: string[];
-    ignore?: boolean;
-  };
-  workspaces?: boolean;
-  test?: boolean;
-  devDependencies?: 0 | 1 | 2;
-  git?: 0 | 1 | 2;
-  userOptions: UserOptions;
 }

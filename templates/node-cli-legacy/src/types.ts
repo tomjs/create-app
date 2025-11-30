@@ -1,1 +1,0 @@
-export { XxxCLIOptions } from '../index';

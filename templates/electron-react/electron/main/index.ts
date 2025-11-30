@@ -1,8 +1,15 @@
 import { release } from 'node:os';
-
 import { join } from 'node:path';
+import { ELECTRON_EXIT } from '@tomjs/vite-plugin-electron/electron';
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
-import '../polyfills';
+
+console.log('Electron Main Process!');
+
+const isDev = process.env.NODE_ENV === 'development';
+process.env.DIST = join(__dirname, '../renderer');
+
+console.log('process.env.DIST', process.env.DIST);
+console.log('process.env.VITE_DEV_SERVER_URL', process.env.VITE_DEV_SERVER_URL);
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1'))
@@ -20,24 +27,19 @@ if (!app.requestSingleInstanceLock()) {
 // Remove electron security warnings
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
-process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
-
-const isDev = process.env.NODE_ENV === 'development';
+// process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 let win: BrowserWindow | null = null;
-// package.json "type":"module", must use mjs extension
-const preload = join(__dirname, '../preload/index.mjs');
-const serverUrl = process.env.VITE_DEV_SERVER_URL as string;
-const rendererDist = join(__dirname, '../renderer');
-const indexHtml = join(rendererDist, 'index.html');
-const publicPath = serverUrl ? join(__dirname, '../../public') : rendererDist;
+// Here, you can also use other preload
+const preload = join(__dirname, '../preload/index.js');
+const url = process.env.VITE_DEV_SERVER_URL as string;
+const indexHtml = join(process.env.DIST, 'index.html');
 
 function createWindow() {
   win = new BrowserWindow({
     title: 'Main window',
     width: 800,
     height: 700,
-    icon: join(publicPath, 'img/icon.png'),
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -49,11 +51,9 @@ function createWindow() {
   });
 
   if (isDev) {
-    win.loadURL(serverUrl);
+    // electron-vite-vue#298
+    win.loadURL(url);
     // Open devTool if the app is not packaged
-    setTimeout(() => {
-      win?.webContents.openDevTools();
-    }, 500);
   }
   else {
     win.loadFile(indexHtml);
@@ -77,20 +77,34 @@ app.whenReady().then(async () => {
   createWindow();
 
   if (isDev) {
-    const { installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = await import(
-      '@tomjs/electron-devtools-installer'
-    );
+    try {
+      const { installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = await import(
+        '@tomjs/electron-devtools-installer',
+      );
 
-    installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
-      .then((exts) => {
-        console.log(
-          'Added Extension: ',
-          exts.map(s => s.name),
-        );
-      })
-      .catch(() => {
-        console.log('Failed to install extensions');
-      });
+      installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
+        .then((exts) => {
+          // console.log('Added Extension: ', exts.name);
+          // console.log('Added Extension: ', exts.name);
+
+          // Open devTool if the app is not packaged
+          if (win) {
+            win.webContents.openDevTools();
+          }
+
+          console.log(
+            'Added Extension: ',
+            exts.map(s => s.name),
+          );
+        })
+        .catch((err) => {
+          console.log('Failed to install extensions');
+          console.error(err);
+        });
+    }
+    catch (e) {
+      console.error(e);
+    }
   }
 });
 
@@ -129,10 +143,19 @@ ipcMain.handle('open-win', (_, arg) => {
     },
   });
 
-  if (serverUrl) {
-    childWindow.loadURL(`${serverUrl}#${arg}`);
+  if (process.env.VITE_DEV_SERVER_URL) {
+    childWindow.loadURL(`${url}#${arg}`);
   }
   else {
     childWindow.loadFile(indexHtml, { hash: arg });
+  }
+});
+
+process.on('message', (data) => {
+  // electron exit message
+  if (data === ELECTRON_EXIT) {
+    if (isDev && win) {
+      win.webContents.closeDevTools();
+    }
   }
 });

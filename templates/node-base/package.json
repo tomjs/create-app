@@ -1,0 +1,15 @@
+{
+  "description": "node base template",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx ./src/index.ts"
+  },
+  "devDependencies": {
+    "chalk": "^5.6.2"
+  }
+}

@@ -1,6 +1,6 @@
 # @tomjs/create-app
 
-![npm](https://img.shields.io/npm/v/@tomjs/create-app) ![node-current (scoped)](https://img.shields.io/node/v/@tomjs/create-app) ![NPM](https://img.shields.io/npm/l/@tomjs/create-app)
+![npm](https://img.shields.io/npm/v/@tomjs/create-app) ![node-current (scoped)](https://img.shields.io/node/v/@tomjs/create-app) ![license](https://img.shields.io/npm/l/@tomjs/create-app)
 
 **English** | [中文](./README.zh_CN.md)
 

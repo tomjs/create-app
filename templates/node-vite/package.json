@@ -1,0 +1,16 @@
+{
+  "name": "node-vite",
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "lint:stylelint": "stylelint \"examples/**/*.{css,scss,vue}\" --fix"
+  },
+  "peerDependencies": {
+    "vite": ">=2"
+  },
+  "devDependencies": {
+    "publint": "0.3.15",
+    "tsdown": "^0.16.7",
+    "vite": "^7.2.4"
+  }
+}

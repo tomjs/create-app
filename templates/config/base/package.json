@@ -1,0 +1,24 @@
+{
+
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.24.0",
+  "scripts": {
+    "lint": "eslint --fix",
+    "prepare": "simple-git-hooks"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.2.0",
+    "@commitlint/cli": "^20.1.0",
+    "@tomjs/commitlint": "^5.0.0",
+    "@tomjs/eslint": "^6.0.0",
+    "@tomjs/tsconfig": "^2.1.0",
+    "@types/node": "^20.19.25",
+    "eslint": "^9.39.1",
+    "lint-staged": "^16.2.7",
+    "npm-run-all2": "^8.0.4",
+    "simple-git-hooks": "^2.13.1",
+    "tsx": "^4.20.6",
+    "typescript": "~5.9.3"
+  }
+}

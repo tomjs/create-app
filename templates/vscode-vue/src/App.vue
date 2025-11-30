@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { allComponents, provideVSCodeDesignSystem } from '@vscode/webview-ui-toolkit';
 import { ref } from 'vue';
-import { vscode } from './utils';
+import { vscodeApi } from './utils';
 
 provideVSCodeDesignSystem().register(allComponents);
 
 function onPostMessage() {
-  vscode.postMessage({
+  vscodeApi.postMessage({
     command: 'hello',
     text: 'Hey there partner! 🤠',
   });
@@ -15,19 +15,21 @@ function onPostMessage() {
 const message = ref('');
 const state = ref('');
 
-const onSetState = () => {
-  vscode.setState(state.value);
-};
+function onSetState() {
+  vscodeApi.setState(state.value);
+}
 
-const onGetState = () => {
-  state.value = vscode.getState() as string;
-};
+function onGetState() {
+  state.value = vscodeApi.getState() as string;
+}
 </script>
 
 <template>
   <main>
     <h1>Hello Vue!</h1>
-    <vscode-button @click="onPostMessage">Test VSCode Message</vscode-button>
+    <vscode-button @click="onPostMessage">
+      Test VSCode Message
+    </vscode-button>
     <div>
       <vscode-text-field :value="message" @input="e => (message = e.target.value)">
         Please enter a message
@@ -40,8 +42,12 @@ const onGetState = () => {
       </vscode-text-field>
       <div>State is: {{ state }}</div>
       <div>
-        <vscode-button @click="onSetState">setState</vscode-button>
-        <vscode-button style="margin-left: 8px" @click="onGetState">getState</vscode-button>
+        <vscode-button @click="onSetState">
+          setState
+        </vscode-button>
+        <vscode-button style="margin-left: 8px" @click="onGetState">
+          getState
+        </vscode-button>
       </div>
     </div>
   </main>

@@ -1,8 +1,0 @@
-{
-  "name": "{{pkgName}}",
-  "type": "commonjs",
-  "version": "0.0.0",
-  "engines": {
-    "node": ">=16"
-  }
-}

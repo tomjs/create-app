@@ -1,0 +1,11 @@
+{
+  "options.config": "Configuration file path (e.g., \"./xxx.config.json\")",
+  "options.dir": "Current working directory (default: \".\")",
+  "options.help": "Display help information",
+  "options.verbose": "Display detailed logs",
+  "options.version": "Display version information",
+  "prompt.cancel": "Operation canceled",
+  "prompt.confirm.no": "No",
+  "prompt.confirm.yes": "Yes",
+  "prompt.public.message": "Is it public?"
+}

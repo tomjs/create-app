@@ -1,8 +1,0 @@
-{
-  "private": true,
-  "scripts": {
-    "build": "pnpm -r --stream --filter=@tomjs/* build",
-    "lint:eslint": "eslint \"packages/**/*.ts\" *.{js,cjs,ts} --fix --cache"
-  },
-  "devDependencies": {}
-}

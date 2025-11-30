@@ -1,1 +1,5 @@
-export { XxxCLIOptions } from '../index';
+export interface XxxCLIOptions {
+  dir?: string;
+  config?: string;
+  verbose?: boolean;
+}

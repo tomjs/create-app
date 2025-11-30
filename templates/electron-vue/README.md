@@ -1,3 +1,3 @@
-# electron-vue
+# vue
 
 vite + electron + vue

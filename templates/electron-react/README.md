@@ -1,3 +1,3 @@
-# electron-react
+# react
 
 vite + electron + react

@@ -1,3 +1,3 @@
-# extension-webview
+# extension
 
-vite + extension + vue
+vscode extension

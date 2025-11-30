@@ -1,9 +1,63 @@
 {
+  "publisher": "",
+  "name": "vscode-vue",
+  "displayName": "%displayName%",
+  "type": "commonjs",
+  "description": "%description%",
+  "license": "MIT",
+  "keywords": [
+    "vscode"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "main": "dist/extension/index.js",
+  "icon": "resources/logo.png",
+  "engines": {
+    "node": ">=14.16.0",
+    "vscode": "^1.56.0"
+  },
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "tomjs.xxx.showHello",
+        "title": "%tomjs.commands.hello%",
+        "category": "%displayName%"
+      },
+      {
+        "command": "tomjs.xxx.showPanel",
+        "title": "%tomjs.commands.panel%",
+        "category": "%displayName%"
+      }
+    ]
+  },
+  "vsce": {
+    "dependencies": false,
+    "yarn": false
+  },
   "scripts": {
+    "dev": "run-p dev:*",
+    "dev:vsd": "vscode-dev --watch",
+    "dev:dist": "vite",
     "build": "vscode-dev && vue-tsc --noEmit && vite build",
-    "lint:eslint": "eslint \"{src,extension}/**/*.{js,cjs,ts,tsx,vue}\" *.{js,cjs,ts} --fix --cache"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "vue-i18n": "^9.14.0"
+    "@tomjs/node": "^2.2.3",
+    "@tomjs/vscode": "^2.5.0",
+    "@tomjs/vscode-webview": "^2.0.2",
+    "@vscode/webview-ui-toolkit": "^1.4.0",
+    "vue": "^3.5.25",
+    "vue-i18n": "^11.2.2"
+  },
+  "devDependencies": {
+    "@tomjs/vite-plugin-vscode": "^5.1.0",
+    "@tomjs/vscode-dev": "^3.0.2",
+    "@types/vscode": "^1.56.0",
+    "@types/vscode-webview": "^1.57.5",
+    "@vitejs/plugin-vue": "^6.0.2",
+    "vite": "^7.2.4",
+    "vue-tsc": "^3.1.5"
   }
 }

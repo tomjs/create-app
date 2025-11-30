@@ -1,95 +1,64 @@
-import type { CLIOptions } from './types';
+import type { CreateAppOptions } from './types';
 import meow from 'meow';
 import { createApp } from './app';
-import { logger } from './utils';
+import { logger, t } from './utils';
 
-const cli = meow(
-  `
+const cli = meow(`
 Usage
-  $ create-app [name] [options]
+  $ create-app [options] <dir>
 
-  name                  The package name
+  dir                  ${t('options.dir')}
 
 Options
-  --cwd                 The current working directory (default: ".")
-  -e, --example         Only create examples
-  -p, --package         Only create packages
-  --git                 Only manage git repository
-  --verbose             Display verbose output
-  -h, --help            Display this message
-  -v, --version         Display version number
-
-Examples
-  $ create-app my-project
-  $ create-app my-project --template=vue
-`,
-  {
-    importMeta: import.meta,
-    booleanDefault: undefined,
-    helpIndent: 0,
-    flags: {
-      cwd: {
-        type: 'string',
-      },
-      verbose: {
-        type: 'boolean',
-        default: process.env.NODE_ENV === 'development',
-      },
-      example: {
-        shortFlag: 'e',
-        type: 'boolean',
-      },
-      package: {
-        shortFlag: 'p',
-        type: 'boolean',
-      },
-      h: {
-        type: 'boolean',
-        default: false,
-      },
-      v: {
-        type: 'boolean',
-        default: false,
-      },
+  -o, --overwrite       ${t('options.overwrite')}
+  -p, --private         ${t('options.private')}
+  -i, --install         ${t('options.install')}
+  --verbose             ${t('options.verbose')}
+  -h, --help            ${t('options.help')}
+  -v, --version         ${t('options.version')}
+`, {
+  importMeta: import.meta,
+  booleanDefault: undefined,
+  helpIndent: 0,
+  flags: {
+    overwrite: {
+      type: 'string',
+    },
+    private: {
+      type: 'boolean',
+      shortFlag: 'p',
+    },
+    install: {
+      type: 'boolean',
+      shortFlag: 'i',
+    },
+    verbose: {
+      type: 'boolean',
+      default: process.env.NODE_ENV === 'development',
+    },
+    help: {
+      type: 'boolean',
+      shortFlag: 'h',
+    },
+    version: {
+      type: 'boolean',
+      shortFlag: 'v',
     },
   },
-);
+});
 
 const { input, flags } = cli;
-if (flags.h) {
+if (flags.help) {
   cli.showHelp(0);
 }
-else if (flags.v) {
+else if (flags.version) {
   cli.showVersion();
 }
 else {
   logger.enableDebug(flags.verbose);
-  logger.debug('cli options:', input, flags);
+  logger.debug('project dir:', input.join());
+  logger.debug('cli options:', flags);
 
-  const opts = Object.assign({ name: input[0], type: 'project' }, flags) as CLIOptions;
-  opts.cwd ||= process.env.CA_CWD || process.cwd();
-  opts.example ??= isTrue(process.env.CA_EXAMPLE);
-  opts.package ??= isTrue(process.env.CA_PACKAGE);
-  logger.debug('final options:', opts);
-
-  opts.type = getType(opts);
-
-  // eslint-disable-next-line antfu/no-top-level-await
-  await createApp(opts);
-}
-
-function getType(opts: CLIOptions) {
-  if (opts.example) {
-    return 'example';
-  }
-  else if (opts.package) {
-    return 'package';
-  }
-  else {
-    return 'project';
-  }
-}
-
-function isTrue(str?: string) {
-  return str === '1' || str === 'true';
+  const opts = Object.assign({ dir: input[0] }, flags) as CreateAppOptions;
+  createApp(opts);
 }

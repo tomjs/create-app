@@ -1,31 +1,31 @@
 {
-  "type": "module",
-  "description": "node cli",
-  "keywords": [
-    "cli"
-  ],
+  "name": "cli",
+  "description": "cli node project",
   "bin": {
-    "xxx": "./dist/index.js",
-    "xxx-cli": "./dist/index.js"
+    "xxx": "./dist/index.mjs"
   },
   "files": [
-    "dist",
-    "index.d.ts"
+    "dist"
   ],
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "start": "tsx ./src/index.ts",
     "build": "tsdown"
   },
   "dependencies": {
-    "chalk": "^5.4.1",
+    "@clack/prompts": "^0.11.0",
+    "@tomjs/logger": "^1.4.0",
+    "@tomjs/node": "^2.2.3",
+    "chalk": "^5.6.2",
     "cosmiconfig": "^9.0.0",
-    "execa": "^9.5.3",
-    "meow": "^13.2.0",
-    "ora": "^8.2.0"
+    "execa": "^9.6.0",
+    "meow": "^14.0.0",
+    "ora": "^9.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "publint": "0.3.15",
+    "tsdown": "^0.16.7"
+  }
 }
