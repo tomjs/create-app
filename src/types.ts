@@ -7,7 +7,6 @@ export interface CreateAppOptions {
    * Whether to make the project private.
    */
   private?: boolean;
-  install?: boolean;
   verbose?: boolean;
 }
 

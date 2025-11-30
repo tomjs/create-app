@@ -3,7 +3,7 @@
   "type": "module",
   "version": "2.0.0",
   "packageManager": "pnpm@10.11.0",
-  "description": "create tomjs web app",
+  "description": "create tomjs web/electron/vscode extension",
   "author": {
     "name": "Tom Gao",
     "email": "tom@tomgao.cc"

@@ -12,7 +12,6 @@ Usage
 Options
   -o, --overwrite       ${t('options.overwrite')}
   -p, --private         ${t('options.private')}
-  -i, --install         ${t('options.install')}
   --verbose             ${t('options.verbose')}
   -h, --help            ${t('options.help')}
   -v, --version         ${t('options.version')}
@@ -27,10 +26,6 @@ Options
     private: {
       type: 'boolean',
       shortFlag: 'p',
-    },
-    install: {
-      type: 'boolean',
-      shortFlag: 'i',
     },
     verbose: {
       type: 'boolean',

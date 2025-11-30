@@ -1,7 +1,6 @@
 {
   "options.dir": "项目目录",
   "options.help": "显示帮助信息",
-  "options.install": "安装依赖项",
   "options.interactive": "强制互动",
   "options.overwrite": "覆盖已存在的目录",
   "options.private": "设为私有项目",

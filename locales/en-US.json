@@ -1,7 +1,6 @@
 {
   "options.dir": "Project directory",
   "options.help": "Show help information",
-  "options.install": "Install dependencies",
   "options.interactive": "Force interactive",
   "options.overwrite": "Overwrite existing project",
   "options.private": "Set as private project",
