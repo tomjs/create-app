@@ -1,3 +1,8 @@
+## [2.0.1](https://github.com/tomjs/create-app/compare/v2.0.0...v2.0.1) (2025-11-30)
+
+- fix: i18n and readme  [c41be8d](https://github.com/tomjs/create-app/commit/c41be8d)
+- feat: remove install option  [b28d40d](https://github.com/tomjs/create-app/commit/b28d40d)
+
 ## [2.0.0](https://github.com/tomjs/create-app/compare/v1.7.0...v2.0.0) (2025-11-30)
 
 - feat: rewrite and support chinese  [83a46d2](https://github.com/tomjs/create-app/commit/83a46d2)
