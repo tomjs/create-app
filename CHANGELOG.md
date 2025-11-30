@@ -1,3 +1,12 @@
+## [2.0.0](https://github.com/tomjs/create-app/compare/v1.7.0...v2.0.0) (2025-11-30)
+
+- feat: rewrite and support chinese  [83a46d2](https://github.com/tomjs/create-app/commit/83a46d2)
+- chore: rm .husky  [0fd418e](https://github.com/tomjs/create-app/commit/0fd418e)
+- fix: inquirer types  [2358ad0](https://github.com/tomjs/create-app/commit/2358ad0)
+- fix: prepare 脚本改为 simple-git-hooks  [f77add1](https://github.com/tomjs/create-app/commit/f77add1)
+- fix: inquirer dts  [7765fe6](https://github.com/tomjs/create-app/commit/7765fe6)
+- feat: update lint and remove husky  [0d8261e](https://github.com/tomjs/create-app/commit/0d8261e)
+
 ## [1.7.0](https://github.com/tomjs/create-app/compare/v1.6.1...v1.7.0) (2025-03-11)
 
 - chore: update eslint [8b1eaa0](https://github.com/tomjs/create-app/commit/8b1eaa0)
