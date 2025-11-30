@@ -1,3 +1,7 @@
+## [2.0.2](https://github.com/tomjs/create-app/compare/v2.0.1...v2.0.2) (2025-11-30)
+
+- feat: update description  [ed93218](https://github.com/tomjs/create-app/commit/ed93218)
+
 ## [2.0.1](https://github.com/tomjs/create-app/compare/v2.0.0...v2.0.1) (2025-11-30)
 
 - fix: i18n and readme  [c41be8d](https://github.com/tomjs/create-app/commit/c41be8d)
