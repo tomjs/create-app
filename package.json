@@ -39,6 +39,7 @@
     "create-app": "dist/index.js"
   },
   "files": [
+    "locales",
     "dist",
     "templates",
     "!templates/*/node_modules/.bin/*"
