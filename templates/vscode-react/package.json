@@ -52,7 +52,7 @@
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@tomjs/vite-plugin-vscode": "^5.1.0",
+    "@tomjs/vite-plugin-vscode": "^5.2.0",
     "@tomjs/vscode-dev": "^3.0.2",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

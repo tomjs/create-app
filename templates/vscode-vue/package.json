@@ -49,15 +49,16 @@
     "@tomjs/vscode-webview": "^2.0.2",
     "@vscode/webview-ui-toolkit": "^1.4.0",
     "vue": "^3.5.26",
-    "vue-i18n": "^11.2.2"
+    "vue-i18n": "^11.2.7"
   },
   "devDependencies": {
-    "@tomjs/vite-plugin-vscode": "^5.1.0",
+    "@tomjs/vite-plugin-vscode": "^5.2.0",
     "@tomjs/vscode-dev": "^3.0.2",
     "@types/vscode": "^1.56.0",
     "@types/vscode-webview": "^1.57.5",
     "@vitejs/plugin-vue": "^6.0.3",
     "vite": "^7.3.0",
+    "vite-plugin-vue-devtools": "^8.0.5",
     "vue-tsc": "^3.2.0"
   }
 }

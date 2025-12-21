@@ -36,7 +36,7 @@
     "node"
   ],
   "bin": {
-    "create-app": "dist/index.js"
+    "create-app": "dist/index.mjs"
   },
   "files": [
     "locales",
