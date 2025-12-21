@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "@tomjs/stylelint": "^7.0.0",
-    "sass": "1.94.2",
+    "sass": "^1.97.1",
     "stylelint": "^16.26.1"
   }
 }

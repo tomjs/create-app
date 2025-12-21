@@ -8,17 +8,17 @@
     "prepare": "simple-git-hooks"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^6.2.0",
-    "@commitlint/cli": "^20.1.0",
+    "@antfu/eslint-config": "^6.7.1",
+    "@commitlint/cli": "^20.2.0",
     "@tomjs/commitlint": "^5.0.0",
     "@tomjs/eslint": "^6.0.0",
     "@tomjs/tsconfig": "^2.1.0",
-    "@types/node": "^20.19.25",
-    "eslint": "^9.39.1",
+    "@types/node": "^20.19.27",
+    "eslint": "^9.39.2",
     "lint-staged": "^16.2.7",
     "npm-run-all2": "^8.0.4",
     "simple-git-hooks": "^2.13.1",
-    "tsx": "^4.20.6",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.3"
   }
 }
