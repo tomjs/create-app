@@ -1,3 +1,7 @@
+## [2.0.3](https://github.com/tomjs/create-app/compare/v2.0.2...v2.0.3) (2025-12-21)
+
+- fix: npm publish include locales  [6d3c306](https://github.com/tomjs/create-app/commit/6d3c306)
+
 ## [2.0.2](https://github.com/tomjs/create-app/compare/v2.0.1...v2.0.2) (2025-11-30)
 
 - feat: update description  [ed93218](https://github.com/tomjs/create-app/commit/ed93218)
