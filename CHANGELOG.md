@@ -1,3 +1,7 @@
+## [2.1.0](https://github.com/tomjs/create-app/compare/v2.0.3...v2.1.0) (2025-12-21)
+
+- chore: update deps  [84f6451](https://github.com/tomjs/create-app/commit/84f6451)
+
 ## [2.0.3](https://github.com/tomjs/create-app/compare/v2.0.2...v2.0.3) (2025-12-21)
 
 - fix: npm publish include locales  [6d3c306](https://github.com/tomjs/create-app/commit/6d3c306)
