@@ -1,7 +1,7 @@
 import type { ChalkInstance } from 'chalk';
 
 export interface CreateAppOptions {
-  dir?: string;
+  package?: string;
   overwrite?: 'yes' | 'no' | 'ignore';
   /**
    * Whether to make the project private.
@@ -27,6 +27,7 @@ export interface ProjectOptions {
 export interface ProjectTemplate {
   name: string;
   display: string;
+  value?: string;
   color: ChalkInstance;
   hasStyle?: boolean;
   isPublic?: boolean | 'public';

@@ -23,6 +23,7 @@ export const projectTemplates: ProjectTemplateGroup[] = [
       {
         name: 'node-vite',
         display: 'Vite Plugin',
+        value: 'vite-plugin',
         color: chalk.blue,
         hasStyle: true,
       },

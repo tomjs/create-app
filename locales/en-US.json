@@ -1,9 +1,9 @@
 {
   "app.description": "Create a node/web/electron/vscode project based on tomjs",
-  "options.dir": "Project directory",
   "options.help": "Show help information",
   "options.interactive": "Force interactive",
   "options.overwrite": "Overwrite existing project",
+  "options.package": "Package name",
   "options.private": "Set as private project",
   "options.verbose": "Show verbose logs",
   "options.version": "Show version information",

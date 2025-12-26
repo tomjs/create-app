@@ -25,8 +25,8 @@ export async function createApp(options: CreateAppOptions) {
 }
 
 async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | void> {
+  // 1. Choose template
   const selectTemplate = async function () {
-    // 1. Choose template
     const templateType = await prompts.select({
       message: t('prompt.templateType.message'),
       options: projectTemplates.map(s => ({
@@ -69,28 +69,45 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
   if (!templateResult) {
     return;
   }
+
+  // 2. Get package name
   const { template, templateOptions } = templateResult;
-
-  // 2. Get project name and target dir
-  let targetDir = formatTargetDir(opts.dir);
-  if (!targetDir || ['.', '~'].includes(targetDir)) {
-    const projectName = await prompts.text({
-      message: t('prompt.project.message'),
-      defaultValue: template,
-      placeholder: template,
-      validate: (value) => {
-        return value.length === 0 || formatTargetDir(value).length > 0
-          ? undefined
-          : t('prompt.project.invalid');
-      },
-    });
-    if (prompts.isCancel(projectName)) {
-      return cancel();
-    }
-    targetDir = path.resolve(targetDir === '~' && !isWindows ? os.homedir() : process.cwd(), formatTargetDir(projectName));
+  let packageName = opts.package || templateOptions.value || template;
+  const _packageName = await prompts.text({
+    message: t('prompt.package.message'),
+    initialValue: packageName,
+    defaultValue: packageName,
+    placeholder: packageName,
+    validate: (value) => {
+      return value.length === 0 || isValidPackageName(value)
+        ? undefined
+        : t('prompt.package.invalid');
+    },
+  });
+  if (prompts.isCancel(_packageName)) {
+    return cancel();
   }
+  packageName = _packageName;
 
-  // 3. Handle directory if exist and not empty
+  // 3. Get project name and target dir
+  let targetDir = getTargetDirFromPkg(packageName);
+  const projectName = await prompts.text({
+    message: t('prompt.project.message'),
+    defaultValue: targetDir,
+    initialValue: targetDir,
+    placeholder: targetDir,
+    validate: (value) => {
+      return value.length === 0 || getTargetDirFromPkg(value).length > 0
+        ? undefined
+        : t('prompt.project.invalid');
+    },
+  });
+  if (prompts.isCancel(projectName)) {
+    return cancel();
+  }
+  targetDir = path.resolve(targetDir === '~' && !isWindows ? os.homedir() : process.cwd(), targetDir);
+
+  // 4. Handle directory if exist and not empty
   if (fs.existsSync(targetDir) && !isEmpty(targetDir)) {
     let overwrite = opts.overwrite;
     if (!overwrite) {
@@ -126,23 +143,6 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
         return;
     }
   }
-
-  // 4. Get package name
-  let packageName = path.basename(path.resolve(targetDir));
-  const _packageName = await prompts.text({
-    message: t('prompt.package.message'),
-    defaultValue: toValidPackageName(packageName),
-    placeholder: toValidPackageName(packageName),
-    validate: (value) => {
-      return value.length === 0 || isValidPackageName(value)
-        ? undefined
-        : t('prompt.package.invalid');
-    },
-  });
-  if (prompts.isCancel(_packageName)) {
-    return cancel();
-  }
-  packageName = _packageName;
 
   // 5. Is public or private
   let isPublic: boolean;
@@ -337,8 +337,8 @@ async function createProject(projectOptions: ProjectOptions) {
   await run(`git init`, { cwd: targetDir });
 }
 
-function formatTargetDir(targetDir: string) {
-  return (targetDir || '').trim().replace(/\/+$/g, '');
+function getTargetDirFromPkg(pkgName: string) {
+  return (pkgName || '').trim().replace(/^@[^/]+\//, '');
 }
 
 function isEmpty(path: string) {
@@ -359,15 +359,6 @@ function isValidPackageName(name: string) {
 
 function isValidPackageScope(name: string) {
   return /^[a-z][a-z\d\-._]*$/.test(name);
-}
-
-function toValidPackageName(projectName: string) {
-  return projectName
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/^[._]/, '')
-    .replace(/[^a-z\d\-~]+/g, '-');
 }
 
 async function getGitConfig(name: string) {

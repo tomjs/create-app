@@ -5,9 +5,9 @@ import { logger, t } from './utils';
 
 const cli = meow(`
 Usage
-  $ create-app [options] <dir>
+  $ create-app [options] <package>
 
-  dir                  ${t('options.dir')}
+  package          ${t('options.package')}
 
 Options
   -o, --overwrite       ${t('options.overwrite')}
@@ -52,9 +52,9 @@ else if (flags.version) {
 }
 else {
   logger.enableDebug(flags.verbose);
-  logger.debug('project dir:', input.join());
+  logger.debug('package name:', input.join());
   logger.debug('cli options:', flags);
 
-  const opts = Object.assign({ dir: input[0] }, flags) as CreateAppOptions;
+  const opts = Object.assign({ package: input[0] }, flags) as CreateAppOptions;
   createApp(opts);
 }
