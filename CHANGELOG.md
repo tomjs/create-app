@@ -1,3 +1,7 @@
+## [3.0.0](https://github.com/tomjs/create-app/compare/v2.1.1...v3.0.0) (2025-12-27)
+
+- feat: cli dir => package  [f89b8c5](https://github.com/tomjs/create-app/commit/f89b8c5)
+
 ## [2.1.1](https://github.com/tomjs/create-app/compare/v2.1.0...v2.1.1) (2025-12-21)
 
 - feat: electron-vue use vite-plugin-vue-devtools  [2e29650](https://github.com/tomjs/create-app/commit/2e29650)
