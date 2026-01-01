@@ -1,3 +1,7 @@
+## [4.0.0](https://github.com/tomjs/create-app/compare/v3.0.0...v4.0.0) (2026-01-01)
+
+- feat: add --package option  [2ebf2d3](https://github.com/tomjs/create-app/commit/2ebf2d3)
+
 ## [3.0.0](https://github.com/tomjs/create-app/compare/v2.1.1...v3.0.0) (2025-12-27)
 
 - feat: cli dir => package  [f89b8c5](https://github.com/tomjs/create-app/commit/f89b8c5)
