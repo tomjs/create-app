@@ -1,7 +1,3 @@
-import { defineConfig } from '@tomjs/eslint';
+import defineConfig from '@tomjs/eslint';
 
-export default defineConfig({
-  rules: {
-    'no-console': 'off',
-  },
-});
+export default defineConfig();
