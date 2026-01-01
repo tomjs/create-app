@@ -5,11 +5,11 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as prompts from '@clack/prompts';
-import { copy, mkdir, mkdirp, readFile, readJson, rm, rmSync, writeFile, writeJson } from '@tomjs/node';
-import { merge, omit } from 'lodash-es';
+import { copy, mkdir, mkdirp, readFile, readJson, readJsonSync, rm, rmSync, writeFile, writeJson } from '@tomjs/node';
+import { camelCase, merge, upperFirst } from 'lodash-es';
 import { glob } from 'tinyglobby';
 import { gitRepos, packageScriptsSortKeys, packageSortFields, projectTemplates } from './constants';
-import { isWindows, logger, run, setOptions, t } from './utils';
+import { getOptions, isWindows, logger, run, setOptions, t } from './utils';
 
 const ROOT = path.join(fileURLToPath(import.meta.url), '../../');
 const TEMPLATE_DIR = path.join(ROOT, 'templates');
@@ -21,7 +21,21 @@ export async function createApp(options: CreateAppOptions) {
   if (!opts) {
     return;
   }
+
   await createProject(opts);
+
+  if (options.package) {
+    await handlePackageTypeProject(opts);
+  }
+
+  if (opts.template === 'node-vite') {
+    await updatePackageJsonVersion(opts.targetDir);
+    await updateWorkspacePackageName(opts.targetDir, opts.packageName);
+  }
+
+  if (!options.package) {
+    await run(`git init`, { cwd: opts.targetDir });
+  }
 }
 
 async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | void> {
@@ -70,9 +84,24 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
     return;
   }
 
+  let scope = '';
+  const gitEmail = await getGitConfig('user.email');
+  if (gitEmail === 'tom@tomgao.cc') {
+    scope = 'tomjs';
+  }
+
   // 2. Get package name
   const { template, templateOptions } = templateResult;
-  let packageName = opts.package || templateOptions.value || template;
+  const isNode = template.startsWith('node-');
+
+  let packageName = opts.packageName;
+  if (!packageName) {
+    packageName = templateOptions.value || template;
+    if (scope && isNode) {
+      packageName = `@${scope}/${packageName}`;
+    }
+  }
+
   const _packageName = await prompts.text({
     message: t('prompt.package.message'),
     initialValue: packageName,
@@ -97,7 +126,7 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
     initialValue: targetDir,
     placeholder: targetDir,
     validate: (value) => {
-      return value.length === 0 || getTargetDirFromPkg(value).length > 0
+      return value.length === 0 || value.length > 0
         ? undefined
         : t('prompt.project.invalid');
     },
@@ -105,7 +134,7 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
   if (prompts.isCancel(projectName)) {
     return cancel();
   }
-  targetDir = path.resolve(targetDir === '~' && !isWindows ? os.homedir() : process.cwd(), targetDir);
+  targetDir = path.resolve(targetDir === '~' && !isWindows ? os.homedir() : process.cwd(), projectName);
 
   // 4. Handle directory if exist and not empty
   if (fs.existsSync(targetDir) && !isEmpty(targetDir)) {
@@ -179,46 +208,42 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
   }
 
   // 7. git org
-  let gitOrg: string;
+  let orgName: string;
   if (isPublic) {
-    let scope = getScope(packageName);
-    if (!scope) {
-      const gitEmail = await getGitConfig('user.email');
-      if (gitEmail === 'tom@tomgao.cc') {
-        scope = 'tomjs';
-      }
-    }
     // 默认组织
+    scope = getScope(packageName);
     const org = await prompts.text({
-      message: t('prompt.gitOrg.message'),
+      message: t('prompt.orgName.message'),
       defaultValue: scope,
       placeholder: scope,
       validate: (value) => {
         return (scope && !value) || isValidPackageScope(value)
           ? undefined
-          : t('prompt.gitOrg.invalid');
+          : t('prompt.orgName.invalid');
       },
     });
     if (prompts.isCancel(org)) {
       return cancel();
     }
-    gitOrg = org;
+    orgName = org;
   }
+
+  delete templateOptions.color;
 
   return {
     targetDir,
+    orgName,
     packageName,
     template,
     templateOptions,
     isPublic,
     gitUrl,
-    gitOrg,
   };
 }
 
 async function createProject(projectOptions: ProjectOptions) {
-  logger.debug('projectOptions:', omit(projectOptions, 'templateOptions'));
-  const { targetDir, packageName, template, isPublic, gitUrl, gitOrg, templateOptions } = projectOptions;
+  logger.debug('projectOptions:', projectOptions);
+  const { targetDir, packageName, template, isPublic, gitUrl, orgName: gitOrg, templateOptions } = projectOptions;
   await mkdir(targetDir);
 
   const isVSCode = template.includes('vscode');
@@ -267,14 +292,13 @@ async function createProject(projectOptions: ProjectOptions) {
       pkg.bugs = {
         url: `${url}/issues`,
       };
-    }
-    else {
       delete pkg.publishConfig;
     }
 
     pkg.repository = {
       type: 'git',
-      url: `git+${url}.git`,
+      url: `${url}.git`,
+      directory: getOptions().package ? `packages/${path.basename(targetDir)}` : undefined,
     };
   }
   else {
@@ -284,7 +308,6 @@ async function createProject(projectOptions: ProjectOptions) {
       delete pkg.devDependencies.publint;
     }
   }
-
   await writeJson(path.join(targetDir, 'package.json'), sortPackageJson(pkg));
 
   // md/license
@@ -333,8 +356,6 @@ async function createProject(projectOptions: ProjectOptions) {
     filePaths[filePaths.length - 1] = filePaths[filePaths.length - 1].substring(1);
     await fsp.rename(path.join(targetDir, file), path.join(targetDir, filePaths.join('/')));
   }
-
-  await run(`git init`, { cwd: targetDir });
 }
 
 function getTargetDirFromPkg(pkgName: string) {
@@ -466,4 +487,91 @@ function sortPackageJson(pkg: any) {
   });
 
   return pkg;
+}
+
+async function updatePackageJsonVersion(targetDir: string) {
+  const configPkgDeps = readJsonSync(path.join(TEMPLATE_DIR, 'config/package.json'))?.dependencies || {};
+  const pkgFiles = await glob('**/package.json', { ignore: ['**/node_modules/**', '**/.*'], cwd: targetDir });
+  for (const file of pkgFiles) {
+    const pkgPath = path.join(targetDir, file);
+    const pkg = await readJson(pkgPath);
+    ['dependencies', 'devDependencies'].forEach((depName) => {
+      const deps = pkg[depName];
+      if (!deps) {
+        return;
+      }
+      Object.keys(deps).forEach((key) => {
+        deps[key] = configPkgDeps[key] || deps[key];
+      });
+    });
+
+    writeJson(pkgPath, sortPackageJson(pkg));
+  }
+}
+
+async function handlePackageTypeProject(opts: ProjectOptions) {
+  const hasStyle = opts.templateOptions.hasStyle;
+
+  // rm lint config file
+  const rmFiles = ['.editorconfig', '.gitignore', '.gitattributes', 'commitlint.config.mjs', 'simple-git-hooks.mjs', 'pnpm-workspace.yaml'];
+
+  if (!hasStyle) {
+    rmFiles.push('lint-staged.config.mjs');
+  }
+
+  if (!['vscode', 'electron'].find(s => opts.template.startsWith(s))) {
+    rmFiles.push('.vscode');
+  }
+
+  rmFiles.forEach((fileName) => {
+    const filePath = path.join(opts.targetDir, fileName);
+    if (fs.existsSync(filePath)) {
+      rmSync(filePath);
+    }
+  });
+  // rm config file
+  const pkg = await readJson(path.join(opts.targetDir, 'package.json'));
+  if (pkg.scripts) {
+    delete pkg.scripts.prepare;
+  }
+
+  if (!hasStyle) {
+    delete pkg.devDependencies;
+  }
+  else if (pkg.devDependencies) {
+    const stylePkg = await readJson(path.join(TEMPLATE_DIR, 'config/style/package.json'));
+    const keys = Object.keys(stylePkg.devDependencies || {});
+    Object.keys(pkg.devDependencies).forEach((key) => {
+      if (!keys.includes(key)) {
+        delete pkg.devDependencies[key];
+      }
+    });
+  }
+
+  await writeJson(path.join(opts.targetDir, 'package.json'), pkg);
+}
+
+async function updateWorkspacePackageName(targetDir: string, packageName: string) {
+  // examples
+  const exampleFiles = await glob(['examples/*/package.json', 'examples/*/vite.config.ts'], { ignore: ['**/node_modules/**', '**/.*'], cwd: targetDir });
+  for (const file of exampleFiles) {
+    const pkgPath = path.join(targetDir, file);
+    const content = await readFile(pkgPath);
+    await writeFile(pkgPath, content.replaceAll('@tomjs/vite-plugin-template', packageName));
+  }
+
+  const pluginName = camelCase((packageName.split('/').pop() || '').replace('vite-plugin-', ''));
+  if (pluginName) {
+    const srcFiles = await glob(['src/**/*.ts'], { ignore: ['**/node_modules/**', '**/.*'], cwd: targetDir });
+    for (const file of srcFiles) {
+      const pkgPath = path.join(targetDir, file);
+      const content = await readFile(pkgPath);
+      await writeFile(
+        pkgPath,
+        content.replaceAll('@tomjs:xxx', `@tomjs/${pluginName}`)
+          .replaceAll('useXxxPlugin', `use${upperFirst(pluginName)}Plugin`)
+          .replaceAll('XxxPluginOptions', `${upperFirst(pluginName)}PluginOptions`),
+      );
+    }
+  }
 }

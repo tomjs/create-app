@@ -26,19 +26,20 @@ Then generate the project based on the prompts.
 ```bash
 $ pnpm create @tomjs/app -h
 
-Create a template based on tomjs node/web/electron/vscode
+Create a node/web/electron/vscode project based on tomjs
 
 Usage
-  $ create-app [options] <dir>
+  $ create-app [options] <package-name>
 
-  dir                  Project directory
+  package-name          Package name
 
 Options
-  -o, --overwrite       Overwrite existing project
-  -p, --private         Set as private project
+  --overwrite, -o       Overwrite existing project
+  --package, -p         Create a package for the workspace project
+  --private             Set as private project
   --verbose             Show verbose logs
-  -h, --help            Show help information
-  -v, --version         Show version information
+  --help, -h            Show help information
+  --version, -v         Show version information
 ```
 
 Support templates:

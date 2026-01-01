@@ -13,5 +13,6 @@ export default defineConfig((options) => {
     env: {
       NODE_ENV: isDev ? 'development' : 'production',
     },
+    fixedExtension: false,
   };
 });

@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "react": "^19.2.3",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "^2.3.13",
+    "@eslint-react/eslint-plugin": "^2.4.0",
     "@types/node": "^22.19.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

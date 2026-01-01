@@ -1,7 +1,14 @@
 import type { ChalkInstance } from 'chalk';
 
 export interface CreateAppOptions {
-  package?: string;
+  /**
+   * The package name to use for the project.
+   */
+  packageName?: string;
+  /**
+   * Create a package for the workspace project
+   */
+  package?: boolean;
   overwrite?: 'yes' | 'no' | 'ignore';
   /**
    * Whether to make the project private.
@@ -12,12 +19,12 @@ export interface CreateAppOptions {
 
 export interface ProjectOptions {
   targetDir: string;
+  orgName?: string;
   packageName: string;
   template: string;
   templateOptions: ProjectTemplate;
   isPublic: boolean;
   gitUrl?: string;
-  gitOrg?: string;
   initGit?: boolean;
 }
 

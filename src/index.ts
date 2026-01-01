@@ -5,16 +5,17 @@ import { logger, t } from './utils';
 
 const cli = meow(`
 Usage
-  $ create-app [options] <package>
+  $ create-app [options] <package-name>
 
-  package          ${t('options.package')}
+  package-name          ${t('options.packageName')}
 
 Options
-  -o, --overwrite       ${t('options.overwrite')}
-  -p, --private         ${t('options.private')}
+  --overwrite, -o       ${t('options.overwrite')}
+  --package, -p         ${t('options.package')}
+  --private             ${t('options.private')}
   --verbose             ${t('options.verbose')}
-  -h, --help            ${t('options.help')}
-  -v, --version         ${t('options.version')}
+  --help, -h            ${t('options.help')}
+  --version, -v         ${t('options.version')}
 `, {
   importMeta: import.meta,
   booleanDefault: undefined,
@@ -25,6 +26,9 @@ Options
       type: 'string',
     },
     private: {
+      type: 'boolean',
+    },
+    package: {
       type: 'boolean',
       shortFlag: 'p',
     },
@@ -55,6 +59,6 @@ else {
   logger.debug('package name:', input.join());
   logger.debug('cli options:', flags);
 
-  const opts = Object.assign({ package: input[0] }, flags) as CreateAppOptions;
+  const opts = Object.assign({ packageName: input[0] }, flags) as CreateAppOptions;
   createApp(opts);
 }
