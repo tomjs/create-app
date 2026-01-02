@@ -1,3 +1,7 @@
+## [4.1.0](https://github.com/tomjs/create-app/compare/v4.0.1...v4.1.0) (2026-01-02)
+
+- feat: update tsconfig  [91f5938](https://github.com/tomjs/create-app/commit/91f5938)
+
 ## [4.0.1](https://github.com/tomjs/create-app/compare/v4.0.0...v4.0.1) (2026-01-01)
 
 - feat: change eslint config  [6e0b6e8](https://github.com/tomjs/create-app/commit/6e0b6e8)
