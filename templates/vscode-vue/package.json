@@ -49,11 +49,11 @@
     "@tomjs/vscode-webview": "^2.0.2",
     "@vscode/webview-ui-toolkit": "^1.4.0",
     "vue": "^3.5.26",
-    "vue-i18n": "^11.2.7"
+    "vue-i18n": "^11.2.8"
   },
   "devDependencies": {
     "@tomjs/vite-plugin-vscode": "^6.0.1",
-    "@tomjs/vscode-dev": "^3.0.2",
+    "@tomjs/vscode-dev": "^3.1.2",
     "@types/vscode": "^1.56.0",
     "@types/vscode-webview": "^1.57.5",
     "@vitejs/plugin-vue": "^6.0.3",

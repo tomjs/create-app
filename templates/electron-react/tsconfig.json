@@ -1,9 +1,7 @@
 {
-  "extends": "@tomjs/tsconfig/react-dom.json",
   "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
   ],
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"]
+  "files": []
 }

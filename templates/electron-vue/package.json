@@ -19,7 +19,7 @@
     "vue": "^3.5.26"
   },
   "devDependencies": {
-    "@tomjs/vite-plugin-electron": "^2.1.0",
+    "@tomjs/vite-plugin-electron": "^2.2.0",
     "@types/node": "^20.19.27",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vue/tsconfig": "^0.8.1",

@@ -211,7 +211,7 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
   let orgName: string;
   if (isPublic) {
     // 默认组织
-    scope = getScope(packageName);
+    scope = getScope(packageName) || scope;
     const org = await prompts.text({
       message: t('prompt.orgName.message'),
       defaultValue: scope,
@@ -309,6 +309,9 @@ async function createProject(projectOptions: ProjectOptions) {
     }
   }
   await writeJson(path.join(targetDir, 'package.json'), sortPackageJson(pkg));
+
+  // update all package.json
+  await updatePackageJsonVersion(targetDir);
 
   // md/license
   if (isPublic) {
@@ -495,8 +498,8 @@ async function updatePackageJsonVersion(targetDir: string) {
   for (const file of pkgFiles) {
     const pkgPath = path.join(targetDir, file);
     const pkg = await readJson(pkgPath);
-    ['dependencies', 'devDependencies'].forEach((depName) => {
-      const deps = pkg[depName];
+    ['dependencies', 'devDependencies'].forEach((depKey) => {
+      const deps = pkg[depKey];
       if (!deps) {
         return;
       }

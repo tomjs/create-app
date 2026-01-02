@@ -75,7 +75,7 @@
     "@tomjs/commitlint": "^5.0.0",
     "@tomjs/eslint": "^6.3.0",
     "@tomjs/stylelint": "^7.0.0",
-    "@tomjs/tsconfig": "^2.2.0",
+    "@tomjs/tsconfig": "^3.0.1",
     "@tsconfig/node20": "^20.1.8",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.19.27",

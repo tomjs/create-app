@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { allComponents, provideVSCodeDesignSystem } from '@vscode/webview-ui-toolkit';
 import { ref } from 'vue';
-import { vscodeApi } from './utils';
+import { vscode } from './utils';
 
 provideVSCodeDesignSystem().register(allComponents);
 
 function onPostMessage() {
-  vscodeApi.postMessage({
+  vscode.postMessage({
     command: 'hello',
     text: 'Hey there partner! 🤠',
   });
@@ -16,11 +16,11 @@ const message = ref('');
 const state = ref('');
 
 function onSetState() {
-  vscodeApi.setState(state.value);
+  vscode.setState(state.value);
 }
 
 function onGetState() {
-  state.value = vscodeApi.getState() as string;
+  state.value = vscode.getState() as string;
 }
 </script>
 

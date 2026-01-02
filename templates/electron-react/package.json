@@ -19,8 +19,8 @@
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "^2.4.0",
-    "@tomjs/vite-plugin-electron": "^2.1.0",
+    "@eslint-react/eslint-plugin": "^2.5.0",
+    "@tomjs/vite-plugin-electron": "^2.2.0",
     "@types/node": "^20.19.27",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
