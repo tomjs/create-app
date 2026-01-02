@@ -1,3 +1,7 @@
+## [4.1.1](https://github.com/tomjs/create-app/compare/v4.1.0...v4.1.1) (2026-01-02)
+
+- feat: vscode locales sort  [c0793f8](https://github.com/tomjs/create-app/commit/c0793f8)
+
 ## [4.1.0](https://github.com/tomjs/create-app/compare/v4.0.1...v4.1.0) (2026-01-02)
 
 - feat: update tsconfig  [91f5938](https://github.com/tomjs/create-app/commit/91f5938)
