@@ -1,6 +1,5 @@
 {
-  "tomjs.commands.hello": "显示你好",
-  "tomjs.commands.panel": "打开面板",
   "description": "这是一个 Tomjs 扩展。",
-  "displayName": "Tomjs 扩展"
+  "displayName": "Tomjs 扩展",
+  "tomjs.commands.hello": "显示你好"
 }
