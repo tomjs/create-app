@@ -1,3 +1,7 @@
+## [5.0.0](https://github.com/tomjs/create-app/compare/v4.2.0...v5.0.0) (2026-01-03)
+
+- feat: extract common code  [2794566](https://github.com/tomjs/create-app/commit/2794566)
+
 ## [4.2.0](https://github.com/tomjs/create-app/compare/v4.1.1...v4.2.0) (2026-01-03)
 
 - chore: update vscode template  [617df70](https://github.com/tomjs/create-app/commit/617df70)
