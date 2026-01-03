@@ -2,7 +2,7 @@
   "name": "@tomjs/create-app",
   "type": "module",
   "version": "4.1.1",
-  "packageManager": "pnpm@10.26.2",
+  "packageManager": "pnpm@10.27.0",
   "description": "Create a node/web/electron/vscode project based on tomjs",
   "author": {
     "name": "Tom Gao",
@@ -71,9 +71,9 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.7.3",
-    "@commitlint/cli": "^20.2.0",
+    "@commitlint/cli": "^20.3.0",
     "@tomjs/commitlint": "^5.0.0",
-    "@tomjs/eslint": "^6.3.0",
+    "@tomjs/eslint": "^6.4.0",
     "@tomjs/stylelint": "^7.0.0",
     "@tomjs/tsconfig": "^3.0.1",
     "@tsconfig/node20": "^20.1.8",
