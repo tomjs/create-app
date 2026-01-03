@@ -1,3 +1,7 @@
+## [4.2.0](https://github.com/tomjs/create-app/compare/v4.1.1...v4.2.0) (2026-01-03)
+
+- chore: update vscode template  [617df70](https://github.com/tomjs/create-app/commit/617df70)
+
 ## [4.1.1](https://github.com/tomjs/create-app/compare/v4.1.0...v4.1.1) (2026-01-02)
 
 - feat: vscode locales sort  [c0793f8](https://github.com/tomjs/create-app/commit/c0793f8)
