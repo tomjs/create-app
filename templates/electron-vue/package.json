@@ -9,27 +9,11 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "vite",
-    "debug": "cross-env VITE_ELECTRON_DEBUG=1 vite",
     "build": "vue-tsc --noEmit && vite build",
-    "build:pack": "cross-env VITE_ELECTRON_BUILDER=1 vite build",
-    "preview": "vite preview"
+    "release": "vue-tsc --noEmit && cross-env VITE_ELECTRON_BUILDER=1 vite build"
   },
-  "dependencies": {
-    "vue": "^3.5.26"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@tomjs/vite-plugin-electron": "^2.2.0",
-    "@types/node": "^20.19.27",
-    "@vitejs/plugin-vue": "^6.0.3",
-    "@vue/tsconfig": "^0.8.1",
-    "cross-env": "^10.1.0",
-    "electron": "^39.2.7",
-    "electron-builder": "^26.0.12",
-    "typescript": "~5.9.3",
-    "vite": "^7.3.0",
-    "vite-plugin-electron-renderer": "^0.14.6",
-    "vite-plugin-vue-devtools": "^8.0.5",
-    "vue-tsc": "^3.2.1"
+    "vite-plugin-electron-renderer": "^0.14.6"
   }
 }

@@ -20,7 +20,7 @@
         "background": {
           "activeOnStart": true,
           "beginsPattern": "^.*Build start*$",
-          "endsPattern": "^.*Build complete.*$"
+          "endsPattern": "^.*Rebuilt.*$"
         }
       },
       "isBackground": true,

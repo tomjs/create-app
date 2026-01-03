@@ -1,6 +1,6 @@
 import type { CreateAppOptions, ProjectOptions } from './types';
 import fs from 'node:fs';
-import fsp from 'node:fs/promises';
+import fsp, { readdir } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,7 +8,7 @@ import * as prompts from '@clack/prompts';
 import { copy, mkdir, mkdirp, readFile, readJson, readJsonSync, rm, rmSync, writeFile, writeJson } from '@tomjs/node';
 import { camelCase, merge, upperFirst } from 'lodash-es';
 import { glob } from 'tinyglobby';
-import { gitRepos, packageScriptsSortKeys, packageSortFields, projectTemplates } from './constants';
+import { gitRepos, packageScriptsSortKeys, packageSortFields, projectTemplates, webFrameworks } from './constants';
 import { getOptions, isWindows, logger, run, setOptions, t } from './utils';
 
 const ROOT = path.join(fileURLToPath(import.meta.url), '../../');
@@ -29,7 +29,6 @@ export async function createApp(options: CreateAppOptions) {
   }
 
   if (opts.template === 'node-vite') {
-    await updatePackageJsonVersion(opts.targetDir);
     await updateWorkspacePackageName(opts.targetDir, opts.packageName);
   }
 
@@ -134,7 +133,7 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
   if (prompts.isCancel(projectName)) {
     return cancel();
   }
-  targetDir = path.resolve(targetDir === '~' && !isWindows ? os.homedir() : process.cwd(), projectName);
+  targetDir = path.resolve(targetDir === '~' && !isWindows ? os.homedir() : opts.cwd || process.cwd(), projectName);
 
   // 4. Handle directory if exist and not empty
   if (fs.existsSync(targetDir) && !isEmpty(targetDir)) {
@@ -175,20 +174,17 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
 
   // 5. Is public or private
   let isPublic: boolean;
-  if (opts.private !== true && templateOptions.isPublic !== 'public') {
+  if (opts.private !== true && templateOptions.public) {
     const _isPublic = await prompts.confirm({
       message: t('prompt.public.message'),
       active: t('prompt.confirm.yes'),
       inactive: t('prompt.confirm.no'),
-      initialValue: templateOptions.isPublic ?? true,
+      initialValue: true,
     });
     if (prompts.isCancel(_isPublic)) {
       return cancel();
     }
     isPublic = _isPublic;
-  }
-  else {
-    isPublic = !opts.private;
   }
 
   // 6. git repo
@@ -253,11 +249,55 @@ async function createProject(projectOptions: ProjectOptions) {
   const targetTempDir = path.join(targetDir, '.temp');
   await mkdirp(targetTempDir);
   await copyTemplate(pkg, 'base', targetTempDir);
+
+  // copy style template
   if (templateOptions.hasStyle) {
     await copyTemplate(pkg, 'style', targetTempDir);
+    // rm vue style
+    if (!template.includes('vue')) {
+      function replaceVue(content: string) {
+        return content.replaceAll('vue,', '').replaceAll(',vue', '');
+      }
+
+      const files = await readdir(path.join(TEMPLATE_DIR, 'config/style'));
+      for (const file of files) {
+        if (file === 'package.json') {
+          if (pkg.scripts) {
+            Object.keys(pkg.scripts).forEach((key) => {
+              const script = pkg.scripts[key];
+              if (script.includes('vue')) {
+                pkg.scripts[key] = replaceVue(pkg.scripts[key]);
+              }
+            });
+          }
+          continue;
+        }
+        const filePath = path.join(targetTempDir, file);
+        const content = await readFile(filePath);
+        if (content.includes('vue')) {
+          writeFile(filePath, replaceVue(content));
+        }
+      }
+    }
   }
-  if (isPublic && !isVSCode) {
-    await copyTemplate(pkg, 'public', targetTempDir);
+
+  // copy public template
+  if (isPublic && templateOptions.public) {
+    await copyTemplate(pkg, templateOptions.public, targetTempDir);
+  }
+
+  // copy web framework template
+  const webFramework = webFrameworks.find(s => template.includes(`-${s}`));
+  if (webFramework) {
+    await copyTemplate(pkg, webFramework, targetTempDir);
+  }
+
+  // copy common templates
+  const commonTemplates = templateOptions.commonTemplates;
+  if (Array.isArray(commonTemplates) && commonTemplates.length > 0) {
+    for (const commonTemplate of commonTemplates) {
+      await copyTemplate(pkg, commonTemplate, targetTempDir);
+    }
   }
 
   // copy common and template to destination
@@ -397,6 +437,10 @@ function getScope(name: string) {
 
 async function copyTemplate(pkg: any, configFolder: string, targetDir: string) {
   const cfgDir = path.join(TEMPLATE_DIR, `config/${configFolder}`);
+  if (!fs.existsSync(cfgDir)) {
+    return;
+  }
+
   const cfgFiles = await fsp.readdir(cfgDir);
   for (const file of cfgFiles) {
     if (['node_modules', '.git'].includes(file)) {
@@ -555,26 +599,17 @@ async function handlePackageTypeProject(opts: ProjectOptions) {
 }
 
 async function updateWorkspacePackageName(targetDir: string, packageName: string) {
-  // examples
-  const exampleFiles = await glob(['examples/*/package.json', 'examples/*/vite.config.ts'], { ignore: ['**/node_modules/**', '**/.*'], cwd: targetDir });
-  for (const file of exampleFiles) {
+  const pluginName = camelCase((packageName.split('/').pop() || '').replace('vite-plugin', '') || 'xxx');
+  const srcFiles = await glob(
+    ['src/**/*.ts', 'examples/*/vite.config.ts', 'examples/*/package.json'],
+    { ignore: ['**/node_modules/**', '**/.*'], cwd: targetDir },
+  );
+  for (const file of srcFiles) {
     const pkgPath = path.join(targetDir, file);
     const content = await readFile(pkgPath);
-    await writeFile(pkgPath, content.replaceAll('@tomjs/vite-plugin-template', packageName));
-  }
-
-  const pluginName = camelCase((packageName.split('/').pop() || '').replace('vite-plugin-', ''));
-  if (pluginName) {
-    const srcFiles = await glob(['src/**/*.ts'], { ignore: ['**/node_modules/**', '**/.*'], cwd: targetDir });
-    for (const file of srcFiles) {
-      const pkgPath = path.join(targetDir, file);
-      const content = await readFile(pkgPath);
-      await writeFile(
-        pkgPath,
-        content.replaceAll('@tomjs:xxx', `@tomjs/${pluginName}`)
-          .replaceAll('useXxxPlugin', `use${upperFirst(pluginName)}Plugin`)
-          .replaceAll('XxxPluginOptions', `${upperFirst(pluginName)}PluginOptions`),
-      );
-    }
+    await writeFile(
+      pkgPath,
+      content.replaceAll('xxx', pluginName).replaceAll('Xxx', upperFirst(pluginName)),
+    );
   }
 }

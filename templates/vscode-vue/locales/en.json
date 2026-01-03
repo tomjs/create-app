@@ -1,6 +1,0 @@
-{
-  "description": "This is a Tomjs Extension.",
-  "displayName": "Tomjs Extension",
-  "tomjs.commands.hello": "Show Hello",
-  "tomjs.commands.panel": "Open Panel"
-}

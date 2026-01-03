@@ -5,7 +5,7 @@
   },
   "include": [
     "@tomjs/vite-plugin-electron/env",
-    "electron",
+    "../config/electron/electron",
     "*.config.ts"
   ]
 }

@@ -13,6 +13,7 @@
     "@tomjs/eslint": "^6.3.0",
     "@tomjs/tsconfig": "^3.0.1",
     "@types/node": "^20.19.27",
+    "cross-env": "^10.1.0",
     "eslint": "^9.39.2",
     "lint-staged": "^16.2.7",
     "npm-run-all2": "^8.0.4",

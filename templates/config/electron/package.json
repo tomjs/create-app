@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "debug": "cross-env VITE_ELECTRON_DEBUG=1 vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@tomjs/vite-plugin-electron": "^2.2.0",
+    "electron": "^39.2.7",
+    "electron-builder": "^26.0.12",
+    "vite-plugin-electron-renderer": "^0.14.6"
+  }
+}

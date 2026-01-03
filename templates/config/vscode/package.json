@@ -1,0 +1,49 @@
+{
+  "keywords": [
+    "vscode"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "icon": "resources/logo.png",
+  "engines": {
+    "node": ">=14.16.0",
+    "vscode": "^1.56.0"
+  },
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "tomjs.xxx.showHello",
+        "title": "%tomjs.commands.hello%",
+        "category": "%displayName%"
+      },
+      {
+        "command": "tomjs.xxx.showPanel",
+        "title": "%tomjs.commands.panel%",
+        "category": "%displayName%"
+      }
+    ]
+  },
+  "scripts": {
+    "dev": "run-p dev:*",
+    "dev:vsd": "vscode-dev --watch",
+    "dev:dist": "vite"
+  },
+  "dependencies": {
+    "@tomjs/node": "^2.2.3",
+    "@tomjs/vscode": "^2.5.0",
+    "@tomjs/vscode-webview": "^2.0.2",
+    "@vscode/webview-ui-toolkit": "^1.4.0"
+  },
+  "devDependencies": {
+    "@tomjs/vite-plugin-vscode": "^6.1.0",
+    "@tomjs/vscode-dev": "^3.1.2",
+    "@types/vscode": "^1.56.0",
+    "@types/vscode-webview": "^1.57.5"
+  },
+  "vsce": {
+    "dependencies": false,
+    "yarn": false
+  }
+}

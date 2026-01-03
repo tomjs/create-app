@@ -1,5 +1,5 @@
 export default {
-  '*.{vue,css,scss,html}': [
+  '*.{css,scss,vue,html}': [
     'stylelint --fix',
     'eslint --fix',
   ],

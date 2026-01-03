@@ -2,5 +2,6 @@ onlyBuiltDependencies:
   - '@parcel/watcher'
   - '@swc/core'
   - electron
+  - electron-winstaller
   - esbuild
   - simple-git-hooks

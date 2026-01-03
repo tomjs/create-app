@@ -4,6 +4,8 @@ import chalk from 'chalk';
 
 export const ROOT_DIR = fileURLToPath(new URL('..', import.meta.url));
 
+export const webFrameworks = ['vue', 'react'];
+
 export const projectTemplates: ProjectTemplateGroup[] = [
   {
     name: 'node',
@@ -14,18 +16,21 @@ export const projectTemplates: ProjectTemplateGroup[] = [
         name: 'node-base',
         display: 'Base',
         color: chalk.green,
+        public: 'npm',
       },
       {
         name: 'node-cli',
         display: 'CLI',
         color: chalk.green,
+        public: 'npm',
       },
       {
         name: 'node-vite',
         display: 'Vite Plugin',
-        value: 'vite-plugin',
+        value: 'vite-plugin-xxx',
         color: chalk.blue,
         hasStyle: true,
+        public: 'npm',
       },
     ],
   },
@@ -39,14 +44,12 @@ export const projectTemplates: ProjectTemplateGroup[] = [
         display: 'Vue',
         color: chalk.green,
         hasStyle: true,
-        isPublic: false,
       },
       {
         name: 'web-react',
         display: 'React',
         color: chalk.blue,
         hasStyle: true,
-        isPublic: false,
       },
     ],
   },
@@ -59,21 +62,23 @@ export const projectTemplates: ProjectTemplateGroup[] = [
         name: 'vscode-base',
         display: 'Base',
         color: chalk.yellow,
-        isPublic: 'public',
+        public: 'public',
       },
       {
         name: 'vscode-vue',
         display: 'Vue',
         color: chalk.green,
+        commonTemplates: ['vscode'],
         hasStyle: true,
-        isPublic: 'public',
+        public: 'public',
       },
       {
         name: 'vscode-react',
         display: 'React',
         color: chalk.blue,
+        commonTemplates: ['vscode'],
         hasStyle: true,
-        isPublic: 'public',
+        public: 'public',
       },
     ],
   },
@@ -86,15 +91,15 @@ export const projectTemplates: ProjectTemplateGroup[] = [
         name: 'electron-vue',
         display: 'Vue',
         color: chalk.green,
+        commonTemplates: ['electron'],
         hasStyle: true,
-        isPublic: false,
       },
       {
         name: 'electron-react',
         display: 'React',
         color: chalk.blue,
+        commonTemplates: ['electron'],
         hasStyle: true,
-        isPublic: false,
       },
     ],
   },

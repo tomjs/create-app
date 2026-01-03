@@ -10,6 +10,7 @@ Usage
   package-name          ${t('options.packageName')}
 
 Options
+  --cwd                 ${t('options.cwd')}
   --overwrite, -o       ${t('options.overwrite')}
   --package, -p         ${t('options.package')}
   --private             ${t('options.private')}
@@ -22,6 +23,9 @@ Options
   helpIndent: 0,
   description: t('app.description'),
   flags: {
+    cwd: {
+      type: 'string',
+    },
     overwrite: {
       type: 'string',
     },
@@ -59,6 +63,7 @@ else {
   logger.debug('package name:', input.join());
   logger.debug('cli options:', flags);
 
-  const opts = Object.assign({ packageName: input[0] }, flags) as CreateAppOptions;
+  const opts = Object.assign({ packageName: input[0], cwd: process.env.CLI_CWD }, flags) as CreateAppOptions;
+  logger.debug('merge options:', opts);
   createApp(opts);
 }

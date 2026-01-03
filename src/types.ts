@@ -2,6 +2,10 @@ import type { ChalkInstance } from 'chalk';
 
 export interface CreateAppOptions {
   /**
+   * The directory to create the project in.
+   */
+  cwd?: string;
+  /**
    * The package name to use for the project.
    */
   packageName?: string;
@@ -28,6 +32,8 @@ export interface ProjectOptions {
   initGit?: boolean;
 }
 
+type CommonTemplate = 'electron' | 'vscode';
+
 /**
  * The template to use for the app.
  */
@@ -36,8 +42,9 @@ export interface ProjectTemplate {
   display: string;
   value?: string;
   color: ChalkInstance;
+  commonTemplates?: CommonTemplate[];
   hasStyle?: boolean;
-  isPublic?: boolean | 'public';
+  public?: 'public' | 'npm';
 }
 
 /**
