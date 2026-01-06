@@ -1,3 +1,7 @@
+## [5.1.0](https://github.com/tomjs/create-app/compare/v5.0.0...v5.1.0) (2026-01-06)
+
+- feat: add hbuilderx template  [0314103](https://github.com/tomjs/create-app/commit/0314103)
+
 ## [5.0.0](https://github.com/tomjs/create-app/compare/v4.2.0...v5.0.0) (2026-01-03)
 
 - feat: extract common code  [2794566](https://github.com/tomjs/create-app/commit/2794566)
