@@ -1,0 +1,96 @@
+{
+  "keywords": [
+    "HBuilderX"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "engines": {
+    "node": ">=16.17.0",
+    "HBuilderX": "^2.7.0"
+  },
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "tomjs.ext.showLeftWebview",
+        "title": "触发左侧视图"
+      },
+      {
+        "command": "tomjs.ext.showRightWebview",
+        "title": "触发右侧视图"
+      },
+      {
+        "command": "tomjs.ext.showWebviewDialog",
+        "title": "触发弹框视图"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "tomjs.ext.showLeftWebview",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "tomjs.ext.showRightWebview",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "tomjs.ext.showWebviewDialog",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "tomjs.ext.showCustomEditor",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "group": "z_commands"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "tomjsActivitybar",
+          "title": "左侧webview展示"
+        }
+      ],
+      "rightside": [
+        {
+          "id": "tomjsRightSide",
+          "title": "右侧webview展示"
+        }
+      ]
+    },
+    "views": {
+      "tomjsActivitybar": [
+        {
+          "id": "tomjs.webview.left",
+          "title": "webview - 展示"
+        }
+      ],
+      "tomjsRightSide": [
+        {
+          "id": "tomjs.webview.right",
+          "title": "webview - 展示"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "dev": "run-p dev:*",
+    "dev:vite": "vite",
+    "dev:cli": "hx-cli --watch"
+  },
+  "dependencies": {
+    "@tomjs/hbuilderx": "^1.2.0"
+  },
+  "devDependencies": {
+    "@tomjs/hbuilderx-cli": "^1.3.1",
+    "@tomjs/vite-plugin-hbuilderx": "^1.2.0"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "publisher": "tomjs",
+  "name": "ext-simple",
+  "displayName": "简单插件",
+  "type": "commonjs",
+  "version": "0.0.0",
+  "description": "简单插件",
+  "keywords": [
+    "HBuilderX"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/index.js",
+  "engines": {
+    "node": ">=16.17.0",
+    "HBuilderX": "^2.7.0"
+  },
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "tomjs.xxx.showHello",
+        "title": "Hello World"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "tomjs.xxx.showHello",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "group": "z_commands"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "lint": "eslint --fix"
+  },
+  "dependencies": {
+    "@tomjs/hbuilderx": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.27",
+    "tsdown": "^0.18.4"
+  }
+}

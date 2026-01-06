@@ -4,5 +4,5 @@
     "strict": false,
     "noImplicitAny": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src", "scripts", "*.config.ts"]
 }

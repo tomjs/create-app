@@ -5,6 +5,8 @@ import { glob } from 'tinyglobby';
 const __dirname = new URL('.', import.meta.url).pathname;
 const root = path.join(__dirname, '..');
 
+const ignorePkgs = ['@tomjs/vite-plugin-xxx'];
+
 async function genRootPackageJson() {
   const configPackageJsonPath = 'templates/config/package.json';
 
@@ -23,6 +25,10 @@ async function genRootPackageJson() {
         return;
       }
       Object.keys(deps).forEach((key) => {
+        if (ignorePkgs.includes(key)) {
+          return;
+        }
+
         if (!configDeps[key]) {
           configDeps[key] = deps[key];
         }
@@ -30,7 +36,12 @@ async function genRootPackageJson() {
     });
   }
 
-  configPkg.dependencies = configDeps;
+  const newDeps: Record<string, string> = {};
+  Object.keys(configDeps).sort().forEach((key) => {
+    newDeps[key] = configDeps[key];
+  });
+
+  configPkg.dependencies = newDeps;
   await writeJson(path.join(root, configPackageJsonPath), configPkg);
 }
 

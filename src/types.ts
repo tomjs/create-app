@@ -32,7 +32,7 @@ export interface ProjectOptions {
   initGit?: boolean;
 }
 
-type CommonTemplate = 'electron' | 'vscode';
+type CommonTemplate = 'electron' | 'vscode' | 'hbuilderx';
 
 /**
  * The template to use for the app.

@@ -103,6 +103,35 @@ export const projectTemplates: ProjectTemplateGroup[] = [
       },
     ],
   },
+  {
+    name: 'hbuilderx',
+    display: 'HBuilderX',
+    color: chalk.yellow,
+    children: [
+      {
+        name: 'hbuilderx-base',
+        display: 'Base',
+        color: chalk.yellow,
+        public: 'public',
+      },
+      {
+        name: 'hbuilderx-vue',
+        display: 'Vue',
+        color: chalk.green,
+        commonTemplates: ['hbuilderx'],
+        hasStyle: true,
+        public: 'public',
+      },
+      {
+        name: 'hbuilderx-react',
+        display: 'React',
+        color: chalk.blue,
+        commonTemplates: ['hbuilderx'],
+        hasStyle: true,
+        public: 'public',
+      },
+    ],
+  },
 ];
 
 export const gitRepos: GitRepo[] = [

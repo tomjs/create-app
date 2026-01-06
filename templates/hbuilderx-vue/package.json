@@ -1,0 +1,12 @@
+{
+  "publisher": "tomjs",
+  "name": "hbuilderx-vue",
+  "displayName": "hbuilderx vue插件",
+  "type": "commonjs",
+  "version": "0.0.0",
+  "description": "hbuilderx vue插件",
+  "main": "dist/extension/index.js",
+  "scripts": {
+    "build": "vue-tsc --noEmit && vite build"
+  }
+}
