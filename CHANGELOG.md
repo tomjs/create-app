@@ -1,3 +1,8 @@
+## [5.2.0](https://github.com/tomjs/create-app/compare/v5.1.0...v5.2.0) (2026-01-12)
+
+- chore: update deps  [a5de7b3](https://github.com/tomjs/create-app/commit/a5de7b3)
+- feat: change template public folder  [0bc09c3](https://github.com/tomjs/create-app/commit/0bc09c3)
+
 ## [5.1.0](https://github.com/tomjs/create-app/compare/v5.0.0...v5.1.0) (2026-01-06)
 
 - feat: add hbuilderx template  [0314103](https://github.com/tomjs/create-app/commit/0314103)
