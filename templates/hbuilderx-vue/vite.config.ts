@@ -1,5 +1,9 @@
+import { fileURLToPath, URL } from 'node:url';
 import hbuilderx from '@tomjs/vite-plugin-hbuilderx';
 import vue from '@vitejs/plugin-vue';
+import UnoCSS from 'unocss/vite';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
 import { defineConfig } from 'vite';
 import devtools from 'vite-plugin-vue-devtools';
 
@@ -7,11 +11,21 @@ import devtools from 'vite-plugin-vue-devtools';
 export default defineConfig({
   resolve: {
     alias: {
-      '@': '/src',
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   build: {
-    assetsInlineLimit: 1024 * 100,
+    chunkSizeWarningLimit: 102400,
+    reportCompressedSize: false,
   },
-  plugins: [vue(), hbuilderx(), devtools()],
+  plugins: [
+    vue(),
+    AutoImport({
+      imports: ['vue'],
+    }),
+    Components(),
+    hbuilderx(),
+    UnoCSS(),
+    devtools(),
+  ],
 });

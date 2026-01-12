@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { readJson, writeJson } from '@tomjs/node';
+import { readJson, writeFile } from '@tomjs/node';
 import { glob } from 'tinyglobby';
 
 const __dirname = new URL('.', import.meta.url).pathname;
@@ -42,7 +42,7 @@ async function genRootPackageJson() {
   });
 
   configPkg.dependencies = newDeps;
-  await writeJson(path.join(root, configPackageJsonPath), configPkg);
+  await writeFile(path.join(root, configPackageJsonPath), `${JSON.stringify(configPkg, null, 2)}\n`);
 }
 
 await genRootPackageJson();

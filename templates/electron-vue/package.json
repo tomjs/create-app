@@ -12,7 +12,9 @@
     "build": "vue-tsc --noEmit && vite build",
     "release": "vue-tsc --noEmit && cross-env VITE_ELECTRON_BUILDER=1 vite build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "vue-router": "^4.6.4"
+  },
   "devDependencies": {
     "vite-plugin-electron-renderer": "^0.14.6"
   }

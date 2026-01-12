@@ -6,6 +6,9 @@
     "lint": "eslint --fix",
     "prepare": "simple-git-hooks"
   },
+  "dependencies": {
+    "dayjs": "^1.11.19"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^6.7.3",
     "@commitlint/cli": "^20.3.0",

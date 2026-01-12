@@ -1,4 +1,4 @@
-import path from 'node:path';
+import { fileURLToPath, URL } from 'node:url';
 import vscode from '@tomjs/vite-plugin-vscode';
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
@@ -8,8 +8,12 @@ export default defineConfig(() => {
   return {
     resolve: {
       alias: {
-        '@': path.join(__dirname, 'src'),
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
+    },
+    build: {
+      chunkSizeWarningLimit: 102400,
+      reportCompressedSize: false,
     },
     plugins: [
       react(),
