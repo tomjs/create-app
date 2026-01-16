@@ -34,6 +34,7 @@ Usage
   package-name          Package name
 
 Options
+  --cwd                 Current working directory
   --overwrite, -o       Overwrite existing project
   --package, -p         Create a package for the workspace project
   --private             Set as private project
@@ -46,6 +47,9 @@ Support templates:
 
 - electron-vue
 - electron-react
+- hbuilderx-base
+- hbuilderx-react
+- hbuilderx-vue
 - node-base
 - node-cli
 - node-vite

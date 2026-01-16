@@ -34,6 +34,7 @@ Usage
   package-name          包名称
 
 Options
+  --cwd                 当前工作目录
   --overwrite, -o       覆盖已存在的目录
   --package, -p         为 workspace 项目创建包
   --private             设为私有项目
@@ -46,6 +47,9 @@ Options
 
 - electron-vue
 - electron-react
+- hbuilderx-base
+- hbuilderx-react
+- hbuilderx-vue
 - node-base
 - node-cli
 - node-vite
