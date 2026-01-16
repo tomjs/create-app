@@ -1,3 +1,8 @@
+## [5.3.0](https://github.com/tomjs/create-app/compare/v5.2.0...v5.3.0) (2026-01-16)
+
+- chore: update deps  [f6a7396](https://github.com/tomjs/create-app/commit/f6a7396)
+- docs: update readme  [3c844e0](https://github.com/tomjs/create-app/commit/3c844e0)
+
 ## [5.2.0](https://github.com/tomjs/create-app/compare/v5.1.0...v5.2.0) (2026-01-12)
 
 - chore: update deps  [a5de7b3](https://github.com/tomjs/create-app/commit/a5de7b3)
