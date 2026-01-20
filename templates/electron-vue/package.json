@@ -14,8 +14,5 @@
   },
   "dependencies": {
     "vue-router": "^4.6.4"
-  },
-  "devDependencies": {
-    "vite-plugin-electron-renderer": "^0.14.6"
   }
 }

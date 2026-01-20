@@ -5,8 +5,8 @@
     "lint:eslint": "eslint --fix"
   },
   "devDependencies": {
-    "@tomjs/stylelint": "^7.1.1",
+    "@tomjs/stylelint": "^8.0.0",
     "sass": "^1.97.2",
-    "stylelint": "^16.26.1"
+    "stylelint": "^17.0.0"
   }
 }

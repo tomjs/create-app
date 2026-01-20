@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "@tomjs/vite-plugin-electron": "^2.4.2",
-    "electron": "^39.2.7",
+    "electron": "^40.0.0",
     "electron-builder": "^26.4.0",
     "vite-plugin-electron-renderer": "^0.14.6"
   }
