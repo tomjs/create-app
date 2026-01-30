@@ -1,3 +1,7 @@
+## [5.5.0](https://github.com/tomjs/create-app/compare/v5.4.0...v5.5.0) (2026-01-30)
+
+- feat: change vue template  [276fa61](https://github.com/tomjs/create-app/commit/276fa61)
+
 ## [5.4.0](https://github.com/tomjs/create-app/compare/v5.3.0...v5.4.0) (2026-01-20)
 
 - chore: update deps  [518705f](https://github.com/tomjs/create-app/commit/518705f)    [e8acc74](https://github.com/tomjs/create-app/commit/e8acc74)
