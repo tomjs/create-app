@@ -1,6 +1,6 @@
-import { createApp } from 'vue';
 import App from './App.vue';
 
-import './style.css';
+import 'virtual:uno.css';
+import './style.scss';
 
 createApp(App).mount('#app');

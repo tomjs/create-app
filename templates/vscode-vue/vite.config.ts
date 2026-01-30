@@ -28,9 +28,12 @@ export default defineConfig(() => {
         },
       }),
       AutoImport({
-        imports: ['vue'],
+        dts: './src/auto-imports.d.ts',
+        imports: ['vue', '@vueuse/core'],
       }),
-      Components(),
+      Components({
+        dts: './src/components.d.ts',
+      }),
       UnoCSS(),
       vscode(),
       devtools(),

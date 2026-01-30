@@ -2,15 +2,12 @@
   "extends": "@tomjs/tsconfig/vue.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "types": [
-      "vite/client",
-      "node"
-    ]
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "src/**/*.d.ts"
+    "src/**/*",
+    "src/**/*.vue"
   ]
 }

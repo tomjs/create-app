@@ -16,9 +16,12 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      imports: ['vue', 'vue-router'],
+      dts: './src/auto-imports.d.ts',
+      imports: ['vue', 'vue-router', '@vueuse/core'],
     }),
-    Components(),
+    Components({
+      dts: './src/components.d.ts',
+    }),
     UnoCSS(),
     devtools(),
   ],

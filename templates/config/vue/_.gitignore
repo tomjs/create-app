@@ -32,7 +32,7 @@ web_modules
 tsconfig.tsbuildinfo
 
 # environment
-*.local
+.env
 
 # macOS
 .DS_Store
@@ -46,14 +46,12 @@ tsconfig.tsbuildinfo
 *.tar.*
 *.tgz
 *.zip
-*.vsix
 
 # IDEA
 .idea
 
 # vscode
 .history
-.vscode/i18n-ally-reviews.yml
 
 # build output
 build
@@ -63,7 +61,3 @@ release
 # generated files
 auto-imports.d.ts
 components.d.ts
-
-package.nls.json
-package.nls.*.json
-src/vscode.d.ts

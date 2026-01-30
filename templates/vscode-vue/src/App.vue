@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { allComponents, provideVSCodeDesignSystem } from '@vscode/webview-ui-toolkit';
-import { ref } from 'vue';
 import { vscode } from './utils';
 
 provideVSCodeDesignSystem().register(allComponents);

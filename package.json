@@ -2,7 +2,7 @@
   "name": "@tomjs/create-app",
   "type": "module",
   "version": "5.4.0",
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@10.28.2",
   "description": "Create a node/web/electron/vscode project based on tomjs",
   "author": {
     "name": "Tom Gao",
@@ -59,22 +59,22 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@clack/prompts": "^0.11.0",
+    "@clack/prompts": "^1.0.0",
     "@tomjs/logger": "^3.0.0",
     "@tomjs/node": "^2.2.3",
     "chalk": "^5.6.2",
     "dayjs": "^1.11.19",
     "execa": "^9.6.1",
-    "lodash-es": "^4.17.22",
+    "lodash-es": "^4.17.23",
     "meow": "^14.0.0",
     "tinyglobby": "^0.2.15"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^7.1.0",
+    "@antfu/eslint-config": "^7.2.0",
     "@commitlint/cli": "^20.3.1",
     "@tomjs/commitlint": "^5.0.0",
     "@tomjs/eslint": "^7.0.0",
-    "@tomjs/stylelint": "^8.0.0",
+    "@tomjs/stylelint": "^8.1.0",
     "@tomjs/tsconfig": "^3.2.0",
     "@tsconfig/node20": "^20.1.8",
     "@types/lodash-es": "^4.17.12",
@@ -83,13 +83,13 @@
     "eslint": "^9.39.2",
     "lint-staged": "^16.2.7",
     "npm-run-all2": "^8.0.4",
-    "publint": "^0.3.16",
+    "publint": "^0.3.17",
     "rimraf": "^6.1.2",
     "simple-git-hooks": "^2.13.1",
     "stylelint": "^17.0.0",
-    "tsdown": "~0.19.0",
+    "tsdown": "~0.20.1",
     "tsx": "^4.21.0",
-    "type-fest": "^5.4.1",
+    "type-fest": "^5.4.2",
     "typescript": "~5.9.3"
   }
 }

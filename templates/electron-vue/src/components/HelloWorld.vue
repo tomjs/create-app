@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import os from 'node:os';
-import { ref } from 'vue';
 
 defineProps<{ msg: string }>();
 

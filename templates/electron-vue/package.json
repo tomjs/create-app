@@ -13,6 +13,6 @@
     "release": "vue-tsc --noEmit && cross-env VITE_ELECTRON_BUILDER=1 vite build"
   },
   "dependencies": {
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.0.1"
   }
 }
