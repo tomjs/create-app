@@ -1,3 +1,8 @@
+## [5.6.0](https://github.com/tomjs/create-app/compare/v5.5.0...v5.6.0) (2026-02-10)
+
+- feat: add chrome extension templates  [b5d74c9](https://github.com/tomjs/create-app/commit/b5d74c9)
+- chore: update deps  [f2fa41d](https://github.com/tomjs/create-app/commit/f2fa41d)
+
 ## [5.5.0](https://github.com/tomjs/create-app/compare/v5.4.0...v5.5.0) (2026-01-30)
 
 - feat: change vue template  [276fa61](https://github.com/tomjs/create-app/commit/276fa61)
