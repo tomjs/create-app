@@ -45,6 +45,8 @@ Options
 
 Support templates:
 
+- crx-react
+- crx-vue
 - electron-vue
 - electron-react
 - hbuilderx-base

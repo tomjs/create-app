@@ -45,6 +45,8 @@ Options
 
 支持模板:
 
+- crx-react
+- crx-vue
 - electron-vue
 - electron-react
 - hbuilderx-base

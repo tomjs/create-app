@@ -132,6 +132,25 @@ export const projectTemplates: ProjectTemplateGroup[] = [
       },
     ],
   },
+  {
+    name: 'crx',
+    display: 'Chrome Extension',
+    color: chalk.red,
+    children: [
+      {
+        name: 'crx-vue',
+        display: 'Vue',
+        color: chalk.green,
+        hasStyle: true,
+      },
+      {
+        name: 'crx-react',
+        display: 'React',
+        color: chalk.blue,
+        hasStyle: true,
+      },
+    ],
+  },
 ];
 
 export const gitRepos: GitRepo[] = [

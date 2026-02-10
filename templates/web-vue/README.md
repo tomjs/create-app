@@ -1,1 +1,1 @@
-# vue example
+# crx vue example
