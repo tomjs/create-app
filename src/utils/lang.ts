@@ -50,7 +50,7 @@ function getLocale() {
     = process.env.LC_ALL // POSIX locale environment variables
       || process.env.LC_MESSAGES
       || process.env.LANG
-      || Intl.DateTimeFormat().resolvedOptions().locale // Built-in ECMA-402 support
+      || new Intl.DateTimeFormat().resolvedOptions().locale // Built-in ECMA-402 support
       || 'en-US'; // Default fallback
 
   return linkLocale(shellLocale.split('.')[0].replace('_', '-'));

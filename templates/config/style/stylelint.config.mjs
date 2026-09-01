@@ -1,7 +1,7 @@
-import { IGNORE_FILES } from '@tomjs/stylelint';
+import { IGNORE_FILES } from '@tomjs/stylelint-config';
 
 /** @type {import('stylelint').Config} */
 export default {
-  extends: ['@tomjs/stylelint'],
+  extends: ['@tomjs/stylelint-config'],
   ignoreFiles: [...IGNORE_FILES],
 };

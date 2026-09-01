@@ -85,7 +85,7 @@ async function initialValue(opts: CreateAppOptions): Promise<ProjectOptions | vo
 
   let scope = '';
   const gitEmail = await getGitConfig('user.email');
-  if (gitEmail === 'tom@tomgao.cc') {
+  if (gitEmail === 'tom@tomgao.cn') {
     scope = 'tomjs';
   }
 
@@ -566,7 +566,7 @@ async function handlePackageTypeProject(opts: ProjectOptions) {
     rmFiles.push('lint-staged.config.mjs');
   }
 
-  if (!['vscode', 'electron'].find(s => opts.template.startsWith(s))) {
+  if (!['vscode', 'electron'].some(s => opts.template.startsWith(s))) {
     rmFiles.push('.vscode');
   }
 

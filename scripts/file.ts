@@ -1,9 +1,10 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { readJson, writeFile } from '@tomjs/node';
 import { glob } from 'tinyglobby';
 
-const __dirname = new URL('.', import.meta.url).pathname;
-const root = path.join(__dirname, '..');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const root = path.join(__dirname, '../');
 
 const ignorePkgs = ['@tomjs/vite-plugin-xxx'];
 
